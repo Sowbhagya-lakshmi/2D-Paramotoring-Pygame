@@ -20,7 +20,7 @@ class Player(object):
 		
 		# Border
 		self.border_to_be_modified = read_json('player')
-		self.border = set()
+		self.border = set()									
 
 		for lst in self.border_to_be_modified:
 			new_tup = (lst[0]+self.x, lst[1])
@@ -52,7 +52,7 @@ class Tree:
 def read_json(key):
 	filename = 'contour_coordinates.json'
 	with open(filename) as f:
-		json_data = json.load(f)
+		json_data = json.load(f)	
 	border_points = json_data[key]
 	return border_points
 
