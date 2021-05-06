@@ -1,3 +1,4 @@
+# Arrange the libs in alphabetical order
 import pygame
 from pygame.locals import *
 import os
@@ -7,9 +8,10 @@ import random
 import time
 import json
 
+# Explain purpose of class? What does it have?
 class Player(object):
 	
-	imgs = [pygame.image.load(os.path.join('pics', "player-"+ str(x) + '.png')) for x in range(1,10)]
+	imgs = [pygame.image.load(os.path.join('pics', "player-"+ str(x) + '.png')) for x in range(1,10)] #Why 10? eg: Only 10 images of player available
 
 	def __init__(self, x, y, width, height):
 		self.x = x
@@ -27,13 +29,14 @@ class Player(object):
 			self.border.add(new_tup)
 
 	def draw (self, win):
-		if self.runCount > 63:
+		if self.runCount > 63: #Why 63?
 			self.runCount = 0
 		win.blit(self.imgs[self.runCount//9], (self.x,self.y))
 		self.runCount += 1 
 
+# Does what?
 class Tree:
-	tree_light = pygame.image.load('pics/tree_light.png')
+	tree_light = pygame.image.load('pics/tree_light.png') #Folder path is inaccurate, site my comment below
 	tree_dark = pygame.image.load('pics/tree_dark.png')
 	cherry_tree = pygame.image.load('pics/cherry_tree.png')
 
@@ -46,9 +49,11 @@ class Tree:
 		self.tree_num = tree_num
 		self.border = read_json('tree')
 
+	#Draw what?
 	def draw(self,win):
 		win.blit(self.resized_imgs[self.tree_num], (self.x, self.y)) 
 
+# Explain purpose
 def read_json(key):
 	filename = 'contour_coordinates.json'
 	with open(filename) as f:
@@ -56,6 +61,7 @@ def read_json(key):
 	border_points = json_data[key]
 	return border_points
 
+# Redraw what?
 def redrawWindow(bgX, bg_width, groundX, ground_width):
 	# Drawing background
 	win.blit(bg, (bgX, 0))
@@ -91,6 +97,7 @@ def redrawWindow(bgX, bg_width, groundX, ground_width):
 
 	return bgX, bg_width, groundX, ground_width
 
+# Create what obstacles?
 def create_obstacle(): 
 	#Creates one obstacle
 	random_num = random.randint(0,2)        # range over the number of obstacles
@@ -104,17 +111,19 @@ def create_obstacle():
 
 def update_obstacle_position():
 	for obstacle in obstacles:
-		if obstacle.x < -400:
+		if obstacle.x < -400: #400 is hardcoded and why?
 			obstacles.remove(obstacle)
 		else:
 			obstacle.x -= foreground_speed
 
+# rename function name (make it more clear)
 def display_pointer(mx,my):
 	font = pygame.font.Font('freesansbold.ttf', 32)
 	text_x, text_y = 10, 10
 	text = font.render(str(mx)+', '+str(my), True, (0,0,0))
 	win.blit(text, (text_x, text_y))
 
+# rename function name 
 def collision_message():
 	font = pygame.font.Font('freesansbold.ttf', 100)
 	text_x, text_y = 750, 100
@@ -153,7 +162,7 @@ def collision():
 pygame.init()
 
 # Game Window
-W, H = 1550, 800
+W, H = 1550, 800  #better to use Width and Height instead of W and H
 win = pygame.display.set_mode((W,H))
 pygame.display.set_caption('Game Window')
 
@@ -166,11 +175,11 @@ bg_width = bg.get_width()                             # to get width of the imag
 ground = pygame.image.load(os.path.join('pics','ground.png'))
 flipped_ground = pygame.transform.flip(ground, True, False)
 groundX = 0
-ground_width = ground.get_width() - 5
+ground_width = ground.get_width() - 5 #Why 5?
 
 speed = 60		# fps
 clock = pygame.time.Clock()
-foreground_speed = 6
+foreground_speed = 6 # Why 6?
 
 run = True
 collision_occured = False
@@ -224,3 +233,8 @@ while run:
 	clock.tick(speed)
 	pygame.display.update()
 	
+
+	#File path should be more detailed. 
+	#For eg: Utils/Pics/Player - for player
+	#		 Utils/Pics/Background - for background
+	# 		 Utils/Music - for future music files	
