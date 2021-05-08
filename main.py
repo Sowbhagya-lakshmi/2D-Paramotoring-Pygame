@@ -56,6 +56,10 @@ class Tree:
 		self.tree_num = tree_num
 		self.border = read_json('tree')
 
+		# Width and height of obstacle
+		self.width = self.resized_imgs[self.tree_num].get_width()
+		self.width = self.resized_imgs[self.tree_num].get_height()
+
 	# Draws the obstacle onto the screen
 	def draw(self,win):
 		win.blit(self.resized_imgs[self.tree_num], (self.x, self.y)) 
@@ -74,7 +78,7 @@ class Coin:
 		self.y = y
 		self.runCount = 0
 		
-		# Border (contour coordinates)
+		# Borders (contour coordinates)
 		self.borders = read_json('coins')
 
 	def draw(self, win):	
@@ -82,11 +86,18 @@ class Coin:
 		if self.runCount >= self.frames_per_image*self.num_of_coin_imgs:
 			self.runCount = 0
 		self.index = self.runCount//self.frames_per_image
+		self.runCount += 1
+
+		# coin image
 		self.img = self.resized_imgs[self.index]
+
+		# Coins to rotate about it's central y axis
 		self.centroid_x = self.img.get_width()//2
 		win.blit(self.img, (self.x-self.centroid_x,self.y))
-		self.runCount += 1
+
+		# Border
 		self.border = self.borders[self.index]
+
 
 # HELPER FUNCTIONS
 
@@ -151,9 +162,21 @@ def create_random_obstacle():
 	elif random_num == 2:
 		obstacles.append(Tree(random_x,y_coordinate_obstacle,2))	# cherry_tree obstacle
 
+def find_free_zone_y():
+	y_coordinate_obstacle = 300
+	free_zone_y = max_y_coord
+	for obstacle in obstacles:
+		if obstacle.x >(bg.get_width() - obstacle.width) and obstacle.x < bg.get_width():
+			free_zone_y =  y_coordinate_obstacle
+			#print('inside if')
+
+	return free_zone_y
+
 def create_coin():
-	x = random.randint(-250,250)
-	coins.append(Coin(bg.get_width(), 300 + x))
+	free_zone_y = find_free_zone_y()	# find free space in y axis
+	#print(free_zone_y)
+	x = random.randint(50,free_zone_y)	# choose random y value within free zone
+	coins.append(Coin(bg.get_width(), x))
 
 def update_coins_position():
 	for coin in coins:
@@ -166,8 +189,7 @@ def update_coins_position():
 
 def update_obstacle_position():
 	for obstacle in obstacles:
-		obstacle_width = obstacle.resized_imgs[obstacle.tree_num].get_width()
-		if obstacle.x < -1*obstacle_width: # If obstacle goes offscreen, removing it from obstacles list 
+		if obstacle.x < -1*obstacle.width: # If obstacle goes offscreen, removing it from obstacles list 
 			obstacles.remove(obstacle)
 		else:
 			obstacle.x -= foreground_speed
@@ -227,8 +249,8 @@ def coin_collection():
 
 def display_num_coins_collected():
 	win.blit(coin_board, (10,10))
-	font = pygame.font.Font('freesansbold.ttf', 30)
-	text_x, text_y = 60, 20
+	font = pygame.font.Font('freesansbold.ttf', 40)
+	text_x, text_y = 80, 20
 	text = font.render(str(num_coins_collected), True, (255,255,255))
 	win.blit(text, (text_x, text_y))
 
@@ -246,27 +268,31 @@ pygame.display.set_caption('Game Window')
 bg = pygame.image.load(os.path.join('Utils/Pics/Background','bg.png')).convert()
 bg_x = 0
 bg_width = bg.get_width()  
+background_speed = 2	# Background shifts by 2 pixels in each game loop
 
 # Ground
 ground = pygame.image.load(os.path.join('Utils/Pics/Foreground','ground.png'))
 flipped_ground = pygame.transform.flip(ground, True, False)
 ground_x = 0
 ground_width = ground.get_width() - 5	# To prevent glitches in background movement...yet to find an optimal solution
+foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
 
 # Coin collection board
-coin_board = pygame.image.load(os.path.join('Utils/Pics/Display','coin_display.png'))
-
-speed = 60		# fps
-clock = pygame.time.Clock()
-foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
-background_speed = 2	# Background shifts by 2 pixels in each game loop
-run = True
-collision_occured = False
-obstacles = []
+coin_board1 = pygame.image.load(os.path.join('Utils/Pics/Display','coin_display.png'))
+coin_board = pygame.transform.scale(coin_board1, (int(coin_board1.get_width()//1.5), int(coin_board1.get_height()//1.5)))
 coins = []
 num_coins_collected = 0
 
+speed = 60			# fps
+max_y_coord = 560	# player's y axis limit
+run = True
+
+collision_occured = False
+obstacles = []
+
 player = Player(250, 313, 50, 50)	# Creating an instance of the class Player
+
+clock = pygame.time.Clock()
 
 # Setting a userevent once in every 8 seconds to generate obstacles
 pygame.time.set_timer(pygame.USEREVENT+2, 8000)
@@ -274,6 +300,9 @@ pygame.time.set_timer(pygame.USEREVENT+2, 8000)
 # Setting a userevent once in every 3 seconds to generate coin
 pygame.time.set_timer(pygame.USEREVENT+1, 2000)
 
+'''
+frame_count = 0
+start_time = time.time()'''
 
 # GAME LOOP
 while run:
@@ -291,7 +320,7 @@ while run:
 		player.x, player.y = 250, my
 		player.draw(win)
 	else:
-		player.x, player.y = 250, 560
+		player.x, player.y = 250, max_y_coord
 		player.draw(win)
 	
 	# Event loop
@@ -334,3 +363,11 @@ while run:
 
 	clock.tick(speed)
 	pygame.display.update()
+
+	'''now = time.time()
+	if now-start_time >=1:
+		start_time = time.time()
+		print(frame_count)
+		frame_count = 0
+	frame_count += 1'''
+
