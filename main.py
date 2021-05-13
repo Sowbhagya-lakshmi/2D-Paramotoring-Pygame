@@ -5,6 +5,32 @@ import random
 import sys
 import time
 
+pygame.init()
+
+# Game Window
+width, height = 1550,800
+win = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Game Window')
+
+# Background Image
+bg = pygame.image.load(os.path.join('Utils/Pics/Background','bg.png')).convert()
+bg_x = 0
+bg_width = bg.get_width()  
+background_speed = 2	# Background shifts by 2 pixels in each game loop
+
+# Ground
+ground = pygame.image.load(os.path.join('Utils/Pics/Foreground','ground.png')).convert_alpha()
+flipped_ground = pygame.transform.flip(ground, True, False)
+ground_x = 0
+ground_width = ground.get_width() - 5	# To prevent glitches in background movement...yet to find an optimal solution
+foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
+
+# Coin collection board
+coin_board1 = pygame.image.load(os.path.join('Utils/Pics/Display','coin_display.png')).convert_alpha()
+coin_board = pygame.transform.scale(coin_board1, (int(coin_board1.get_width()//1.5), int(coin_board1.get_height()//1.5)))
+coins = []
+num_coins_collected = 0
+
 class Player:
 	"""
 	Descibes the player object.
@@ -12,7 +38,7 @@ class Player:
 	"""
 	# Loading player images
 	num_of_player_imgs = 9
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')) for x in range(1, num_of_player_imgs+1)]
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')).convert_alpha() for x in range(1, num_of_player_imgs+1)]
 
 	def __init__(self, x, y):
 		self.x = x
@@ -34,7 +60,7 @@ class Tree:
 	"""
 	# Loading images 
 	num_of_imgs = 11
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "tree"+ str(x) + '.png')) for x in range(0, num_of_imgs)]
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "tree"+ str(x) + '.png')).convert_alpha() for x in range(0, num_of_imgs)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//1.5), int(img.get_height()//1.5))) for img in imgs]
 
 	obstacles = []
@@ -61,7 +87,7 @@ class Other_obstacles:
 	"""
 	# Loading images 
 	num_of_imgs = 2
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')) for x in range(0, num_of_imgs)]
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')).convert_alpha() for x in range(0, num_of_imgs)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*2), int(img.get_height()*2))) for img in imgs]
 
 	obstacles = []
@@ -86,7 +112,7 @@ class Coin:
 	"""
 	# Loading coin images
 	num_of_imgs = 6
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Coins/', "coin"+ str(x) + '.png')) for x in range(1, num_of_imgs+1)]
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Coins/', "coin"+ str(x) + '.png')).convert_alpha() for x in range(1, num_of_imgs+1)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//50), int(img.get_height()//50))) for img in imgs]
 
 	def __init__(self, x, y):
@@ -110,10 +136,11 @@ class Coin:
 
 # HELPER FUNCTIONS
 
-def draw_scene_and_obstacles(bg_x, bg_width, ground_x, ground_width):
+def draw_scene_and_obstacles():
 	"""
 	Draws the background, foreground, obstacles and coins.
 	"""
+	global bg_x, bg_width, ground_x, ground_width
 	# Drawing background
 	win.blit(bg, (bg_x, 0))
 	win.blit(bg, (bg_width,0))
@@ -288,33 +315,7 @@ def display_collision_message():
 
 # MAIN ALGORITHM
 
-pygame.init()
-
-# Game Window
-width, height = 1550, 800
-win = pygame.display.set_mode((width, height))
-pygame.display.set_caption('Game Window')
-
-# Background Image
-bg = pygame.image.load(os.path.join('Utils/Pics/Background','bg.png')).convert()
-bg_x = 0
-bg_width = bg.get_width()  
-background_speed = 2	# Background shifts by 2 pixels in each game loop
-
-# Ground
-ground = pygame.image.load(os.path.join('Utils/Pics/Foreground','ground.png'))
-flipped_ground = pygame.transform.flip(ground, True, False)
-ground_x = 0
-ground_width = ground.get_width() - 5	# To prevent glitches in background movement...yet to find an optimal solution
-foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
-
-# Coin collection board
-coin_board1 = pygame.image.load(os.path.join('Utils/Pics/Display','coin_display.png'))
-coin_board = pygame.transform.scale(coin_board1, (int(coin_board1.get_width()//1.5), int(coin_board1.get_height()//1.5)))
-coins = []
-num_coins_collected = 0
-
-speed = 60			# fps
+speed = 60		# fps
 max_y_coord = 560	# player's y axis limit
 run = True
 
@@ -329,12 +330,13 @@ clock = pygame.time.Clock()
 
 # Setting a userevent once in every 1.5 seconds to generate coin
 pygame.time.set_timer(pygame.USEREVENT+1, 1500)
-
 # Setting a userevent once in every 8 seconds to generate tree obstacles
 pygame.time.set_timer(pygame.USEREVENT+2, 8000)
-
-# Setting a userevent once in every 20 seconds to generate rock obstacles
+# Setting a userevent once in every 20 seconds to generate other obstacles
 pygame.time.set_timer(pygame.USEREVENT+3, 20000)
+
+pygame.event.set_blocked(None)
+pygame.event.set_allowed([pygame.KEYDOWN, pygame.QUIT, pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3])
 
 '''
 frame_count = 0	# chck fps
@@ -343,7 +345,7 @@ start_time = time.time()'''
 # GAME LOOP
 while run:
 	# Draws stuff to be displayed in window
-	bg_x, bg_width, ground_x, ground_width = draw_scene_and_obstacles(bg_x, bg_width, ground_x, ground_width)
+	draw_scene_and_obstacles()
 	
 	# Get mouse pointer coordinates
 	(mx, my) = pygame.mouse.get_pos()
@@ -360,12 +362,13 @@ while run:
 		player.draw(win)
 	
 	# Event loop
+	#pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN])
 	for event in pygame.event.get():
 		
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
-			run = False
+			run = False	
 		
 		if event.type == pygame.KEYDOWN:
 			if event.key == 27:		# press esc to quit
@@ -402,9 +405,9 @@ while run:
 
 	'''
 	now = time.time()	# chck fps
-	if now-start_time >=1:
+	if now-start_time >=5:
 		start_time = time.time()
-		print(frame_count)
+		print(frame_count//5)
 		frame_count = 0
-	frame_count += 1'''
-
+	frame_count += 1
+	'''
