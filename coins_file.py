@@ -4,7 +4,10 @@ import pygame
 import random
 import sys
 import time
+
 import main
+import obstacles_file
+
 
 
 class Coin:
@@ -49,10 +52,10 @@ def find_free_zone_y():
 	"""
 	free_zone_y = main.max_y_coord
 
-	for obstacle in main.Tree.obstacles:
+	for obstacle in obstacles_file.Tree.obstacles:
 		if obstacle.x >(main.bg.get_width() - obstacle.width) and obstacle.x < main.bg.get_width():
 			free_zone_y =  obstacle.y
-	for obstacle in main.Other_obstacles.obstacles:
+	for obstacle in obstacles_file.Other_obstacles.obstacles:
 		if obstacle.x >(main.bg.get_width() - obstacle.width) and obstacle.x < main.bg.get_width():
 			free_zone_y =  obstacle.y
 
