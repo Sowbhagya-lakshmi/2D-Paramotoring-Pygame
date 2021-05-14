@@ -1,14 +1,10 @@
-import math
 import os
 import pygame
 import random
-import sys
-import time
 
-import main
-import obstacles_file
-
-
+import bg_module
+import fg_module
+import obstacles_module
 
 class Coin:
 	"""
@@ -50,13 +46,13 @@ def find_free_zone_y():
 	"""
 	To determine free space inorder to place coins. To prevent coins being drawn over obstacles.
 	"""
-	free_zone_y = main.max_y_coord
+	free_zone_y = fg_module.ground_y
 
-	for obstacle in obstacles_file.Tree.obstacles:
-		if obstacle.x >(main.bg.get_width() - obstacle.width) and obstacle.x < main.bg.get_width():
+	for obstacle in obstacles_module.Tree.obstacles:
+		if obstacle.x >(bg_module.bg.get_width() - obstacle.width) and obstacle.x < bg_module.bg.get_width():
 			free_zone_y =  obstacle.y
-	for obstacle in obstacles_file.Other_obstacles.obstacles:
-		if obstacle.x >(main.bg.get_width() - obstacle.width) and obstacle.x < main.bg.get_width():
+	for obstacle in obstacles_module.Other_obstacles.obstacles:
+		if obstacle.x >(bg_module.bg.get_width() - obstacle.width) and obstacle.x < bg_module.bg.get_width():
 			free_zone_y =  obstacle.y
 
 	return free_zone_y
@@ -66,8 +62,13 @@ def create_coin():
 	"""
 	free_zone_y = find_free_zone_y()	# find free space in y axis
 	x = random.randint(50,free_zone_y)	# choose random y value within free zone
-	Coin.coins_list.append(Coin(main.bg.get_width(), x))
+	Coin.coins_list.append(Coin(bg_module.bg.get_width(), x))
 
+def draw_coins(win):
+	for coin in Coin.coins_list:
+		coin.draw(win)
+	update_coins_position()
+	
 def update_coins_position():
 	"""
 	Updates the x coordinates of coins. If coin goes offscreen, remove it from the list.
@@ -77,7 +78,7 @@ def update_coins_position():
 		if coin.x < -1*coin_width: # If coin goes offscreen, removing it from coins list 
 			Coin.coins_list.remove(coin)
 		else:
-			coin.x -= main.foreground_speed
+			coin.x -= fg_module.foreground_speed
 
 def coin_collection(player):
 	"""

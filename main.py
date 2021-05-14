@@ -1,13 +1,8 @@
-import math
-import os
 import pygame
-import random
-import sys
 import time
 
 # Global variables
 speed = 60		# fps
-max_y_coord = 560	# player's y axis limit
 run = True
 collision_occured = False
 
@@ -18,116 +13,27 @@ width, height = 1550,800
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Game Window')
 
-# Background Image
-bg = pygame.image.load(os.path.join('Utils/Pics/Background','bg.png')).convert()
-bg_x = 0
-bg_width = bg.get_width()  
-background_speed = 2	# Background shifts by 2 pixels in each game loop
-
-# Ground
-ground = pygame.image.load(os.path.join('Utils/Pics/Foreground','ground.png')).convert_alpha()
-flipped_ground = pygame.transform.flip(ground, True, False)
-ground_x = 0
-ground_y = win.get_height()-ground.get_height() 
-ground_width = ground.get_width() - 5	# To prevent glitches in background movement...yet to find an optimal solution
-foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
-
-
-class Player:
-	"""
-	Descibes the player object.
-	It has info such as the x positon, y position, width, height and a draw method to draw the player's images onto the screen hence creating the animation effect.
-	"""
-	# Loading player images
-	num_of_player_imgs = 9
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')).convert_alpha() for x in range(1, num_of_player_imgs+1)]
-
-	def __init__(self, x, y):
-		self.x = x
-		self.y = y
-		self.runCount = 0
-
-	def draw(self, win):
-		self.frames_per_image = 7			# each player image is drawn for 7 consecutive frames
-		if self.runCount > self.frames_per_image*self.num_of_player_imgs :
-			self.runCount = 0
-		self.img = self.imgs[self.runCount//self.num_of_player_imgs]
-		win.blit(self.img, (self.x,self.y))
-		self.runCount += 1 
-
-def draw_scene_and_obstacles():
+def draw_all_objects():
 	"""
 	Draws the background, foreground, obstacles and coins.
 	"""
-	global bg_x, bg_width, ground_x, ground_y, ground_width
-	# Drawing background
-	win.blit(bg, (bg_x, 0))
-	win.blit(bg, (bg_width,0))
-
-	# Background movement
-	bg_x -= background_speed
-	bg_width -= background_speed
-	
-	# For repetition of background movement
-	if bg_x < bg.get_width() * -1:
-		bg_x = bg.get_width()
-	if bg_width < bg.get_width() * -1:
-		bg_width = bg.get_width()
-
-	# Drawing ground
-	win.blit(ground, (ground_x, ground_y))
-	win.blit(flipped_ground, (ground_width,ground_y))	
-
-	# Ground movement
-	ground_x -= foreground_speed
-	ground_width -= foreground_speed
-	
-	# For repetition of ground movement
-	if ground_x < (ground.get_width()-5) * -1:
-		ground_x = (ground.get_width()-5)
-	if ground_width < (flipped_ground.get_width()-5) * -1:
-		ground_width = (flipped_ground.get_width()-5)
-
-	return bg_x, bg_width, ground_x, ground_width
-
-def display_mouse_pointer_coordinates(mx,my):
-	"""
-	To display mouse pointer coordinates just for reference. Temporary function to be removed later.
-	"""
-	font = pygame.font.Font('freesansbold.ttf', 32)
-	text_x, text_y = 1400, 10
-	text = font.render(str(mx)+', '+str(my), True, (0,0,0))
-	win.blit(text, (text_x, text_y))
-
-def display_collision_message():
-	"""
-	Temporary function to communicate that collision had occured
-	"""
-	font = pygame.font.Font('freesansbold.ttf', 100)
-	text_x, text_y = 750, 100
-	text = font.render('COLLISION', True, (0,0,0))
-	win.blit(text, (text_x, text_y))
+	bg_module.draw_bg(win)
+	obstacles_module.draw_obstacles(win)
+	coins_module.draw_coins(win)
+	fg_module.draw_fg(win)
+	player_module.draw_player(win)
 
 # MAIN ALGORITHM
-
 if __name__ == '__main__':
-	import coins_file
-	import obstacles_file
-
-	player = Player(250, 313)	# Creating an instance of the class Player
+	import player_module
+	import bg_module
+	import fg_module
+	import coins_module
+	import obstacles_module
+	import event_module
 
 	clock = pygame.time.Clock()
-
-	# Setting a userevent once in every 1.5 seconds to generate coin
-	pygame.time.set_timer(pygame.USEREVENT+1, 1500)
-	# Setting a userevent once in every 8 seconds to generate tree obstacles
-	pygame.time.set_timer(pygame.USEREVENT+2, 8000)
-	# Setting a userevent once in every 20 seconds to generate other obstacles
-	pygame.time.set_timer(pygame.USEREVENT+3, 20000)
-
-	pygame.event.set_blocked(None)
-	pygame.event.set_allowed([pygame.KEYDOWN, pygame.QUIT, pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3])
-
+	event_module.setting_up_events()
 
 	'''
 	frame_count = 0	# chck fps
@@ -135,64 +41,19 @@ if __name__ == '__main__':
 
 	# GAME LOOP
 	while run:
-		# Draws stuff to be displayed in window
-		draw_scene_and_obstacles()
-		obstacles_file.draw_obstacles(win)
-		# Draw coins
-		for coin in coins_file.Coin.coins_list:
-			coin.draw(win)
-		
-		# Get mouse pointer coordinates
-		(mx, my) = pygame.mouse.get_pos()
-
-		# Display mouse pointer coordinates for reference
-		display_mouse_pointer_coordinates(mx,my)
-			
-		# limit player's movable region
-		if my < 560 :
-			player.x, player.y = 250, my
-			player.draw(win)
-		else:
-			player.x, player.y = 250, max_y_coord
-			player.draw(win)
-		
-		# Event loop
-		#pygame.event.set_allowed([pygame.QUIT, pygame.KEYDOWN])
-		for event in pygame.event.get():
-			
-			if event.type == pygame.QUIT:
-				pygame.quit()
-				sys.exit()
-				run = False	
-			
-			if event.type == pygame.KEYDOWN:
-				if event.key == 27:		# press esc to quit
-					pygame.quit()
-					sys.exit()
-					run = False
-			
-			if event.type == pygame.USEREVENT+1:
-				coins_file.create_coin()
-			if event.type == pygame.USEREVENT+2:
-				obstacles_file.create_tree_obstacle()
-			if event.type == pygame.USEREVENT+3:
-				obstacles_file.create_other_obstacle()
-		
-		obstacles_file.update_obstacle_position()
-		coins_file.update_coins_position()
+		draw_all_objects()
+		event_module.event_loop()
 
 		# Coin collection
-		collected = coins_file.coin_collection(player)	# Checks collision and returns bool 
+		collected = coins_module.coin_collection(player_module.player)	# Checks collision and returns bool 
 		if collected:
-			coins_file.Coin.num_coins_collected += 1
-		coins_file.display_num_coins_collected(win)
+			coins_module.Coin.num_coins_collected += 1
+		coins_module.display_num_coins_collected(win)
 
 		# Collision with Obstacles
-		collision_occured = obstacles_file.collision_with_obstacle(player)	# Checks collision and returns bool 
+		collision_occured = obstacles_module.collision_with_obstacle(player_module.player)	# Checks collision and returns bool 
 		if collision_occured:		# Dummy exit
-			display_collision_message()
-			pygame.display.update()
-			time.sleep(3)
+			time.sleep(1)
 			break
 
 		clock.tick(speed)

@@ -1,10 +1,9 @@
-import math
 import os
 import pygame
 import random
-import sys
-import time
-import main
+
+import bg_module
+import fg_module
 
 class Tree:
 	"""
@@ -23,7 +22,7 @@ class Tree:
 		self.num = num
 		self.img = self.resized_imgs[self.num]
 		self.x = x
-		self.y = main.ground_y - self.img.get_height() + 230 # push the image slightly down
+		self.y = fg_module.ground_y - self.img.get_height() + 230 # push the image slightly down
 	
 		# Width and height of obstacle
 		self.width = self.img.get_width()
@@ -35,8 +34,8 @@ class Tree:
 
 class Other_obstacles:
 	"""
-	Describes other obstacle objects. Contains rocks and shrubs. It contains the x position, y position. The various obstacles are created using num variable.
-	Also contains a draw method to draw the tree onto the screen.
+	Describes other obstacle objects. Contains rocks. It contains the x position, y position. The various obstacles are
+	created using num variable. Also contains a draw method to draw the tree onto the screen.
 	"""
 	# Loading images 
 	num_of_imgs = 2
@@ -49,7 +48,7 @@ class Other_obstacles:
 		self.num = num
 		self.img = self.resized_imgs[self.num]
 		self.x = x
-		self.y = main.ground_y - self.img.get_height() + 250 # push the image slightly down
+		self.y = fg_module.ground_y - self.img.get_height() + 250 # push the image slightly down
 
 		# Width and height of obstacle
 		self.width = self.img.get_width()
@@ -68,7 +67,7 @@ def create_tree_obstacle():
 	Creates a random tree obstacle.
 	"""
 	random_num = random.randrange(0,Tree.num_of_imgs)       	# range over the number of obstacles
-	random_x = random.randint(main.bg.get_width(), main.bg.get_width()+500)   # random inital x position of obstacle
+	random_x = random.randint(bg_module.bg.get_width(), bg_module.bg.get_width()+500)   # random inital x position of obstacle
 	# Add new obstacle to obstacles list
 	Tree.obstacles.append(Tree(random_x,random_num))
 
@@ -77,15 +76,19 @@ def create_other_obstacle():
 	Creates a random obstacle.
 	"""
 	random_num = random.randrange(0,Other_obstacles.num_of_imgs)       	# range over the number of obstacles
-	random_x = random.randint(main.bg.get_width(), main.bg.get_width()+500)   # random inital x position of obstacle
+	random_x = random.randint(bg_module.bg.get_width(), bg_module.bg.get_width()+500)   # random inital x position of obstacle
 	# Add new obstacle to obstacles list
 	Other_obstacles.obstacles.append(Other_obstacles(random_x,random_num))
 
 def draw_obstacles(win):
+	"""
+	Draws the obstacles onto the screen and updates the obstacles position.
+	"""
 	for obstacle in Other_obstacles.obstacles:
 		obstacle.draw(win)
 	for obstacle in Tree.obstacles:
 		obstacle.draw(win)
+	update_obstacle_position()
 
 def update_obstacle_position():
 	"""
@@ -96,7 +99,7 @@ def update_obstacle_position():
 			if obstacle.x < -1*obstacle.width:
 				element.obstacles.remove(obstacle)
 			else:
-				obstacle.x -= main.foreground_speed
+				obstacle.x -= fg_module.foreground_speed
 
 def collision_with_obstacle(player):
 	"""
