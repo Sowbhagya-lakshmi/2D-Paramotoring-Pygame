@@ -22,6 +22,7 @@ def draw_all_objects():
 	coins_module.draw_coins(win)
 	fg_module.draw_fg(win)
 	player_module.draw_player(win)
+	bird_module.draw_bird(win)
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
@@ -31,6 +32,7 @@ if __name__ == '__main__':
 	import coins_module
 	import obstacles_module
 	import event_module
+	import bird_module
 
 	clock = pygame.time.Clock()
 	event_module.setting_up_events()
@@ -53,6 +55,11 @@ if __name__ == '__main__':
 		# Collision with Obstacles
 		collision_occured = obstacles_module.collision_with_obstacle(player_module.player)	# Checks collision and returns bool 
 		if collision_occured:		# Dummy exit
+			time.sleep(1)
+			break
+
+		collision_with_bird = bird_module.collision_with(player_module.player)
+		if collision_occured or collision_with_bird:		# Dummy exit
 			time.sleep(1)
 			break
 

@@ -12,7 +12,7 @@ class Tree:
 	"""
 	# Loading images 
 	num_of_imgs = 11
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "tree"+ str(x) + '.png')).convert_alpha() for x in range(0, num_of_imgs)]
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "tree"+ str(x) + '.png')).convert_alpha() for x in range(num_of_imgs)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//1.2), int(img.get_height()//1.2))) for img in imgs]
 
 	obstacles = []
@@ -38,8 +38,8 @@ class Other_obstacles:
 	created using num variable. Also contains a draw method to draw the tree onto the screen.
 	"""
 	# Loading images 
-	num_of_imgs = 2
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')).convert_alpha() for x in range(0, num_of_imgs)]
+	num_of_imgs = 4
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')).convert_alpha() for x in range(num_of_imgs)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()), int(img.get_height()))) for img in imgs]
 
 	obstacles = []
@@ -67,7 +67,7 @@ def create_tree_obstacle():
 	Creates a random tree obstacle.
 	"""
 	random_num = random.randrange(0,Tree.num_of_imgs)       	# range over the number of obstacles
-	random_x = random.randint(bg_module.bg.get_width(), bg_module.bg.get_width()+500)   # random inital x position of obstacle
+	random_x = random.randint(bg_module.bg.get_width(), bg_module.bg.get_width()+500)   # random inital x position of obstacle	
 	# Add new obstacle to obstacles list
 	Tree.obstacles.append(Tree(random_x,random_num))
 

@@ -6,6 +6,8 @@ import bg_module
 import fg_module
 import obstacles_module
 
+free_zone_y = 0
+
 class Coin:
 	"""
 	Describes coin object. Draw method draws the coin, and animates it.
@@ -46,6 +48,7 @@ def find_free_zone_y():
 	"""
 	To determine free space inorder to place coins. To prevent coins being drawn over obstacles.
 	"""
+	global free_zone_y
 	free_zone_y = fg_module.ground_y
 
 	for obstacle in obstacles_module.Tree.obstacles:
