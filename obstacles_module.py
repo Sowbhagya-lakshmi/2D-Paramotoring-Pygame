@@ -1,3 +1,4 @@
+from hashlib import new
 import os
 import pygame
 import random
@@ -16,6 +17,7 @@ class Tree:
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//1.2), int(img.get_height()//1.2))) for img in imgs]
 
 	obstacles = []
+	collision_obstacles = []
 
 
 	def __init__(self, x, num):
@@ -43,6 +45,7 @@ class Other_obstacles:
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()), int(img.get_height()))) for img in imgs]
 
 	obstacles = []
+	collision_obstacles = []
 
 	def __init__(self, x, num):
 		self.num = num
@@ -69,7 +72,9 @@ def create_tree_obstacle():
 	random_num = random.randrange(0,Tree.num_of_imgs)       	# range over the number of obstacles
 	random_x = random.randint(bg_module.bg.get_width(), bg_module.bg.get_width()+500)   # random inital x position of obstacle	
 	# Add new obstacle to obstacles list
-	Tree.obstacles.append(Tree(random_x,random_num))
+	new_tree = Tree(random_x,random_num)
+	Tree.obstacles.append(new_tree)
+	Tree.collision_obstacles.append(new_tree)	# To check collision
 
 def create_other_obstacle():
 	"""
@@ -78,7 +83,9 @@ def create_other_obstacle():
 	random_num = random.randrange(0,Other_obstacles.num_of_imgs)       	# range over the number of obstacles
 	random_x = random.randint(bg_module.bg.get_width(), bg_module.bg.get_width()+500)   # random inital x position of obstacle
 	# Add new obstacle to obstacles list
-	Other_obstacles.obstacles.append(Other_obstacles(random_x,random_num))
+	new_obstacle = Other_obstacles(random_x,random_num)
+	Other_obstacles.obstacles.append(new_obstacle)
+	Other_obstacles.collision_obstacles.append(new_obstacle)
 
 def draw_obstacles(win):
 	"""
@@ -108,11 +115,12 @@ def collision_with_obstacle(player):
 	"""
 	player_mask = pygame.mask.from_surface(player.img)
 	for element in obstacle_classes:
-		for obstacle in element.obstacles:
+		for obstacle in element.collision_obstacles:
 			if obstacle.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				obstacle_mask = pygame.mask.from_surface(obstacle.img)
 				offset = obstacle.x - player.x, obstacle.y - player.y
 				boolean = player_mask.overlap(obstacle_mask, offset)
 				if boolean:
+					element.collision_obstacles.remove(obstacle)
 					return True
 	return False

@@ -4,7 +4,7 @@ import time
 # Global variables
 speed = 60		# fps
 run = True
-collision_occured = False
+game_duration = 30 # in sec
 
 pygame.init()
 
@@ -23,6 +23,10 @@ def draw_all_objects():
 	fg_module.draw_fg(win)
 	player_module.draw_player(win)
 	bird_module.draw_bird(win)
+	display_module.display_lives(win, num_of_lives)
+	for spark_object in effects_module.Coin_spark_effects.effects_list:
+		spark_object.draw(win)
+
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
@@ -33,9 +37,13 @@ if __name__ == '__main__':
 	import obstacles_module
 	import event_module
 	import bird_module
+	import display_module
+	import effects_module
 
 	clock = pygame.time.Clock()
 	event_module.setting_up_events()
+	frame_count = 0
+	num_of_lives = 3
 
 	'''
 	frame_count = 0	# chck fps
@@ -43,6 +51,7 @@ if __name__ == '__main__':
 
 	# GAME LOOP
 	while run:
+		frame_count += 1
 		draw_all_objects()
 		event_module.event_loop()
 
@@ -50,21 +59,25 @@ if __name__ == '__main__':
 		collected = coins_module.coin_collection(player_module.player)	# Checks collision and returns bool 
 		if collected:
 			coins_module.Coin.num_coins_collected += 1
+
 		coins_module.display_num_coins_collected(win)
 
 		# Collision with Obstacles
 		collision_occured = obstacles_module.collision_with_obstacle(player_module.player)	# Checks collision and returns bool 
-		if collision_occured:		# Dummy exit
-			time.sleep(1)
-			break
+		collision_with_bird = bird_module.collision_with_bird(player_module.player)
 
-		collision_with_bird = bird_module.collision_with(player_module.player)
 		if collision_occured or collision_with_bird:		# Dummy exit
-			time.sleep(1)
-			break
+			num_of_lives -= 1
+			if num_of_lives == 0:
+				time.sleep(1)
+				break
 
 		clock.tick(speed)
 		pygame.display.update()
+
+		if frame_count >= 30*60:
+			print('Game Over')
+			break
 
 		'''
 		now = time.time()	# chck fps

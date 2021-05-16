@@ -3,6 +3,7 @@ import pygame
 import random
 
 import bg_module
+import effects_module
 import fg_module
 import obstacles_module
 
@@ -96,7 +97,8 @@ def coin_collection(player):
 				offset = coin.x - player.x, coin.y - player.y
 				boolean = player_mask.overlap(coin_mask, offset)
 				if boolean:
-					Coin.coins_list.remove(coin)
+					Coin.coins_list.remove(coin)	# Stop drawing
+					effects_module.Coin_spark_effects.effects_list.append(effects_module.Coin_spark_effects(coin.x, coin.y))	# create a spark object
 					return True
 		except: pass
 	return False
@@ -110,3 +112,4 @@ def display_num_coins_collected(win):
 	text_x, text_y = 80, 20
 	text = font.render(str(Coin.num_coins_collected), True, (255,255,255))
 	win.blit(text, (text_x, text_y))
+

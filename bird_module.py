@@ -27,6 +27,7 @@ class Bird():
 		list_of_lists.append(imgs)
 
 	birds_list = []
+	collision_birds = []	# Birds for which we have to check collision
 
 	def __init__(self,x,y,colour_num):
 		self.x = x
@@ -53,7 +54,9 @@ def create_bird():
 	free_zone_y = coins_module.free_zone_y	# find free space in y axis
 	x = random.randint(50,free_zone_y)	# choose random y value within free zone
 	colour_num = random.randrange(Bird.num_of_colours)
-	Bird.birds_list.append(Bird(bg_module.bg.get_width(), x, colour_num))
+	new_bird = Bird(bg_module.bg.get_width(), x, colour_num)
+	Bird.birds_list.append(new_bird)
+	Bird.collision_birds.append(new_bird)	#	To check collision
 
 def draw_bird(win):
 	for bird in Bird.birds_list:
@@ -71,20 +74,20 @@ def update_birds_position():
 		else:
 			bird.x -= (fg_module.foreground_speed + 2)
 
-def collision_with(player):
+def collision_with_bird(player):
 	"""
-	Collision with coin is checked using Pixel perfect collision method. If collision occurs returns True, else False.
-	Collision is check only if coin is near the player to save computation.
+	Collision with bird is checked using Pixel perfect collision method. If collision occurs returns True, else False.
+	Collision is check only if bird is near the player to save computation.
 	"""
 	player_mask = pygame.mask.from_surface(player.img)
-	for bird in Bird.birds_list:
+	for bird in Bird.collision_birds:
 		try:
 			if bird.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				bird_mask = pygame.mask.from_surface(bird.img)
 				offset = bird.x - player.x, bird.y - player.y
 				boolean = player_mask.overlap(bird_mask, offset)
 				if boolean:
-					Bird.birds_list.remove(bird)
+					Bird.collision_birds.remove(bird)
 					return True
 		except: pass
 	return False
