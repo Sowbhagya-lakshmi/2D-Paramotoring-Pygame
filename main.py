@@ -26,6 +26,7 @@ def draw_all_objects():
 	display_module.display_lives(win, num_of_lives)
 	for spark_object in effects_module.Coin_spark_effects.effects_list:
 		spark_object.draw(win)
+	display_module.draw_progression_bar(win,frame_count)
 
 
 # MAIN ALGORITHM
@@ -75,8 +76,9 @@ if __name__ == '__main__':
 		clock.tick(speed)
 		pygame.display.update()
 
-		if frame_count >= 30*60:
+		if frame_count >= game_duration*speed:
 			print('Game Over')
+			time.sleep(5)
 			break
 
 		'''
