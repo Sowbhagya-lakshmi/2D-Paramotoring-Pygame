@@ -1,5 +1,7 @@
+
 import pygame
 import time
+
 
 # Global variables
 speed = 60		# fps
@@ -7,6 +9,15 @@ run = True
 collision_occured = False
 
 pygame.init()
+
+#Sound Variables
+CollisionSound = pygame.mixer.Sound('CollidedSound.wav')
+BirdSound = pygame.mixer.Sound('BirdSound.wav')
+CoinSound = pygame.mixer.Sound('CoinsSound.wav')
+
+#Music Variable
+Backgroundmusic = pygame.mixer.music.load('BG1music.wav')
+pygame.mixer.music.play(-1) 
 
 # Game Window
 width, height = 1550,800
@@ -47,12 +58,14 @@ if __name__ == '__main__':
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Checks collision and returns bool 
 		if collected:
+			CoinSound.play()
 			coins_module.Coin.num_coins_collected += 1
 		coins_module.display_num_coins_collected(win)
 
 		# Collision with Obstacles
 		collision_occured = obstacles_module.collision_with_obstacle(player_module.player)	# Checks collision and returns bool 
 		if collision_occured:		# Dummy exit
+			CollisionSound.play()
 			time.sleep(1)
 			break
 
