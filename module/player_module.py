@@ -1,7 +1,7 @@
 import os
 import pygame
 
-import fg_module
+from module import foreground_module
 
 class Player:
 	"""
@@ -11,7 +11,7 @@ class Player:
 	"""
 	# Loading player images
 	num_of_player_imgs = 9
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')).convert_alpha() for x in range(1, num_of_player_imgs+1)]
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')) for x in range(1, num_of_player_imgs+1)]
 
 	def __init__(self, x, y):
 		self.x = x
@@ -35,18 +35,19 @@ def draw_player(win):
 	display_mouse_pointer_coordinates(mx,my, win)
 		
 	# limit player's movable region
-	if my < fg_module.ground_y :
+	if my < foreground_module.ground_y :
 		player.x, player.y = 250, my
 		player.draw(win)
 	else:
-		player.x, player.y = 250, fg_module.ground_y
+		player.x, player.y = 250, foreground_module.ground_y
 		player.draw(win)
 
 def display_mouse_pointer_coordinates(mx,my, win):
 	"""
 	To display mouse pointer coordinates just for reference. Temporary function to be removed later.
 	"""
-	font = pygame.font.Font('freesansbold.ttf', 32)
-	text_x, text_y = 1400, 10
+	font_size = 32
+	font = pygame.font.Font('freesansbold.ttf', font_size)
+	text_x_pos, text_y_pos = 1400, 10
 	text = font.render(str(mx)+', '+str(my), True, (0,0,0))
-	win.blit(text, (text_x, text_y))
+	win.blit(text, (text_x_pos, text_y_pos))
