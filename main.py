@@ -10,15 +10,6 @@ from module import obstacles_module
 from module import player_module
 from module import music_module
 
-
-from module import background_module
-from module import coins_module
-from module import event_module
-from module import foreground_module
-from module import obstacles_module
-from module import player_module
-
-
 # Global variables
 speed = 60		# fps
 run = True
