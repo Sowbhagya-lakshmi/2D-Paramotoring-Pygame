@@ -17,10 +17,6 @@ collision_occured = False
 
 pygame.init()
 
-#Music Variable
-Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
-pygame.mixer.music.play(-1)
-
 # Game Window
 width, height = 1550,800
 win = pygame.display.set_mode((width, height))
@@ -63,6 +59,10 @@ if __name__ == '__main__':
 	'''
 	frame_count = 0	# chk fps
 	start_time = time.time()'''
+	
+	#Music Variable
+        Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
+	pygame.mixer.music.play(-1)
 
 	# GAME LOOP
 	while run:
