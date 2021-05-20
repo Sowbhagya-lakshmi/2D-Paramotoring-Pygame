@@ -1,6 +1,16 @@
 import pygame
 import time
 
+from module import background_module
+from module import bird_module
+from module import coins_module
+from module import display_module
+from module import event_module
+from module import effects_module
+from module import foreground_module
+from module import obstacles_module
+from module import player_module
+
 # Global variables
 speed = 60		# fps
 run = True
@@ -13,46 +23,65 @@ width, height = 1550,800
 win = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Game Window')
 
+def change_img_pixel_format():
+	"""
+	Creates a new copy of the Surface which will have the same pixel format as
+	the display Surface. Necessary for blitting images to the screen faster.
+	"""
+	background_module.bg = background_module.bg.convert()
+	foreground_module.ground = foreground_module.ground.convert_alpha()
+	coins_module.coin_board = coins_module.coin_board.convert_alpha()
+	
+	player_module.Player.imgs = [img.convert_alpha() for img in player_module.player.imgs]
+	coins_module.Coin.resized_imgs = [img.convert_alpha() for img in coins_module.Coin.resized_imgs]
+
+	obstacles_module.Tree.resized_imgs = [img.convert_alpha() for img in obstacles_module.Tree.resized_imgs]
+	obstacles_module.Rock_n_Bush.resized_imgs = [img.convert_alpha() for img in obstacles_module.Rock_n_Bush.resized_imgs]	
+
+	effects_module.Coin_spark_effects.imgs = [img.convert_alpha() for img in effects_module.Coin_spark_effects.imgs]
+
+	display_module.heart = display_module.heart.convert_alpha()
+	display_module.line = display_module.line.convert_alpha()
+	display_module.start = display_module.start.convert_alpha()
+	display_module.finish = display_module.finish.convert_alpha()
+	
+	bird_module.Bird.list_of_lists = [[img.convert_alpha() for img in lst] for lst in bird_module.Bird.list_of_lists]
+
 def draw_all_objects():
 	"""
 	Draws the background, foreground, obstacles and coins.
 	"""
-	bg_module.draw_bg(win)
+	background_module.draw_bg(win)
 	obstacles_module.draw_obstacles(win)
 	coins_module.draw_coins(win)
-	fg_module.draw_fg(win)
+	foreground_module.draw_fg(win)
+	for spark_object in effects_module.Coin_spark_effects.effects_list:
+		spark_object.draw(win)
+
 	player_module.draw_player(win)
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
-	for spark_object in effects_module.Coin_spark_effects.effects_list:
-		spark_object.draw(win)
 	display_module.draw_progression_bar(win,frame_count)
 
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
-	import player_module
-	import bg_module
-	import fg_module
-	import coins_module
-	import obstacles_module
-	import event_module
-	import bird_module
-	import display_module
-	import effects_module
+
+	change_img_pixel_format()
 
 	clock = pygame.time.Clock()
 	event_module.setting_up_events()
 	frame_count = 0
+	count = 0
 	num_of_lives = 3
 
-	'''
+	
 	frame_count = 0	# chck fps
-	start_time = time.time()'''
+	start_time = time.time()
 
 	# GAME LOOP
 	while run:
-		frame_count += 1
+		#frame_count += 1
 		draw_all_objects()
 		event_module.event_loop()
 
@@ -75,17 +104,21 @@ if __name__ == '__main__':
 
 		clock.tick(speed)
 		pygame.display.update()
+	
+		'''if frame_count >= (game_duration-10)*speed:	# Last 10 seconds of game
+			#print('ending')
+			event_module.level_end(win, count)'''
 
 		if frame_count >= game_duration*speed:
 			print('Game Over')
-			time.sleep(5)
+			time.sleep(1)
 			break
-
-		'''
+ 
+		
 		now = time.time()	# chck fps
 		if now-start_time >=5:
 			start_time = time.time()
 			print(frame_count//5)
 			frame_count = 0
 		frame_count += 1
-		'''
+		

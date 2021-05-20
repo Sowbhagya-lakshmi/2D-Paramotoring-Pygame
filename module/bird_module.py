@@ -2,9 +2,9 @@ import os
 import pygame
 import random
 
-import bg_module
-import fg_module
-import coins_module
+from module import background_module
+from module import foreground_module
+from module import coins_module
 
 class Bird():
 	"""
@@ -22,7 +22,7 @@ class Bird():
 	for colour in colour_list:
 		imgs = []
 		for x in range(num_of_imgs):
-			img = pygame.image.load(os.path.join(path, colour +"/bird"+ str(x) + '.png')).convert_alpha()
+			img = pygame.image.load(os.path.join(path, colour +"/bird"+ str(x) + '.png'))
 			imgs.append(pygame.transform.scale(img, (int(img.get_width()//4), int(img.get_height()//4))))
 		list_of_lists.append(imgs)
 
@@ -54,7 +54,7 @@ def create_bird():
 	free_zone_y = coins_module.free_zone_y	# find free space in y axis
 	x = random.randint(50,free_zone_y)	# choose random y value within free zone
 	colour_num = random.randrange(Bird.num_of_colours)
-	new_bird = Bird(bg_module.bg.get_width(), x, colour_num)
+	new_bird = Bird(background_module.bg.get_width(), x, colour_num)
 	Bird.birds_list.append(new_bird)
 	Bird.collision_birds.append(new_bird)	#	To check collision
 
@@ -72,7 +72,7 @@ def update_birds_position():
 		if bird.x < -1*bird_width: # If bird goes offscreen, removing it from bird list 
 			Bird.birds_list.remove(bird)
 		else:
-			bird.x -= (fg_module.foreground_speed + 2)
+			bird.x -= (foreground_module.foreground_speed + 2)
 
 def collision_with_bird(player):
 	"""

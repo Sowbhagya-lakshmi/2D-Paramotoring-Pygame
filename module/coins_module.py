@@ -2,10 +2,10 @@ import os
 import pygame
 import random
 
-import bg_module
-import effects_module
-import fg_module
-import obstacles_module
+from module import background_module
+from module import effects_module
+from module import foreground_module
+from module import obstacles_module
 
 free_zone_y = 0
 
@@ -15,7 +15,7 @@ class Coin:
 	"""
 	# Loading coin images
 	num_of_imgs = 6
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Coins/', "coin"+ str(x) + '.png')).convert_alpha() for x in range(1, num_of_imgs+1)]
+	imgs = [pygame.image.load(os.path.join('Utils/Pics/Coins/', "coin"+ str(x) + '.png')) for x in range(1, num_of_imgs+1)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//50), int(img.get_height()//50))) for img in imgs]
 
 	coins_list = []
@@ -42,7 +42,7 @@ class Coin:
 
 
 # Coin collection board
-coin_board1 = pygame.image.load(os.path.join('Utils/Pics/Display','coin_display.png')).convert_alpha()
+coin_board1 = pygame.image.load(os.path.join('Utils/Pics/Display','coin_display.png'))
 coin_board = pygame.transform.scale(coin_board1, (int(coin_board1.get_width()//1.5), int(coin_board1.get_height()//1.5)))
 
 def find_free_zone_y():
@@ -50,13 +50,13 @@ def find_free_zone_y():
 	To determine free space inorder to place coins. To prevent coins being drawn over obstacles.
 	"""
 	global free_zone_y
-	free_zone_y = fg_module.ground_y
+	free_zone_y = foreground_module.ground_y
 
-	for obstacle in obstacles_module.Tree.obstacles:
-		if obstacle.x >(bg_module.bg.get_width() - obstacle.width) and obstacle.x < bg_module.bg.get_width():
+	for obstacle in obstacles_module.Rock_n_Bush.obstacles:
+		if obstacle.x >(background_module.bg.get_width() - obstacle.width) and obstacle.x < background_module.bg.get_width():
 			free_zone_y =  obstacle.y
-	for obstacle in obstacles_module.Other_obstacles.obstacles:
-		if obstacle.x >(bg_module.bg.get_width() - obstacle.width) and obstacle.x < bg_module.bg.get_width():
+	for obstacle in obstacles_module.Tree.obstacles:
+		if obstacle.x >(background_module.bg.get_width() - obstacle.width) and obstacle.x < background_module.bg.get_width():
 			free_zone_y =  obstacle.y
 
 	return free_zone_y
@@ -66,7 +66,7 @@ def create_coin():
 	"""
 	free_zone_y = find_free_zone_y()	# find free space in y axis
 	x = random.randint(50,free_zone_y)	# choose random y value within free zone
-	Coin.coins_list.append(Coin(bg_module.bg.get_width(), x))
+	Coin.coins_list.append(Coin(background_module.bg.get_width(), x))
 
 def draw_coins(win):
 	for coin in Coin.coins_list:
@@ -82,7 +82,7 @@ def update_coins_position():
 		if coin.x < -1*coin_width: # If coin goes offscreen, removing it from coins list 
 			Coin.coins_list.remove(coin)
 		else:
-			coin.x -= fg_module.foreground_speed
+			coin.x -= foreground_module.foreground_speed
 
 def coin_collection(player):
 	"""
@@ -108,8 +108,10 @@ def display_num_coins_collected(win):
 	To display the number of coins collected.
 	"""
 	win.blit(coin_board, (10,10))
-	font = pygame.font.Font('freesansbold.ttf', 40)
-	text_x, text_y = 80, 20
+	font_size = 40
+	font = pygame.font.Font('freesansbold.ttf', font_size)
+	text_x_pos, text_y_pos = 80, 20
 	text = font.render(str(Coin.num_coins_collected), True, (255,255,255))
-	win.blit(text, (text_x, text_y))
+	win.blit(text, (text_x_pos, text_y_pos))
+
 
