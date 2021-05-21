@@ -61,7 +61,7 @@ if __name__ == '__main__':
 	start_time = time.time()'''
 	
 	#Music Variable
-        Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
 	pygame.mixer.music.play(-1)
 
 	# GAME LOOP
