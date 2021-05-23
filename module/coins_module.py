@@ -87,7 +87,7 @@ def update_coins_position():
 def coin_collection(player):
 	"""
 	Collision with coin is checked using Pixel perfect collision method. If collision occurs returns True, else False.
-	Collision is check only if coin is near the player to save computation.
+	Collision is checked only if coin is near the player to save computation.
 	"""
 	player_mask = pygame.mask.from_surface(player.img)
 	for coin in Coin.coins_list:
@@ -113,5 +113,3 @@ def display_num_coins_collected(win):
 	text_x_pos, text_y_pos = 80, 20
 	text = font.render(str(Coin.num_coins_collected), True, (255,255,255))
 	win.blit(text, (text_x_pos, text_y_pos))
-
-

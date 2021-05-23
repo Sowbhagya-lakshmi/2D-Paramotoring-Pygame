@@ -1,5 +1,14 @@
 import pygame
 import time
+import os
+
+from module import background_module
+from module import coins_module
+from module import event_module
+from module import foreground_module
+from module import obstacles_module
+from module import player_module
+from module import music_module
 
 from module import background_module
 from module import bird_module
@@ -75,9 +84,13 @@ if __name__ == '__main__':
 	count = 0
 	num_of_lives = 3
 
+	'''
+	frame_count = 0	# chk fps
+	start_time = time.time()'''
 	
-	frame_count = 0	# chck fps
-	start_time = time.time()
+	#Music Variable
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
+	pygame.mixer.music.play(-1)
 
 	# GAME LOOP
 	while run:
@@ -88,6 +101,7 @@ if __name__ == '__main__':
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Checks collision and returns bool 
 		if collected:
+			music_module.Sound_Coins.play()
 			coins_module.Coin.num_coins_collected += 1
 
 		coins_module.display_num_coins_collected(win)
@@ -97,6 +111,7 @@ if __name__ == '__main__':
 		collision_with_bird = bird_module.collision_with_bird(player_module.player)
 
 		if collision_occured or collision_with_bird:		# Dummy exit
+			music_module.Sound_Collided.play()
 			num_of_lives -= 1
 			if num_of_lives == 0:
 				time.sleep(1)
@@ -115,10 +130,10 @@ if __name__ == '__main__':
 			break
  
 		
-		now = time.time()	# chck fps
+		'''now = time.time()	# chck fps
 		if now-start_time >=5:
 			start_time = time.time()
 			print(frame_count//5)
 			frame_count = 0
-		frame_count += 1
+		frame_count += 1'''
 		

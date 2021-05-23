@@ -62,8 +62,6 @@ class Rock_n_Bush:
 
 obstacle_classes = [Tree, Rock_n_Bush]
 
-
-
 def create_tree_obstacle():
 	"""
 	Creates a random tree obstacle.
