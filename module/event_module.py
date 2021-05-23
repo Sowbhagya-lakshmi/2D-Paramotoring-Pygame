@@ -10,8 +10,8 @@ from module import obstacles_module
 
 
 def setting_up_events():
-	# Generate coin once in every 1.5 seconds
-	pygame.time.set_timer(pygame.USEREVENT+1, 1500)
+	# Generate coin once in every 1.2 seconds
+	pygame.time.set_timer(pygame.USEREVENT+1, 1200)
 	# Generate tree obstacles once in every 8 seconds
 	pygame.time.set_timer(pygame.USEREVENT+2, 6000)
 	# Generate other obstacles once in every 20 seconds
@@ -41,11 +41,4 @@ def  event_loop():
         if event.type == pygame.USEREVENT+4:
             bird_module.create_bird()
 
-def level_end(win, count):
-    if foreground_module!=0:
-        foreground_module.foreground_speed -= 1
-        background_module.background_speed -= 1
-    else:
-        foreground_module.foreground_speed = 0
-        background_module.background_speed = 0
 

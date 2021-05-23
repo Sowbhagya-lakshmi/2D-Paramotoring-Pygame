@@ -98,7 +98,7 @@ def coin_collection(player):
 				boolean = player_mask.overlap(coin_mask, offset)
 				if boolean:
 					Coin.coins_list.remove(coin)	# Stop drawing
-					effects_module.Coin_spark_effects.effects_list.append(effects_module.Coin_spark_effects(coin.x, coin.y))	# create a spark object
+					effects_module.Coin_spark_effects.coin_effects_list.append(effects_module.Coin_spark_effects(coin.x, coin.y))	# create a spark object
 					return True
 		except: pass
 	return False

@@ -4,6 +4,7 @@ import random
 
 import main
 from module import background_module
+from module import effects_module
 from module import foreground_module
 
 class Tree:
@@ -14,14 +15,18 @@ class Tree:
 	# Loading images 
 	num_of_imgs = 11
 	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "tree"+ str(x) + '.png')) for x in range(num_of_imgs)]
-	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//1.2), int(img.get_height()//1.2))) for img in imgs]
 
 	obstacles = []
 	collision_obstacles = []
 
 	def __init__(self, x, num):
 		self.num = num
-		self.img = self.resized_imgs[self.num]
+
+		# Randomizing the size of imgs
+		self.random_size = random.uniform(1.15, 1.25)	
+		self.org_img = self.imgs[self.num]
+		self.img = pygame.transform.scale(self.org_img, ((int(self.org_img.get_width()//self.random_size), int(self.org_img.get_height()//self.random_size))))
+		
 		self.x = x
 		self.y = foreground_module.ground_y - self.img.get_height() + 230 # push the image slightly down
 	
@@ -41,7 +46,7 @@ class Rock_n_Bush:
 	# Loading images 
 	num_of_imgs = 4
 	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')) for x in range(num_of_imgs)]
-	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()), int(img.get_height()))) for img in imgs]
+	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.3), int(img.get_height()*1.3))) for img in imgs]
 
 	obstacles = []
 	collision_obstacles = []
@@ -60,7 +65,7 @@ class Rock_n_Bush:
 	def draw(self,win):
 		win.blit(self.img, (self.x, self.y))
 
-obstacle_classes = [Tree, Rock_n_Bush]
+obstacle_classes = [Rock_n_Bush, Tree]
 
 def create_tree_obstacle():
 	"""
@@ -116,8 +121,9 @@ def collision_with_obstacle(player):
 			if obstacle.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				obstacle_mask = pygame.mask.from_surface(obstacle.img)
 				offset = obstacle.x - player.x, obstacle.y - player.y
-				boolean = player_mask.overlap(obstacle_mask, offset)
-				if boolean:
+				collision_point = player_mask.overlap(obstacle_mask, offset)
+				if collision_point:
 					element.collision_obstacles.remove(obstacle)
+					effects_module.Hit_effects.hit_effects_list.append(effects_module.Hit_effects())
 					return True
 	return False
