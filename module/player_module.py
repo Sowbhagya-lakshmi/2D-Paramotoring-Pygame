@@ -10,8 +10,9 @@ class Player:
     player's images onto the screen hence creating the animation effect.
 	"""
 	# Loading player images
-	num_of_player_imgs = 9
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')) for x in range(1, num_of_player_imgs+1)]
+	num_of_player_imgs = 1
+	org_imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')) for x in range(1, num_of_player_imgs+1)]
+	imgs = [pygame.transform.scale(img, (int(img.get_width()/2.5), int(img.get_height()/2.5))) for img in org_imgs ] 
 
 	def __init__(self, x, y):
 		self.x = x
@@ -22,7 +23,8 @@ class Player:
 		self.frames_per_image = 7			# each player image is drawn for 7 consecutive frames
 		if self.runCount > self.frames_per_image*self.num_of_player_imgs :
 			self.runCount = 0
-		self.img = self.imgs[self.runCount//self.num_of_player_imgs]
+		#self.img = self.imgs[self.runCount//self.num_of_player_imgs]
+		self.img = self.imgs[0]
 		win.blit(self.img, (self.x,self.y))
 		self.runCount += 1 
 

@@ -30,7 +30,10 @@ finish = pygame.transform.scale(finish, (finish.get_width()//10, finish.get_heig
 line_pos_x = 1140
 line_pos_y = 770
 
-def draw_progression_bar(win,progress):
+def draw_minimap(win,progress):
+    """
+    Minimap shows the position of the player relative to the full distance in a miniature size.
+    """
     max_progress = main.game_duration*main.speed
     current_progress = progress/max_progress
     win.blit(line, (line_pos_x, line_pos_y))

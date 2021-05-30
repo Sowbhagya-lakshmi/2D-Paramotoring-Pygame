@@ -73,7 +73,7 @@ def draw_all_objects():
 	player_module.draw_player(win)
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
-	display_module.draw_progression_bar(win,frame_count)
+	display_module.draw_minimap(win,frame_count)
 
 
 # MAIN ALGORITHM

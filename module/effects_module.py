@@ -45,7 +45,7 @@ class Hit_effects:
 	
 	def draw(self, win):
 		self.x -= foreground_module.foreground_speed
-		self.frames_per_image = 3			# each image is drawn for 3 consecutive frames
+		self.frames_per_image = 2			# each image is drawn for 3 consecutive frames
 		if self.runCount > self.frames_per_image*self.num_of_imgs :
 			self.hit_effects_list.remove(self)
 		self.img = self.imgs[self.runCount//self.num_of_imgs]

@@ -23,7 +23,7 @@ class Bird():
 		imgs = []
 		for x in range(num_of_imgs):
 			img = pygame.image.load(os.path.join(path, colour +"/bird"+ str(x) + '.png'))
-			imgs.append(pygame.transform.scale(img, (int(img.get_width()//4), int(img.get_height()//4))))
+			imgs.append(pygame.transform.scale(img, (int(img.get_width()//6), int(img.get_height()//6))))
 		list_of_lists.append(imgs)
 
 	birds_list = []
@@ -34,16 +34,22 @@ class Bird():
 		self.y = y
 		self.runCount = 0
 		self.colour_num = colour_num
+		self.random_step = 4
 
 	def draw(self, win):	
 		self.frames_per_image = 7	# each bird image is drawn for 7 consecutive frames
 		if self.runCount >= self.frames_per_image*self.num_of_imgs:
 			self.runCount = 0
+			self.random_step *= -1*self.random_num
 		self.index = self.runCount//self.frames_per_image
 		self.runCount += 1
+		
 
 		# Bird image
 		self.img = self.list_of_lists[self.colour_num][self.index]
+
+		self.random_num = random.uniform(0,1.5)
+		self.y= self.y + self.random_step*self.random_num
 
 		win.blit(self.img, (self.x,self.y))
 
@@ -72,7 +78,7 @@ def update_birds_position():
 		if bird.x < -1*bird_width: # If bird goes offscreen, removing it from bird list 
 			Bird.birds_list.remove(bird)
 		else:
-			bird.x -= (foreground_module.foreground_speed + 2)
+			bird.x -= (foreground_module.foreground_speed + 4)
 
 def collision_with_bird(player):
 	"""
