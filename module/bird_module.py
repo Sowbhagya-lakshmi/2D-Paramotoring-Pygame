@@ -10,7 +10,6 @@ class Bird():
 	"""
 	Describes bird obstacles.
 	"""
-
 	# Loading bird images
 	num_of_imgs = 6
 	list_of_lists = []
@@ -86,16 +85,15 @@ def collision_with_bird(player):
 	"""
 	player_mask = pygame.mask.from_surface(player.img)
 	propeller_mask = pygame.mask.from_surface(player.propeller_img)
-	for bird in Bird.collision_birds:
-		try:
+	if len(Bird.collision_birds)!=0:
+		for bird in Bird.collision_birds:
 			if bird.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				bird_mask = pygame.mask.from_surface(bird.img)
-				offset = bird.x - player.x, bird.y - player.y
+				offset = int(bird.x - player.x), int(bird.y - player.y)
 				collision_point_with_player = player_mask.overlap(bird_mask, offset)
 				collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
 
 				if collision_point_with_player or collision_point_with_propeller:
 					Bird.collision_birds.remove(bird)
 					return True
-		except: pass
 	return False
