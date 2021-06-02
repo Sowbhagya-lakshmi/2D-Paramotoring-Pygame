@@ -116,13 +116,16 @@ def collision_with_obstacle(player):
 	obstacles only if the obstacle is near to the player. Returns True if collision occurred, else False.
 	"""
 	player_mask = pygame.mask.from_surface(player.img)
+	propeller_mask = pygame.mask.from_surface(player.propeller_img)
 	for element in obstacle_classes:
 		for obstacle in element.collision_obstacles:
 			if obstacle.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				obstacle_mask = pygame.mask.from_surface(obstacle.img)
 				offset = obstacle.x - player.x, obstacle.y - player.y
-				collision_point = player_mask.overlap(obstacle_mask, offset)
-				if collision_point:
+				collision_point_with_player = player_mask.overlap(obstacle_mask, offset)	# Checking collision with player
+				collision_point_with_propeller = propeller_mask.overlap(obstacle_mask, offset)	# Checking collision with player
+
+				if collision_point_with_player or collision_point_with_propeller:
 					element.collision_obstacles.remove(obstacle)
 					effects_module.Hit_effects.hit_effects_list.append(effects_module.Hit_effects())
 					return True

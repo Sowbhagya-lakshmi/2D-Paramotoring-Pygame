@@ -44,7 +44,6 @@ class Bird():
 		self.index = self.runCount//self.frames_per_image
 		self.runCount += 1
 		
-
 		# Bird image
 		self.img = self.list_of_lists[self.colour_num][self.index]
 
@@ -86,13 +85,16 @@ def collision_with_bird(player):
 	Collision is check only if bird is near the player to save computation.
 	"""
 	player_mask = pygame.mask.from_surface(player.img)
+	propeller_mask = pygame.mask.from_surface(player.propeller_img)
 	for bird in Bird.collision_birds:
 		try:
 			if bird.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				bird_mask = pygame.mask.from_surface(bird.img)
 				offset = bird.x - player.x, bird.y - player.y
-				boolean = player_mask.overlap(bird_mask, offset)
-				if boolean:
+				collision_point_with_player = player_mask.overlap(bird_mask, offset)
+				collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
+
+				if collision_point_with_player or collision_point_with_propeller:
 					Bird.collision_birds.remove(bird)
 					return True
 		except: pass

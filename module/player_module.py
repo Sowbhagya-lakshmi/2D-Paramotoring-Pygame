@@ -10,21 +10,35 @@ class Player:
     player's images onto the screen hence creating the animation effect.
 	"""
 	# Loading player images
-	num_of_player_imgs = 1
-	org_imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/', "player-"+ str(x) + '.png')) for x in range(1, num_of_player_imgs+1)]
-	imgs = [pygame.transform.scale(img, (int(img.get_width()/2.5), int(img.get_height()/2.5))) for img in org_imgs ] 
+	num_of_player_imgs = 20
+	org_imgs = [pygame.image.load(os.path.join('Utils/Pics/Player/',str(x) + '.png')) for x in range(num_of_player_imgs)]
+	imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in org_imgs ] 
+
+	# Loading wheel images of paramotor
+	num_of_propeller_imgs = 3
+	org_propeller_imgs = [pygame.image.load(os.path.join('Utils/Pics/Propeller/',str(x) + '.png')) for x in range(num_of_propeller_imgs)]
+	propeller_imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in org_propeller_imgs ]
 
 	def __init__(self, x, y):
 		self.x = x
 		self.y = y
 		self.runCount = 0
+		self.propeller_count = 0
 
 	def draw(self, win):
+		# Draw propeller
+		self.frames_per_propeller_img = 2
+		if self.propeller_count >= self.frames_per_propeller_img*self.num_of_propeller_imgs :
+			self.propeller_count = 0
+		self.propeller_img = self.propeller_imgs[self.propeller_count//self.frames_per_propeller_img]
+		win.blit(self.propeller_img, (self.x,self.y))
+		self.propeller_count += 1 
+
+		# Draw player
 		self.frames_per_image = 7			# each player image is drawn for 7 consecutive frames
-		if self.runCount > self.frames_per_image*self.num_of_player_imgs :
+		if self.runCount >= self.frames_per_image*self.num_of_player_imgs :
 			self.runCount = 0
-		#self.img = self.imgs[self.runCount//self.num_of_player_imgs]
-		self.img = self.imgs[0]
+		self.img = self.imgs[self.runCount//self.frames_per_image]
 		win.blit(self.img, (self.x,self.y))
 		self.runCount += 1 
 

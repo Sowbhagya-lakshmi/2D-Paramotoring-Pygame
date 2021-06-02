@@ -42,6 +42,8 @@ def change_img_pixel_format():
 	coins_module.coin_board = coins_module.coin_board.convert_alpha()
 	
 	player_module.Player.imgs = [img.convert_alpha() for img in player_module.player.imgs]
+	player_module.Player.propeller_imgs = [img.convert_alpha() for img in player_module.player.propeller_imgs]
+
 	coins_module.Coin.resized_imgs = [img.convert_alpha() for img in coins_module.Coin.resized_imgs]
 
 	obstacles_module.Tree.resized_imgs = [img.convert_alpha() for img in obstacles_module.Tree.imgs]
