@@ -3,20 +3,13 @@ import pygame
 import time
 
 from module import background_module
-from module import coins_module
-from module import event_module
-from module import foreground_module
-from module import music_module
-from module import obstacles_module
-from module import player_module
-
-from module import background_module
 from module import bird_module
 from module import coins_module
 from module import display_module
 from module import event_module
 from module import effects_module
 from module import foreground_module
+from module import music_module
 from module import obstacles_module
 from module import player_module
 

@@ -3,7 +3,6 @@ import os
 import pygame
 import random
 
-import main
 from module import background_module
 from module import foreground_module
 from module import player_module
@@ -66,7 +65,7 @@ def create_bird():
 	"""
 	Creates a bird in the free space. 
 	"""
-	x = random.randint(50,main.height//2)	# choose random y value in upper half of window
+	x = random.randint(50,400)	# choose random y value in upper half of window	(WIP)
 	colour_num = random.randrange(Bird.num_of_colours)
 	new_bird = Bird(background_module.bg.get_width(), x, colour_num)
 	Bird.birds_list.append(new_bird)
