@@ -1,3 +1,4 @@
+import math
 import os
 import pygame
 import random
@@ -33,23 +34,33 @@ class Bird():
 		self.y = y
 		self.runCount = 0
 		self.colour_num = colour_num
-		self.random_step = 4
 
-	def draw(self, win):	
-		self.frames_per_image = 7	# each bird image is drawn for 7 consecutive frames
+		# Variables for trajectory calculation
+		self.org_y = y		# initial y value
+		self.time = 0
+		self.frequency = random.uniform(0.005, 0.013)
+		self.amplitude = random.randrange(30, 70)
+		print(self.amplitude)
+
+	def draw(self, win):
+		# Determining index of bird image to be drawn
+		self.frames_per_image = 7					# each bird image is drawn for 7 consecutive frames
 		if self.runCount >= self.frames_per_image*self.num_of_imgs:
 			self.runCount = 0
-			self.random_step *= -1*self.random_num
 		self.index = self.runCount//self.frames_per_image
 		self.runCount += 1
 		
-		# Bird image
+		# Drawing bird image
 		self.img = self.list_of_lists[self.colour_num][self.index]
-
-		self.random_num = random.uniform(0,1.5)
-		self.y= self.y + self.random_step*self.random_num
-
+		self.randomize_movement()
 		win.blit(self.img, (self.x,self.y))
+		
+
+	def randomize_movement(self):
+		# Sine wave trajectory for bird
+		self.y= self.org_y + self.amplitude*math.sin(2*math.pi*self.frequency*self.time)
+		self.time += 1
+
 
 def create_bird():
 	"""
