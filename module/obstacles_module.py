@@ -6,6 +6,7 @@ import main
 from module import background_module
 from module import effects_module
 from module import foreground_module
+from module import player_module
 
 class Tree:
 	"""
@@ -110,20 +111,24 @@ def update_obstacle_position():
 			else:
 				obstacle.x -= foreground_module.foreground_speed
 
-def collision_with_obstacle(player):
+def collision_with_obstacle():
 	"""
 	Pixel perfect collision implemented using masks. Checks for collision of mask of player against other
 	obstacles only if the obstacle is near to the player. Returns True if collision occurred, else False.
 	"""
+	player = player_module.player
+	propeller = player_module.propeller
 	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(player.propeller_img)
+	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+	
 	for element in obstacle_classes:
 		for obstacle in element.collision_obstacles:
 			if obstacle.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				obstacle_mask = pygame.mask.from_surface(obstacle.img)
 				offset = obstacle.x - player.x, obstacle.y - player.y
+
 				collision_point_with_player = player_mask.overlap(obstacle_mask, offset)	# Checking collision with player
-				collision_point_with_propeller = propeller_mask.overlap(obstacle_mask, offset)	# Checking collision with player
+				collision_point_with_propeller = propeller_mask.overlap(obstacle_mask, offset)	# Checking collision with propeller
 
 				if collision_point_with_player or collision_point_with_propeller:
 					element.collision_obstacles.remove(obstacle)

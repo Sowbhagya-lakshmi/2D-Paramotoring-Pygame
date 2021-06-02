@@ -24,14 +24,14 @@ class Coin:
 	def __init__(self, x, y):
 		self.x = x
 		self.y = y
-		self.runCount = 0
+		self.run_count = 0
 
 	def draw(self, win):	
 		self.frames_per_image = 3			# each coin image is drawn for 7 consecutive frames
-		if self.runCount >= self.frames_per_image*self.num_of_imgs:
-			self.runCount = 0
-		self.index = self.runCount//self.frames_per_image
-		self.runCount += 1
+		if self.run_count >= self.frames_per_image*self.num_of_imgs:
+			self.run_count = 0
+		self.index = self.run_count//self.frames_per_image
+		self.run_count += 1
 
 		# coin image
 		self.img = self.resized_imgs[self.index]
@@ -95,8 +95,8 @@ def coin_collection(player):
 			if coin.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
 				coin_mask = pygame.mask.from_surface(coin.img)
 				offset = coin.x - player.x, coin.y - player.y
-				boolean = player_mask.overlap(coin_mask, offset)
-				if boolean:
+				collision_point = player_mask.overlap(coin_mask, offset)		# returns collision point else returns None
+				if collision_point:
 					Coin.coins_list.remove(coin)	# Stop drawing
 					effects_module.Coin_spark_effects.coin_effects_list.append(effects_module.Coin_spark_effects(coin.x, coin.y))	# create a spark object
 					return True

@@ -1,17 +1,14 @@
 import pygame
 import sys
 
-import main
 from module import bird_module
 from module import coins_module
-from module import background_module
-from module import foreground_module
 from module import obstacles_module
 
 
 def setting_up_events():
-	# Generate coin once in every 1.2 seconds
-	pygame.time.set_timer(pygame.USEREVENT+1, 1200)
+	# Generate coin once in every 1 seconds
+	pygame.time.set_timer(pygame.USEREVENT+1, 1000)
 	# Generate tree obstacles once in every 8 seconds
 	pygame.time.set_timer(pygame.USEREVENT+2, 6000)
 	# Generate rock and bush obstacles once in every 20 seconds

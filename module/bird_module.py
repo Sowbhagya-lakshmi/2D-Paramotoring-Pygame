@@ -3,9 +3,10 @@ import os
 import pygame
 import random
 
+import main
 from module import background_module
 from module import foreground_module
-from module import coins_module
+from module import player_module
 
 class Bird():
 	"""
@@ -32,7 +33,7 @@ class Bird():
 	def __init__(self,x,y,colour_num):
 		self.x = x
 		self.y = y
-		self.runCount = 0
+		self.run_count = 0
 		self.colour_num = colour_num
 
 		# Variables for trajectory calculation
@@ -40,15 +41,14 @@ class Bird():
 		self.time = 0
 		self.frequency = random.uniform(0.005, 0.013)
 		self.amplitude = random.randrange(30, 70)
-		print(self.amplitude)
 
 	def draw(self, win):
 		# Determining index of bird image to be drawn
 		self.frames_per_image = 7					# each bird image is drawn for 7 consecutive frames
-		if self.runCount >= self.frames_per_image*self.num_of_imgs:
-			self.runCount = 0
-		self.index = self.runCount//self.frames_per_image
-		self.runCount += 1
+		if self.run_count >= self.frames_per_image*self.num_of_imgs:
+			self.run_count = 0
+		self.index = self.run_count//self.frames_per_image
+		self.run_count += 1
 		
 		# Drawing bird image
 		self.img = self.list_of_lists[self.colour_num][self.index]
@@ -66,8 +66,7 @@ def create_bird():
 	"""
 	Creates a bird in the free space. 
 	"""
-	free_zone_y = coins_module.free_zone_y	# find free space in y axis
-	x = random.randint(50,free_zone_y)	# choose random y value within free zone
+	x = random.randint(50,main.height//2)	# choose random y value in upper half of window
 	colour_num = random.randrange(Bird.num_of_colours)
 	new_bird = Bird(background_module.bg.get_width(), x, colour_num)
 	Bird.birds_list.append(new_bird)
@@ -89,13 +88,16 @@ def update_birds_position():
 		else:
 			bird.x -= (foreground_module.foreground_speed + 4)
 
-def collision_with_bird(player):
+def collision_with_bird():
 	"""
 	Collision with bird is checked using Pixel perfect collision method. If collision occurs returns True, else False.
 	Collision is check only if bird is near the player to save computation.
 	"""
+	player = player_module.player
+	propeller = player_module.propeller
 	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(player.propeller_img)
+	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+
 	if len(Bird.collision_birds)!=0:
 		for bird in Bird.collision_birds:
 			if bird.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
