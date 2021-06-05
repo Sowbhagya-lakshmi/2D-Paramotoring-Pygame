@@ -9,11 +9,14 @@ from module import foreground_module
 from module import obstacles_module
 from module import player_module
 from module import music_module
+from module import interface_module
 
 # Global variables
 speed = 60		# fps
 run = True
 collision_occured = False
+
+interface_module.Display_Buttons()
 
 pygame.init()
 
@@ -61,7 +64,7 @@ if __name__ == '__main__':
 	start_time = time.time()'''
 	
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
 	# GAME LOOP
