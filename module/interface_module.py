@@ -3,7 +3,6 @@ import pygame
 import sys
 import main 
 
-pygame.init()
 
 button_text = [ "Play" , "Resume" , "High Score" , "Instructions" , "About"]
 

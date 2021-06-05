@@ -16,9 +16,9 @@ speed = 60		# fps
 run = True
 collision_occured = False
 
-interface_module.Display_Buttons()
-
 pygame.init()
+
+interface_module.Display_Buttons()
 
 # Game Window
 width, height = 1550,800
