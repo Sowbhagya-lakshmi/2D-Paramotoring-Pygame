@@ -18,7 +18,7 @@ collision_occured = False
 
 pygame.init()
 
-interface_module.Display_Buttons()
+interface_module.display_buttons()
 
 # Game Window
 width, height = 1550,800
@@ -53,7 +53,6 @@ def draw_all_objects():
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
-
 	change_img_pixel_format()
 
 	clock = pygame.time.Clock()

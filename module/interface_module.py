@@ -1,35 +1,39 @@
-import os
 import pygame
 import sys
-import main 
+import os
+import main
 
+button_original = pygame.image.load(os.path.join('Utils/Pics/Interface','Button.png'))
+button_enlarge =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png'))
+button_click =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_click.png'))
 
-button_text = [ "Play" , "Resume" , "High Score" , "Instructions" , "About"]
+def display_play_button(screen):
+	
+	screen.blit(button_original, (440,200))
+	font_size = 30
+	font = pygame.font.Font('freesansbold.ttf', font_size)
+	text_x_pos, text_y_pos = 470, 235
+	text = font.render('Play' , True, (0,0,0))
+	screen.blit(text, (text_x_pos, text_y_pos))
 
-def Display_Buttons():
+def display_buttons():
     
     main.speed = 60		# fps
     main.run = True
 
-    width, height = 1000,600
-    win = pygame.display.set_mode((width, height))
-    pygame.display.set_caption('Game Interface') 
-
-    
-    button_original = pygame.image.load(os.path.join('Utils/Pics/Interface','Button.png')).convert_alpha()
-    button_enlarge =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png')).convert_alpha()
-    button_click =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_click.png')).convert_alpha()
-    
-    #for text in Button_text:
     count = 0
-    while count<1000:
+    
+    while count < 1000:
+        width, height = 1000,600
+        win = pygame.display.set_mode((width, height))
+        win.fill((255,255,255))
+        pygame.display.set_caption('Game Interface') 
 
-        screen_color = (255,255,255)
-        win.fill(screen_color)
+        display_play_button(win);
+
         pygame.display.update()
-        count += 1
 
-
+        count += 1 
 
 
 
