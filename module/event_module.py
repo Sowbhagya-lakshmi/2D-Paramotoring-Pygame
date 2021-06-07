@@ -16,7 +16,7 @@ def setting_up_events():
 	pygame.event.set_allowed([pygame.KEYDOWN, pygame.QUIT, pygame.USEREVENT+1,
                              pygame.USEREVENT+2, pygame.USEREVENT+3])
 
-def  event_loop():
+def event_loop():
     for event in pygame.event.get():		
         if event.type == pygame.QUIT:
             pygame.quit()
