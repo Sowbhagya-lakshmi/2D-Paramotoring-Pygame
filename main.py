@@ -16,14 +16,13 @@ speed = 60		# fps
 run = True
 collision_occured = False
 
-pygame.init()
+width, height = 1550,800 # of window
+win = None
 
-interface_module.display_buttons()
-
-# Game Window
-width, height = 1550,800
-win = pygame.display.set_mode((width, height))
-pygame.display.set_caption('Game Window')
+def create_game_window():
+	global win	
+	win = pygame.display.set_mode((width, height))
+	pygame.display.set_caption('Game Window')
 
 def change_img_pixel_format():
 	"""
@@ -53,6 +52,15 @@ def draw_all_objects():
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
+
+	pygame.init()
+
+	# Home screen interface window
+	interface_module.display_buttons()
+
+	# Game window
+	create_game_window()
+
 	change_img_pixel_format()
 
 	clock = pygame.time.Clock()

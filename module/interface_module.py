@@ -80,6 +80,7 @@ def display_buttons():
 
     global win
     width, height = 1000,600
+    print('creating window')
     win = pygame.display.set_mode((width, height))
     pygame.display.set_caption('Game Interface')
 
@@ -90,6 +91,8 @@ def display_buttons():
     pygame.mouse.set_visible(False)
 
     all_buttons_list = [settings_button]
+
+    clock = pygame.time.Clock()
     
     while count < 1000: 
         win.fill((255,255,255))
@@ -101,15 +104,20 @@ def display_buttons():
         for button in all_buttons_list:
             # Drawing buttons
             button.draw()
-            
+
             # Enlarging effect while cursor is over button
             cursor_over_button(cursor, button)
 
         cursor.draw()   # should be at last, to avoid overlapping
 
+        clock.tick(main.speed)
         pygame.display.update()
 
         count += 1 
+    
+    # Bring back the original cursor
+    pygame.mouse.set_visible(True)
+
 
 
 

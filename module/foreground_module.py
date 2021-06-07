@@ -7,7 +7,7 @@ import main
 ground = pygame.image.load(os.path.join('Utils/Pics/Foreground','ground.png'))
 flipped_ground = pygame.transform.flip(ground, True, False)
 ground_x = 0
-ground_y = main.win.get_height()-ground.get_height() 
+ground_y = main.height-ground.get_height() 
 ground_width = ground.get_width() - 5	# To prevent glitches in background movement...WIP
 foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
 
