@@ -12,13 +12,15 @@ button_original = pygame.image.load(os.path.join('Utils/Pics/Interface','Button.
 button_enlarge =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png'))
 button_click =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_click.png'))
 
+
+
 def display_play_button(screen):
 	
-	screen.blit(button_original, (440,200))
+	screen.blit(button_original, (440,100))
 	font_size = 30
 	font = pygame.font.Font('freesansbold.ttf', font_size)
-	text_x_pos, text_y_pos = 470, 235
-	text = font.render('Play' , True, (0,0,0))
+	text_x_pos, text_y_pos = 468, 135
+	text = font.render('Play' , True, (255,255,255))
 	screen.blit(text, (text_x_pos, text_y_pos))
 
 class Cursor:
@@ -164,7 +166,17 @@ def display_buttons():
 
 		event_loop()
 		
-		display_play_button(win)   
+		display_play_button(win)
+
+		mouse = pygame.mouse.get_pos()
+
+		if 440 <= mouse[0] <= 560 and 140 <= mouse[1] <= 180 :
+			win.blit(button_enlarge, (430,60))
+			font_size = 40
+			font = pygame.font.Font('freesansbold.ttf', font_size)
+			text_x_pos, text_y_pos = 465, 135
+			text = font.render('Play' , True, (255,255,255))
+			win.blit(text, (text_x_pos, text_y_pos))   
 
 		dropdrown.volume_control(unmute_button)
 		
@@ -188,18 +200,3 @@ def display_buttons():
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
-
-
-
-
-
-	
-
-
-	   
-	   
-	   
-	   
-	   
-	   
-
