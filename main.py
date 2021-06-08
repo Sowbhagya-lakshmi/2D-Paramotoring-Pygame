@@ -93,10 +93,10 @@ if __name__ == '__main__':
 			time.sleep(1)
 			break
 
-			clock.tick(speed)
-			pygame.display.update()
+		clock.tick(speed)
+		pygame.display.update()
 
-			'''
+		'''
 			now = time.time()	# chk fps
 			if now-start_time >=5:
 				start_time = time.time()

@@ -7,6 +7,7 @@ import main
 win = None
 right_click = False
 dropdown_bool = False
+value = 0
 
 button_original = pygame.image.load(os.path.join('Utils/Pics/Interface','Button.png'))
 button_enlarge =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png'))
@@ -57,20 +58,27 @@ def display_about_button(screen):
 	text = font.render('About' , True, (255,255,255))
 	screen.blit(text, (text_x_pos, text_y_pos))
 
+def check_play():
+	global value, right_click
+	mouse = pygame.mouse.get_pos()
+	if 440 <= mouse[0] <= 560 and ((140 <= mouse[1] <= 180) or (240 <= mouse[1] <= 280)):
+		if right_click:
+			value = 1 
+	return value
 
 class Settings_button:
-    """
-    Describes the settings button and its functionality.
-    """
-    def __init__(self):
-        self.img_small = pygame.image.load(os.path.join('Utils/Pics/Interface','settings.png')).convert_alpha()
-        self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
-        self.img = self.img_small
-        self.x = 900
-        self.y = 30
+	"""
+	Describes the settings button and its functionality.
+	"""
+	def __init__(self):
+		self.img_small = pygame.image.load(os.path.join('Utils/Pics/Interface','settings.png')).convert_alpha()
+		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
+		self.img = self.img_small
+		self.x = 900
+		self.y = 30
 
-    def draw(self):
-        win.blit(self.img, (self.x, self.y))
+	def draw(self):
+		win.blit(self.img, (self.x, self.y))
 
 class Cursor:
 	"""
@@ -101,7 +109,7 @@ def event_loop():
 			if event.button == 1:
 				right_click = True 
 
-		       
+			   
 def cursor_over_button(cursor, button):
 	"""
 	Using pixel perfect collision check if the cursor image and the button passed in the argument collide and return boolean.
@@ -118,20 +126,6 @@ def cursor_over_button(cursor, button):
 		button.img = button.img_small
 
 	return collision
-
-class Settings_button:
-	"""
-	Describes the settings button and its functionality.
-	"""
-	def __init__(self):
-		self.img_small = pygame.image.load(os.path.join('Utils/Pics/Interface','settings.png')).convert_alpha()
-		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
-		self.img = self.img_small
-		self.x = 900
-		self.y = 30
-
-	def draw(self):
-		win.blit(self.img, (self.x, self.y))
 
 class Dropdown:
 	"""
@@ -189,6 +183,7 @@ def display_buttons():
 	main.speed = 60		# fps
 	main.run = True
 	count = 0
+	
 
 	# Home screen interface
 	width, height = 1000,600
@@ -201,16 +196,29 @@ def display_buttons():
 	dropdrown = Dropdown()
 	cursor = Cursor()
 	settings_button = Settings_button()
-        
-    	display_play_button(win)
-   	display_resume_button(win)
-	display_highscore_button(win)
-	display_instruction_button(win)
-	display_about_button(win)
 
-	event_loop()
+	all_buttons_list = [settings_button]
 
-	for event in pygame.event.get() :
+	clock = pygame.time.Clock()
+
+	# Hide the original cursor
+	pygame.mouse.set_visible(False)
+
+	while count < 1000:	
+
+		value = check_play()
+		if value == 1: break 	# breaks interface loop
+
+		win.fill((255,255,255))
+
+		display_play_button(win)
+		display_resume_button(win)
+		display_highscore_button(win)
+		display_instruction_button(win)
+		display_about_button(win)		
+
+		event_loop()
+
 		mouse = pygame.mouse.get_pos()
 
 		if 440 <= mouse[0] <= 560 and 140 <= mouse[1] <= 180 :
@@ -253,27 +261,27 @@ def display_buttons():
 			text_x_pos, text_y_pos = 448, 535
 			text = font.render('About' , True, (255,255,255))
 			win.blit(text, (text_x_pos, text_y_pos))
-         
+			
 
-	dropdrown.volume_control(unmute_button)
-		
-	for button in all_buttons_list:
-		# Drawing buttons
-		button.draw()
+		dropdrown.volume_control(unmute_button)
+			
+		for button in all_buttons_list:
+			# Drawing buttons
+			button.draw()
 
-		# Enlarging effect while cursor is over button
-		collision_with_button = cursor_over_button(cursor, button)     # returns bool
+			# Enlarging effect while cursor is over button
+			collision_with_button = cursor_over_button(cursor, button)     # returns bool
 
-		# If the settings button is clicked dropdown option is displayed
-		if button == settings_button and right_click and collision_with_button:
-			dropdown_bool = not(dropdown_bool)						
+			# If the settings button is clicked dropdown option is displayed
+			if button == settings_button and right_click and collision_with_button:
+				dropdown_bool = not(dropdown_bool)						
 
-	cursor.draw()   # should be at last, to avoid overlapping
+		cursor.draw()   # should be at last, to avoid overlapping
 
-	clock.tick(main.speed)
-	pygame.display.update()
+		clock.tick(main.speed)
+		pygame.display.update()
 
-	count += 1 
+		count += 1 
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
