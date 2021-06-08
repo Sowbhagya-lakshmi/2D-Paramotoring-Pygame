@@ -9,8 +9,8 @@ right_click = False
 dropdown_bool = False
 value = 0
 
-button_original = pygame.image.load(os.path.join('Utils/Pics/Interface','Button.png'))
-button_enlarge =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png'))
+button_original =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png'))
+button_enlarge = pygame.transform.scale(button_original, (int(button_original.get_width()*1.2),int(button_original.get_height()*1.2)))
 button_click =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_click.png'))
 
 def display_play_button(screen):
