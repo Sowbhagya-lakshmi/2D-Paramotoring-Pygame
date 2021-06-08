@@ -109,7 +109,7 @@ def event_loop():
 			if event.button == 1:
 				right_click = True 
 
-			   
+		       
 def cursor_over_button(cursor, button):
 	"""
 	Using pixel perfect collision check if the cursor image and the button passed in the argument collide and return boolean.
@@ -184,7 +184,7 @@ def display_buttons():
 	main.run = True
 	count = 0
 	
-
+	
 	# Home screen interface
 	width, height = 1000,600
 	win = pygame.display.set_mode((width, height))
@@ -196,7 +196,7 @@ def display_buttons():
 	dropdrown = Dropdown()
 	cursor = Cursor()
 	settings_button = Settings_button()
-
+        
 	all_buttons_list = [settings_button]
 
 	clock = pygame.time.Clock()
@@ -216,7 +216,7 @@ def display_buttons():
 		display_highscore_button(win)
 		display_instruction_button(win)
 		display_about_button(win)		
-
+	
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
@@ -261,10 +261,10 @@ def display_buttons():
 			text_x_pos, text_y_pos = 448, 535
 			text = font.render('About' , True, (255,255,255))
 			win.blit(text, (text_x_pos, text_y_pos))
-			
-
+	
+	
 		dropdrown.volume_control(unmute_button)
-			
+		
 		for button in all_buttons_list:
 			# Drawing buttons
 			button.draw()
