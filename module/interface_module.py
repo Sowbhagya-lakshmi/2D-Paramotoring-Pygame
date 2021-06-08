@@ -10,8 +10,6 @@ button_original = pygame.image.load(os.path.join('Utils/Pics/Interface','Button.
 button_enlarge =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png'))
 button_click =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_click.png'))
 
-
-
 def display_play_button(screen):
 	
 	screen.blit(button_original, (440,100))
@@ -20,6 +18,43 @@ def display_play_button(screen):
 	text_x_pos, text_y_pos = 468, 135
 	text = font.render('Play' , True, (255,255,255))
 	screen.blit(text, (text_x_pos, text_y_pos))
+
+def display_resume_button(screen):
+	
+	screen.blit(button_original, (440,200))
+	font_size = 26
+	font = pygame.font.Font('freesansbold.ttf', font_size)
+	text_x_pos, text_y_pos = 448, 235
+	text = font.render('Resume' , True, (255,255,255))
+	screen.blit(text, (text_x_pos, text_y_pos))
+
+def display_highscore_button(screen):
+	
+	screen.blit(button_original, (440,300))
+	font_size = 22
+	font = pygame.font.Font('freesansbold.ttf', font_size)
+	text_x_pos, text_y_pos = 445, 340
+	text = font.render('HighScore' , True, (255,255,255))
+	screen.blit(text, (text_x_pos, text_y_pos))
+
+def display_instruction_button(screen):
+	
+	screen.blit(button_original, (440,400))
+	font_size = 20
+	font = pygame.font.Font('freesansbold.ttf', font_size)
+	text_x_pos, text_y_pos = 442, 440
+	text = font.render('Instruction' , True, (255,255,255))
+	screen.blit(text, (text_x_pos, text_y_pos))
+
+def display_about_button(screen):
+	
+	screen.blit(button_original, (440,500))
+	font_size = 30
+	font = pygame.font.Font('freesansbold.ttf', font_size)
+	text_x_pos, text_y_pos = 455, 535
+	text = font.render('About' , True, (255,255,255))
+	screen.blit(text, (text_x_pos, text_y_pos))
+
 
 class Settings_button:
     """
@@ -102,8 +137,13 @@ def display_buttons():
         event_loop()
         
         display_play_button(win)
+        display_resume_button(win)
+        display_highscore_button(win)
+        display_instruction_button(win)
+        display_about_button(win)
 
         mouse = pygame.mouse.get_pos()
+        value = 0
 
         if 440 <= mouse[0] <= 560 and 140 <= mouse[1] <= 180 :
             win.blit(button_enlarge, (430,60))
@@ -111,7 +151,40 @@ def display_buttons():
             font = pygame.font.Font('freesansbold.ttf', font_size)
             text_x_pos, text_y_pos = 465, 135
             text = font.render('Play' , True, (255,255,255))
-            win.blit(text, (text_x_pos, text_y_pos))   
+            win.blit(text, (text_x_pos, text_y_pos))  
+            
+        if 440 <= mouse[0] <= 560 and 240 <= mouse[1] <= 280 :
+            win.blit(button_enlarge, (430,160))
+            font_size = 38
+            font = pygame.font.Font('freesansbold.ttf', font_size)
+            text_x_pos, text_y_pos = 438, 235
+            text = font.render('Resume' , True, (255,255,255))
+            win.blit(text, (text_x_pos, text_y_pos))
+            
+
+        if 440 <= mouse[0] <= 560 and 340 <= mouse[1] <= 380 :
+            win.blit(button_enlarge, (430,260))
+            font_size = 32
+            font = pygame.font.Font('freesansbold.ttf', font_size)
+            text_x_pos, text_y_pos = 432, 335
+            text = font.render('HighScore' , True, (255,255,255))
+            win.blit(text, (text_x_pos, text_y_pos)) 
+
+        if 440 <= mouse[0] <= 560 and 440 <= mouse[1] <= 480 :
+            win.blit(button_enlarge, (430,360))
+            font_size = 30
+            font = pygame.font.Font('freesansbold.ttf', font_size)
+            text_x_pos, text_y_pos = 430, 435
+            text = font.render('Instruction' , True, (255,255,255))
+            win.blit(text, (text_x_pos, text_y_pos)) 
+
+        if 440 <= mouse[0] <= 560 and 540 <= mouse[1] <= 580 :
+            win.blit(button_enlarge, (430,460))
+            font_size = 40
+            font = pygame.font.Font('freesansbold.ttf', font_size)
+            text_x_pos, text_y_pos = 448, 535
+            text = font.render('About' , True, (255,255,255))
+            win.blit(text, (text_x_pos, text_y_pos))
         
         for button in all_buttons_list:
             # Drawing buttons
@@ -124,11 +197,21 @@ def display_buttons():
 
         clock.tick(main.speed)
         pygame.display.update()
-
         count += 1 
+    
     
     # Bring back the original cursor
     pygame.mouse.set_visible(True)
+
+value = 0
+def check_play():
+    mouse = pygame.mouse.get_pos()
+    if 440 <= mouse[0] <= 560 and (140 <= mouse[1] <= 180) or (240 <= mouse[1] <= 280) :
+        if pygame.mouse.get_pressed() == 1 :
+                value = 1 
+    return value
+        
+
 
 
 

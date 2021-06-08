@@ -75,32 +75,35 @@ if __name__ == '__main__':
 	pygame.mixer.music.play(-1)
 
 	# GAME LOOP
-	while run:
-		draw_all_objects()
-		event_module.event_loop()
+	interface_module.check_play()
+	play = interface_module.check_play()
+	if play == 1:
+		while run:
+			draw_all_objects()
+			event_module.event_loop()
 
-		# Coin collection
-		collected = coins_module.coin_collection(player_module.player)	# Checks collision and returns bool 
-		if collected:
-			music_module.Sound_Coins.play()
-			coins_module.Coin.num_coins_collected += 1
-		coins_module.display_num_coins_collected(win)
+			# Coin collection
+			collected = coins_module.coin_collection(player_module.player)	# Checks collision and returns bool 
+			if collected:
+				music_module.Sound_Coins.play()
+				coins_module.Coin.num_coins_collected += 1
+			coins_module.display_num_coins_collected(win)
 
-		# Collision with Obstacles
-		collision_occured = obstacles_module.collision_with_obstacle(player_module.player)	# Checks collision and returns bool 
-		if collision_occured:		# Dummy exit
-			music_module.Sound_Collided.play()
-			time.sleep(1)
-			break
+			# Collision with Obstacles
+			collision_occured = obstacles_module.collision_with_obstacle(player_module.player)	# Checks collision and returns bool 
+			if collision_occured:		# Dummy exit
+				music_module.Sound_Collided.play()
+				time.sleep(1)
+				break
 
-		clock.tick(speed)
-		pygame.display.update()
+			clock.tick(speed)
+			pygame.display.update()
 
-		'''
-		now = time.time()	# chk fps
-		if now-start_time >=5:
-			start_time = time.time()
-			print(frame_count//5)
-			frame_count = 0
-		frame_count += 1
+			'''
+			now = time.time()	# chk fps
+			if now-start_time >=5:
+				start_time = time.time()
+				print(frame_count//5)
+				frame_count = 0
+			frame_count += 1
 		'''
