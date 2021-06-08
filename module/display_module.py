@@ -1,7 +1,7 @@
 import os
 import pygame
 
-import main
+import global_config
 
 # LIVES
 heart = pygame.image.load(os.path.join('Utils/Pics/Display/', 'life.png'))
@@ -36,7 +36,7 @@ def draw_minimap(win,progress):
     """
     Minimap shows the position of the player relative to the full distance in a miniature size.
     """
-    max_progress = main.game_duration*main.speed
+    max_progress = global_config.game_duration*global_config.speed
     current_progress = progress/max_progress        # Value btn 0 and 1
 
     # Line

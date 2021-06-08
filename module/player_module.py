@@ -15,8 +15,8 @@ class Player:
 	num_of_player_imgs = len(img_name_lst)
 
 	# Loading player images
-	org_imgs = [pygame.image.load('Utils/Pics/Player/'+img) for img in img_name_lst]
-	imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in org_imgs ] 
+	imgs_big = [pygame.image.load('Utils/Pics/Player/'+img) for img in img_name_lst]
+	imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in imgs_big ] 
 
 	def __init__(self):
 		self.x = 0

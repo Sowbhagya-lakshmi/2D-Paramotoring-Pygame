@@ -6,13 +6,13 @@ from module import player_module
 
 class Coin_spark_effects():
 	"""
-	Describes a visual effect when the player collects a coin. Has a draw method which draws the effect onto the screen.
+	Describes a visual effect when the player collects a coin. Draw method which draws the effect onto the screen.
 	"""
 	path = 'Utils/Pics/Coins/Effects/'
-	img_name_lst = os.listdir(path)
-	num_of_imgs = len(img_name_lst)
+	list_of_imgs = os.listdir(path)	# ist of all images in the path
+	num_of_imgs = len(list_of_imgs)
 
-	imgs_big = [pygame.image.load('Utils/Pics/Coins/Effects/'+img) for img in img_name_lst]
+	imgs_big = [pygame.image.load('Utils/Pics/Coins/Effects/'+img) for img in list_of_imgs]
 	imgs = [pygame.transform.scale(img, (int(img.get_width()/6), int(img.get_height()/6))) for img in imgs_big]
 
 	coin_effects_list = []       # contains spark objects
@@ -38,13 +38,13 @@ class Coin_spark_effects():
 
 class Hit_effects:
 	"""
-	Describes a visual effect when the player hits an obstacle like tree, rock or bush. Has a draw method which draws the effect onto the screen.
+	Describes a visual effect when the player hits an obstacle like a tree, rock, or bush. Draw method which draws the effect onto the screen.
 	"""
 	path = 'Utils/Pics/Obstacles/Effects/'
-	img_name_lst = os.listdir(path)
-	num_of_imgs = len(img_name_lst)
+	list_of_imgs = os.listdir(path)
+	num_of_imgs = len(list_of_imgs)
 
-	imgs = [pygame.image.load('Utils/Pics/Obstacles/Effects/'+img) for img in img_name_lst]
+	imgs = [pygame.image.load('Utils/Pics/Obstacles/Effects/'+img) for img in list_of_imgs]
 	imgs = [pygame.transform.scale(img, (img.get_width()*2, img.get_height()*2)) for img in imgs]
 
 	hit_effects_list = []   

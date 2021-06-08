@@ -2,7 +2,7 @@ import os
 import pygame
 import random
 
-import main
+import global_config
 from module import background_module
 from module import effects_module
 from module import foreground_module
@@ -47,7 +47,7 @@ class Rock_n_Bush:
 	# Loading images 
 	num_of_imgs = 4
 	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')) for x in range(num_of_imgs)]
-	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.3), int(img.get_height()*1.3))) for img in imgs]
+	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.3), int(img.get_height()*1.3))) for img in imgs]		# scaling factor - 1.3 
 
 	obstacles = []
 	collision_obstacles = []
@@ -96,7 +96,7 @@ def draw_obstacles(win):
 	"""
 	for element in obstacle_classes:
 		for obstacle in element.obstacles:
-			if obstacle.x <= main.width:	# draw only if the obsatcle is on-screen
+			if obstacle.x <= global_config.window_width:	# draw only if the obsatcle is on-screen
 				obstacle.draw(win)
 	update_obstacle_position()
 

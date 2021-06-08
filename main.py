@@ -2,6 +2,7 @@ import os
 import pygame
 import time
 
+import global_config
 from module import background_module
 from module import bird_module
 from module import coins_module
@@ -14,9 +15,10 @@ from module import obstacles_module
 from module import player_module
 
 # Global variables
-speed = 60		# fps
+
+speed = global_config.speed
+game_duration = global_config.game_duration
 run = True
-game_duration = 30 # in sec
 
 frame_count = 0
 num_of_lives = 3
@@ -24,8 +26,7 @@ num_of_lives = 3
 pygame.init()
 
 # Game Window
-width, height = 1550,800
-win = pygame.display.set_mode((width, height))
+win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
 pygame.display.set_caption('Game Window')
 
 def change_img_pixel_format():
@@ -103,9 +104,9 @@ if __name__ == '__main__':
 		coins_module.display_num_coins_collected(win)
 
 		# Collision with Obstacles
-		collision_occured = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
+		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
 		collision_with_bird = bird_module.collision_with_bird()
-		if collision_occured or collision_with_bird:		# Dummy exit
+		if collision_with_obstacle or collision_with_bird:		# Dummy exit
 			music_module.sound_collided.play()
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 

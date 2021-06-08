@@ -35,11 +35,11 @@ class Bird():
 		self.run_count = 0
 		self.colour_num = colour_num
 
-		# Variables for trajectory calculation
-		self.org_y = y		# initial y value
-		self.time = 0
-		self.frequency = random.uniform(0.005, 0.013)
-		self.amplitude = random.randrange(30, 70)
+		# Variables for sine wave trajectory calculation
+		self.org_y = y									# initial y value where the bird is spawned
+		self.time = 0									# Taken for a reference
+		self.frequency = random.uniform(0.005, 0.013)	# frequency of sine wave
+		self.amplitude = random.randrange(30, 70)		# Amplitude of sine wave - defines range of bird movement in y axis
 
 	def draw(self, win):
 		# Determining index of bird image to be drawn
@@ -90,7 +90,7 @@ def update_birds_position():
 def collision_with_bird():
 	"""
 	Collision with bird is checked using Pixel perfect collision method. If collision occurs returns True, else False.
-	Collision is check only if bird is near the player to save computation.
+	Collision is checked only if bird is near the player to save computation.
 	"""
 	player = player_module.player
 	propeller = player_module.propeller
