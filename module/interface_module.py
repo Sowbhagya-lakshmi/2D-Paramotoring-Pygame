@@ -10,6 +10,8 @@ dropdown_bool = False
 value = 0
 
 #Loading Button Images
+screen =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
+
 button_about =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_about.png'))
 button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.2),int(button_about.get_height()*1.2)))
 
@@ -156,6 +158,7 @@ def display_buttons():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))
+	
 	pygame.display.set_caption('Game Interface')
 
 	# Creating objects of classes
@@ -179,18 +182,21 @@ def display_buttons():
 
 		win.fill((255,255,255))
 
+		win.blit(screen,(0,0))
 		win.blit(button_play, (320,100))
 		win.blit(button_resume, (320,200))
 		win.blit(button_highscore, (320,300))
 		win.blit(button_instructions, (320,400))
 		win.blit(button_about, (320,500))
 
+		
 
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
 		if 320 <= mouse[0] <= 480 and 100 <= mouse[1] <= 150 :
+		#	sound_button_enlarge.play()
 			win.blit(button_play_enlarge, (310,100))
 			  	
 		if 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
