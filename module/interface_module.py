@@ -1,7 +1,9 @@
 import pygame
 import sys
 import os
+
 import main
+from module import music_module
 
 # Global variables
 win = None
@@ -175,7 +177,13 @@ def display_buttons():
 	# Hide the original cursor
 	pygame.mouse.set_visible(False)
 
-	while count < 1000:	
+	pop_sound_play = False
+
+	#Music Variable
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	pygame.mixer.music.play(-1)
+
+	while True:	
 
 		value = check_play()
 		if value == 1: break 	# breaks interface loop
@@ -189,29 +197,43 @@ def display_buttons():
 		win.blit(button_instructions, (320,400))
 		win.blit(button_about, (320,500))
 
-		
-
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
 		if 320 <= mouse[0] <= 480 and 100 <= mouse[1] <= 150 :
-		#	sound_button_enlarge.play()
 			win.blit(button_play_enlarge, (310,100))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
 			  	
-		if 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
+		elif 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
 			win.blit(button_resume_enlarge, (310,200))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
 
-		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
+		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			win.blit(button_highscore_enlarge, (310,300))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
 			
-		if 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
+		elif 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
 			win.blit(button_instructions_enlarge, (310,400))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
 			
-		if 320 <= mouse[0] <= 480 and 500 <= mouse[1] <= 550 :
+		elif 320 <= mouse[0] <= 480 and 500 <= mouse[1] <= 550 :
 			win.blit(button_about_enlarge, (310,500))
-			
-	
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+
+		else:
+			pop_sound_play = False
+
 		dropdrown.volume_control(unmute_button)
 		
 		for button in all_buttons_list:
