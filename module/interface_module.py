@@ -9,59 +9,27 @@ right_click = False
 dropdown_bool = False
 value = 0
 
-button_original =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Enlarge.png'))
-button_enlarge = pygame.transform.scale(button_original, (int(button_original.get_width()*1.2),int(button_original.get_height()*1.2)))
-button_click =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_click.png'))
+#Loading Button Images
+button_about =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_about.png'))
+button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.2),int(button_about.get_height()*1.2)))
 
-def display_play_button(screen):
-	
-	screen.blit(button_original, (440,100))
-	font_size = 30
-	font = pygame.font.Font('freesansbold.ttf', font_size)
-	text_x_pos, text_y_pos = 468, 135
-	text = font.render('Play' , True, (255,255,255))
-	screen.blit(text, (text_x_pos, text_y_pos))
+button_highscore =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_highscore.png'))
+button_highscore_enlarge = pygame.transform.scale(button_highscore, (int(button_highscore.get_width()*1.2),int(button_highscore.get_height()*1.2)))
 
-def display_resume_button(screen):
-	
-	screen.blit(button_original, (440,200))
-	font_size = 26
-	font = pygame.font.Font('freesansbold.ttf', font_size)
-	text_x_pos, text_y_pos = 448, 235
-	text = font.render('Resume' , True, (255,255,255))
-	screen.blit(text, (text_x_pos, text_y_pos))
+button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_instructions.png'))
+button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.2),int(button_instructions.get_height()*1.2)))
 
-def display_highscore_button(screen):
-	
-	screen.blit(button_original, (440,300))
-	font_size = 22
-	font = pygame.font.Font('freesansbold.ttf', font_size)
-	text_x_pos, text_y_pos = 445, 340
-	text = font.render('HighScore' , True, (255,255,255))
-	screen.blit(text, (text_x_pos, text_y_pos))
+button_play =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_play.png'))
+button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_width()*1.2),int(button_play.get_height()*1.2)))
 
-def display_instruction_button(screen):
-	
-	screen.blit(button_original, (440,400))
-	font_size = 20
-	font = pygame.font.Font('freesansbold.ttf', font_size)
-	text_x_pos, text_y_pos = 442, 440
-	text = font.render('Instruction' , True, (255,255,255))
-	screen.blit(text, (text_x_pos, text_y_pos))
+button_resume =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_resume.png'))
+button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.2),int(button_resume.get_height()*1.2)))
 
-def display_about_button(screen):
-	
-	screen.blit(button_original, (440,500))
-	font_size = 30
-	font = pygame.font.Font('freesansbold.ttf', font_size)
-	text_x_pos, text_y_pos = 455, 535
-	text = font.render('About' , True, (255,255,255))
-	screen.blit(text, (text_x_pos, text_y_pos))
 
 def check_play():
 	global value, right_click
 	mouse = pygame.mouse.get_pos()
-	if 440 <= mouse[0] <= 560 and ((140 <= mouse[1] <= 180) or (240 <= mouse[1] <= 280)):
+	if 320 <= mouse[0] <= 480 and ((100 <= mouse[1] <= 150) or (200 <= mouse[1] <= 250)):
 		if right_click:
 			value = 1 
 	return value
@@ -74,7 +42,7 @@ class Settings_button:
 		self.img_small = pygame.image.load(os.path.join('Utils/Pics/Interface','settings.png')).convert_alpha()
 		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
 		self.img = self.img_small
-		self.x = 900
+		self.x = 700
 		self.y = 30
 
 	def draw(self):
@@ -132,7 +100,7 @@ class Dropdown:
 	Creates a dropdown when the settings is clicked. 
 	"""
 	def __init__(self):
-		self.x = 900
+		self.x = 700
 		self.y = 100
 	
 	def volume_control(self, button):
@@ -154,7 +122,7 @@ class Mute_button:
 		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
 
 		self.img = self.img_small
-		self.x = 900
+		self.x = 700
 		self.y = 0
 		self.y_min = 30
 		self.y_max = 100
@@ -168,7 +136,7 @@ class Unmute_button:
 		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
 
 		self.img = self.img_small
-		self.x = 900
+		self.x = 700
 		self.y = 0
 		self.y_min = 30
 		self.y_max = 100
@@ -186,7 +154,7 @@ def display_buttons():
 	
 	
 	# Home screen interface
-	width, height = 1000,600
+	width, height = 800,600
 	win = pygame.display.set_mode((width, height))
 	pygame.display.set_caption('Game Interface')
 
@@ -211,57 +179,32 @@ def display_buttons():
 
 		win.fill((255,255,255))
 
-		display_play_button(win)
-		display_resume_button(win)
-		display_highscore_button(win)
-		display_instruction_button(win)
-		display_about_button(win)		
-	
+		win.blit(button_play, (320,100))
+		win.blit(button_resume, (320,200))
+		win.blit(button_highscore, (320,300))
+		win.blit(button_instructions, (320,400))
+		win.blit(button_about, (320,500))
+
+
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
-		if 440 <= mouse[0] <= 560 and 140 <= mouse[1] <= 180 :
-			win.blit(button_enlarge, (430,60))
-			font_size = 40
-			font = pygame.font.Font('freesansbold.ttf', font_size)
-			text_x_pos, text_y_pos = 465, 135
-			text = font.render('Play' , True, (255,255,255))
-			win.blit(text, (text_x_pos, text_y_pos))  
-				
-		if 440 <= mouse[0] <= 560 and 240 <= mouse[1] <= 280 :
-			win.blit(button_enlarge, (430,160))
-			font_size = 38
-			font = pygame.font.Font('freesansbold.ttf', font_size)
-			text_x_pos, text_y_pos = 438, 235
-			text = font.render('Resume' , True, (255,255,255))
-			win.blit(text, (text_x_pos, text_y_pos))
+		if 320 <= mouse[0] <= 480 and 100 <= mouse[1] <= 150 :
+			win.blit(button_play_enlarge, (310,100))
+			  	
+		if 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
+			win.blit(button_resume_enlarge, (310,200))
+
+		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
+			win.blit(button_highscore_enlarge, (310,300))
 			
-
-		if 440 <= mouse[0] <= 560 and 340 <= mouse[1] <= 380 :
-			win.blit(button_enlarge, (430,260))
-			font_size = 32
-			font = pygame.font.Font('freesansbold.ttf', font_size)
-			text_x_pos, text_y_pos = 432, 335
-			text = font.render('HighScore' , True, (255,255,255))
-			win.blit(text, (text_x_pos, text_y_pos)) 
-
-		if 440 <= mouse[0] <= 560 and 440 <= mouse[1] <= 480 :
-			win.blit(button_enlarge, (430,360))
-			font_size = 30
-			font = pygame.font.Font('freesansbold.ttf', font_size)
-			text_x_pos, text_y_pos = 430, 435
-			text = font.render('Instruction' , True, (255,255,255))
-			win.blit(text, (text_x_pos, text_y_pos)) 
-
-		if 440 <= mouse[0] <= 560 and 540 <= mouse[1] <= 580 :
-			win.blit(button_enlarge, (430,460))
-			font_size = 40
-			font = pygame.font.Font('freesansbold.ttf', font_size)
-			text_x_pos, text_y_pos = 448, 535
-			text = font.render('About' , True, (255,255,255))
-			win.blit(text, (text_x_pos, text_y_pos))
-	
+		if 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
+			win.blit(button_instructions_enlarge, (310,400))
+			
+		if 320 <= mouse[0] <= 480 and 500 <= mouse[1] <= 550 :
+			win.blit(button_about_enlarge, (310,500))
+			
 	
 		dropdrown.volume_control(unmute_button)
 		
