@@ -10,8 +10,9 @@ win = None
 cursor = None
 
 right_click = False
-dropdown_bool = False
 value = 0
+
+mute_button, unmute_button = None, None
 
 #Loading Button Images
 screen =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
@@ -39,23 +40,6 @@ def check_play():
 		if right_click:
 			value = 1 
 	return value
-
-class Settings_button:
-	"""
-	Describes the settings button and its functionality.
-	"""
-	x = 730
-	y = 80
-	def __init__(self):
-		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface','settings.png')).convert_alpha()
-		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/7), int(self.img_original.get_height()/7)))
-		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
-		self.img = self.img_small
-		# self.x = self.x
-		# self.y = self.y
-
-	def draw(self):
-		win.blit(self.img, (self.x - self.img.get_width()//2, self.y - self.img.get_height()//2))
 
 class Cursor:
 	"""
@@ -94,71 +78,99 @@ def cursor_over_button(cursor, button):
 	cursor_mask = pygame.mask.from_surface(cursor.img)
 	button_mask = pygame.mask.from_surface(button.img)
 
-	offset = button.x-cursor.x, button.y-cursor.y
+	offset = button.centroid_x-cursor.x, button.centroid_y-cursor.y
 	collision = cursor_mask.overlap(button_mask, offset)    # returns bool
-
-	if collision:
-		button.img = button.img_big		# If the cursor is over button, button enlarges
-	else:
-		button.img = button.img_small
 
 	return collision
 
-class Dropdown:
+class Volume_control:
 	"""
 	Creates a dropdown when the settings is clicked. 
 	"""
-	def __init__(self):
-		self.x = 700
-		self.y = 100
+	x = 740
+	y = 60
+
+	button_flag = False
 	
-	def volume_control(self, button):
+	def __init__(self):
+		self.buttons_list = [unmute_button, mute_button]
+		self.img = self.buttons_list[0].img
+	
+	def check_status(self, button, pop_sound_play):
 		"""
-		Volume icon in dropdown
+		Checks whether the cursor is over the button. And if it is clicked inverts the status of the button i.e mute to unmute or vice versa.
 		"""
-		if dropdown_bool:
-			button.draw()     	# if settings button is clicked, volume button should be displayed
-			cursor_over_button(cursor, button)
-			if button.y <=button.y_max:
-				button.y += 20	# pixel change 
+		collision_with_button = cursor_over_button(cursor, button)
+
+		# If the cursor is over button, button enlarges
+		if collision_with_button:
+			button.img = button.img_big		
+
+			# If clicked, button is changed
+			if right_click:
+				button = self.buttons_list[not(self.buttons_list.index(button))]
+				# SOund effect
+				if pop_sound_play == False:
+					music_module.sound_button_enlarge.play()
+					pop_sound_play = True
+				else:
+					pop_sound_play = False
 		else:
-			if button.y >= button.y_min:
-				button.draw()	# Volume button should be displayed only until transition
-				button.y -= 20
+			button.img = button.img_small		
+
+		self.draw(button)		
+		self.functionality(button)
+
+		return button, pop_sound_play
+
+	def functionality(self, volume_button):
+		
+		if self.buttons_list.index(volume_button) == 1:
+			pygame.mixer.music.stop()
+			self.button_flag = True
+		elif self.buttons_list.index(volume_button) == 0 and self.button_flag:
+			pygame.mixer.music.play(-1)
+			self.button_flag = False
+
+	def draw(self, button):
+		button.centroid_x = Volume_control.x - button.img.get_width()//2
+		button.centroid_y = Volume_control.y - button.img.get_height()//2
+
+		win.blit(button.img, (button.centroid_x, button.centroid_y))
 		
 class Mute_button:
+	"""
+	Defines the mute button
+	"""
 	def __init__(self):
+		self.centroid_x = 0
+		self.centroid_y = 0
+
 		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'mute.png')).convert_alpha()
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/5), int(self.img_original.get_height()/5)))
 
 		self.img = self.img_small
-		self.x = Settings_button.x
-		self.y = 0
-		self.y_min = Settings_button.y
-		self.y_max = 160
 	
-	def draw(self):
-		win.blit(self.img, (self.x - self.img.get_width()//2, self.y - self.img.get_height()//2)) 
-
 class Unmute_button:
+	"""
+	Defines the unmute button
+	"""
 	def __init__(self):
+		self.centroid_x = 0
+		self.centroid_y = 0
+
 		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'unmute.png')).convert_alpha()		
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/5), int(self.img_original.get_height()/5)))
 
 		self.img = self.img_small
-		self.x = Settings_button.x
-		self.y = 0
-		self.y_min = Settings_button.y
-		self.y_max = 160
-	
-	def draw(self):
-		win.blit(self.img, (self.x - self.img.get_width()//2, self.y - self.img.get_height()//2))   
+	   
 
 def display_buttons():
 
-	global win, cursor, dropdown_bool
+	global win, cursor
+	global mute_button, unmute_button
 	
 	main.speed = 60		# fps
 	main.run = True
@@ -167,18 +179,14 @@ def display_buttons():
 	
 	# Home screen interface
 	width, height = 800,600
-	win = pygame.display.set_mode((width, height))
-	
+	win = pygame.display.set_mode((width, height))	
 	pygame.display.set_caption('Game Interface')
 
 	# Creating objects of classes
 	mute_button = Mute_button()
 	unmute_button = Unmute_button()
-	dropdrown = Dropdown()
+	volume_control = Volume_control()
 	cursor = Cursor()
-	settings_button = Settings_button()
-        
-	all_buttons_list = [settings_button]
 
 	clock = pygame.time.Clock()
 
@@ -186,12 +194,11 @@ def display_buttons():
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
+	volume_button = unmute_button
 
 	#Music Variable
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
-
-	volume_button = unmute_button
 
 	while True:	
 
@@ -243,19 +250,8 @@ def display_buttons():
 
 		else:
 			pop_sound_play = False
-
-		dropdrown.volume_control(volume_button)
 		
-		for button in all_buttons_list:
-			# Drawing buttons
-			button.draw()
-
-			# Enlarging effect while cursor is over button
-			collision_with_button = cursor_over_button(cursor, button)     # returns bool
-
-			# If the settings button is clicked dropdown option is displayed
-			if button == settings_button and right_click and collision_with_button:
-				dropdown_bool = not(dropdown_bool)						
+		volume_button, pop_sound_play = volume_control.check_status(volume_button, pop_sound_play)					
 
 		cursor.draw()   # should be at last, to avoid overlapping
 
@@ -266,3 +262,5 @@ def display_buttons():
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
+
+	return not(volume_control.button_flag)

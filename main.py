@@ -86,7 +86,7 @@ if __name__ == '__main__':
 	pygame.init()
 
 	# Home screen interface window
-	interface_module.display_buttons()
+	volume_button_on_status = interface_module.display_buttons()
 
 	# Game window
 	create_game_window()
@@ -98,7 +98,8 @@ if __name__ == '__main__':
 	
 	#Music Variable
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
-	pygame.mixer.music.play(-1)
+	if volume_button_on_status:
+		pygame.mixer.music.play(-1)
 
 	# GAME LOOP
 	while run:
@@ -110,7 +111,8 @@ if __name__ == '__main__':
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
 		if collected:
-			music_module.sound_coins.play()
+			if volume_button_on_status:
+				music_module.sound_coins.play()
 			coins_module.Coin.num_coins_collected += 1
 		coins_module.display_num_coins_collected(win)
 
@@ -118,7 +120,8 @@ if __name__ == '__main__':
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
 		collision_with_bird = bird_module.collision_with_bird()
 		if collision_with_obstacle or collision_with_bird:		# Dummy exit
-			music_module.sound_collided.play()
+			if volume_button_on_status:
+				music_module.sound_collided.play()
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 
 				time.sleep(1)
