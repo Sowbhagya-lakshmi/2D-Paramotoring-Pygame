@@ -7,6 +7,8 @@ from module import music_module
 
 # Global variables
 win = None
+cursor = None
+
 right_click = False
 dropdown_bool = False
 value = 0
@@ -42,15 +44,18 @@ class Settings_button:
 	"""
 	Describes the settings button and its functionality.
 	"""
+	x = 730
+	y = 80
 	def __init__(self):
-		self.img_small = pygame.image.load(os.path.join('Utils/Pics/Interface','settings.png')).convert_alpha()
-		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
+		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface','settings.png')).convert_alpha()
+		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/7), int(self.img_original.get_height()/7)))
+		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
 		self.img = self.img_small
-		self.x = 700
-		self.y = 30
+		# self.x = self.x
+		# self.y = self.y
 
 	def draw(self):
-		win.blit(self.img, (self.x, self.y))
+		win.blit(self.img, (self.x - self.img.get_width()//2, self.y - self.img.get_height()//2))
 
 class Cursor:
 	"""
@@ -113,6 +118,7 @@ class Dropdown:
 		"""
 		if dropdown_bool:
 			button.draw()     	# if settings button is clicked, volume button should be displayed
+			cursor_over_button(cursor, button)
 			if button.y <=button.y_max:
 				button.y += 20	# pixel change 
 		else:
@@ -122,35 +128,37 @@ class Dropdown:
 		
 class Mute_button:
 	def __init__(self):
-		self.img_small = pygame.image.load(os.path.join('Utils/Pics/Interface', 'mute.png')).convert_alpha()
-		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
+		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'mute.png')).convert_alpha()
+		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
+		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/5), int(self.img_original.get_height()/5)))
 
 		self.img = self.img_small
-		self.x = 700
+		self.x = Settings_button.x
 		self.y = 0
-		self.y_min = 30
-		self.y_max = 100
+		self.y_min = Settings_button.y
+		self.y_max = 160
 	
 	def draw(self):
-		win.blit(self.img, (self.x, self.y)) 
+		win.blit(self.img, (self.x - self.img.get_width()//2, self.y - self.img.get_height()//2)) 
 
 class Unmute_button:
 	def __init__(self):
-		self.img_small = pygame.image.load(os.path.join('Utils/Pics/Interface', 'unmute.png')).convert_alpha()
-		self.img_big = pygame.transform.scale(self.img_small,(int(self.img_small.get_width()*1.1), int(self.img_small.get_height()*1.1)))
+		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'unmute.png')).convert_alpha()		
+		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
+		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/5), int(self.img_original.get_height()/5)))
 
 		self.img = self.img_small
-		self.x = 700
+		self.x = Settings_button.x
 		self.y = 0
-		self.y_min = 30
-		self.y_max = 100
+		self.y_min = Settings_button.y
+		self.y_max = 160
 	
 	def draw(self):
-		win.blit(self.img, (self.x, self.y))   
+		win.blit(self.img, (self.x - self.img.get_width()//2, self.y - self.img.get_height()//2))   
 
 def display_buttons():
 
-	global win, dropdown_bool
+	global win, cursor, dropdown_bool
 	
 	main.speed = 60		# fps
 	main.run = True
@@ -182,6 +190,8 @@ def display_buttons():
 	#Music Variable
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
+
+	volume_button = unmute_button
 
 	while True:	
 
@@ -234,7 +244,7 @@ def display_buttons():
 		else:
 			pop_sound_play = False
 
-		dropdrown.volume_control(unmute_button)
+		dropdrown.volume_control(volume_button)
 		
 		for button in all_buttons_list:
 			# Drawing buttons
