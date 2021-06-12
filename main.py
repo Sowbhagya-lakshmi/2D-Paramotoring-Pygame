@@ -2,6 +2,8 @@ import os
 import pygame
 import time
 
+import AVM as avm
+
 import global_config
 from module import background_module
 from module import bird_module
@@ -25,9 +27,16 @@ num_of_lives = 3
 
 pygame.init()
 
+
 # Game Window
-win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
-pygame.display.set_caption('Game Window')
+# win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
+# pygame.display.set_caption('Game Window 2')
+
+def create_game_window():
+	global win	
+	win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
+	pygame.display.set_caption('Game Window')
+
 
 def change_img_pixel_format():
 	"""
@@ -78,7 +87,23 @@ def draw_all_objects():
 
 
 # MAIN ALGORITHM
-if __name__ == '__main__':
+#if __name__ == '__main__':
+def main_game():
+	
+
+	#----------------Added----------------
+	
+	pygame.init()
+
+	speed = global_config.speed
+	game_duration = global_config.game_duration
+	run = True
+
+	frame_count = 0
+	num_of_lives = 3
+
+	create_game_window()
+	#-------------------------------------
 
 	clock = pygame.time.Clock()
 	event_module.setting_up_events()
@@ -88,6 +113,9 @@ if __name__ == '__main__':
 	#Music Variable
 	Music_background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
 	pygame.mixer.music.play(-1)
+
+	fps_count = 0
+	start_time = time.time()
 
 	# GAME LOOP
 	while run:
@@ -121,3 +149,16 @@ if __name__ == '__main__':
 			print('Game Over')
 			time.sleep(1)
 			break
+
+		fps_count += 1
+		now = time.time()
+		diff = now - start_time
+
+		if diff >= 5:
+			fps = fps_count//5
+			print("fps: ", fps)
+			start_time = time.time()		
+			fps_count = 0
+
+if __name__ == "__main__":
+	main_game()
