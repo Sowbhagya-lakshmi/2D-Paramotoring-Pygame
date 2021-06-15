@@ -26,8 +26,11 @@ num_of_lives = 3
 pygame.init()
 
 # Game Window
-win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
+game_window = pygame.display.set_mode((global_config.window_width, global_config.window_height), pygame.RESIZABLE)
 pygame.display.set_caption('Game Window')
+
+# Copy of game window which will be later resized according to the resolution, and blit onto the original game window.
+win = game_window.copy()	
 
 def change_img_pixel_format():
 	"""
@@ -112,6 +115,9 @@ if __name__ == '__main__':
 			if num_of_lives == 0:	# If all 3 lives are gone 
 				time.sleep(1)
 				break
+
+		# Resize and blit the copy of game window onto main game window
+		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
 		clock.tick(speed)
 		pygame.display.update()
