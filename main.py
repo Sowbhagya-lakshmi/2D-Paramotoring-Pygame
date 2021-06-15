@@ -15,6 +15,7 @@ from module import foreground_module
 from module import music_module
 from module import obstacles_module
 from module import player_module
+from window import draw_control_screen_actual, draw_player_position
 
 # Global variables
 
@@ -80,7 +81,7 @@ def draw_all_objects():
 	for hit_effect_object in effects_module.Hit_effects.hit_effects_list:
 		hit_effect_object.draw(win)
 
-	player_module.draw_player(win)
+	player_y = player_module.draw_player(win)
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
 	display_module.draw_minimap(win,frame_count)
@@ -140,6 +141,9 @@ def main_game():
 			if num_of_lives == 0:	# If all 3 lives are gone 
 				time.sleep(1)
 				break
+		
+		draw_control_screen_actual(win)
+		draw_player_position(win)
 
 		clock.tick(speed)
 		pygame.display.update()

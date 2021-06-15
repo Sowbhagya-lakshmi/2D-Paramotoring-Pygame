@@ -22,11 +22,13 @@ class HandDetector():
         # BGR to RGB
         imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         self.results = self.hands.process(imgRGB)
+        #print(self.results)
         # print(results.multi_hand_landmark)
-        if self.results.multi_hand_landmarks:
-            for handLms in self.results.multi_hand_landmarks:
-                if draw:
-                    self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
+
+        # if self.results.multi_hand_landmarks:
+        #     for handLms in self.results.multi_hand_landmarks:
+        #         if draw:
+        #             self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
         return img
 
     def findPosition(self, img, handNo=0, draw=True):
@@ -50,8 +52,8 @@ class HandDetector():
                 self.lmlist.append([id, cx, cy])
                 #print(x)
                 #if id == 0:
-                if draw:
-                    cv2.circle(img, (cx, cy), 3, (255, 0, 0), cv2.FILLED)
+                # if draw:
+                #     cv2.circle(img, (cx, cy), 3, (255, 0, 0), cv2.FILLED)
                 # print(h,w,c)
                 # cv2.putText(img, str(int(id)), (cx+1, cx+1), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (0, 0, 255), 3)
 

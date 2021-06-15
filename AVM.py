@@ -5,8 +5,8 @@ import time
 import autopy
 
 ##########################
-wCam, hCam = 540, 380
-frameR = 100  # Frame Reduction
+wCam, hCam = 520, 270
+frameR = 50  # Frame Reduction
 smoothening = 8
 #########################
 
@@ -90,8 +90,11 @@ def main_avm():
             break
         #if length < 40:
             #break
+    return x1, y1
 
     cv2.destroyAllWindows()
+
+    
 
 if __name__ == "__main__":
     main_avm()
