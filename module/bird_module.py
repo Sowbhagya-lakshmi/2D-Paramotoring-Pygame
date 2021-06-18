@@ -26,6 +26,7 @@ class Bird():
 			imgs.append(pygame.transform.scale(img, (int(img.get_width()//6), int(img.get_height()//6))))
 		list_of_lists.append(imgs)
 
+	del img
 	birds_list = []
 	collision_birds = []	# Birds for which we have to check collision
 
@@ -99,7 +100,7 @@ def collision_with_bird():
 
 	if len(Bird.collision_birds)!=0:
 		for bird in Bird.collision_birds:
-			if bird.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
+			if bird.x < (player.x + player.img.get_width()+10) and bird.x > player.x and bird.y < (player.y + player.img.get_height()+10) and bird.y > player.y:	# Checking for collision if near player
 				bird_mask = pygame.mask.from_surface(bird.img)
 				offset = int(bird.x - player.x), int(bird.y - player.y)
 				collision_point_with_player = player_mask.overlap(bird_mask, offset)

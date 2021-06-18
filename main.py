@@ -15,13 +15,12 @@ from module import obstacles_module
 from module import player_module
 
 # Global variables
-
-speed = global_config.speed
-game_duration = global_config.game_duration
 run = True
 
 frame_count = 0
 num_of_lives = 3
+
+total_num_of_frames = global_config.speed*global_config.game_duration
 
 pygame.init()
 
@@ -119,11 +118,11 @@ if __name__ == '__main__':
 		# Resize and blit the copy of game window onto main game window
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
-		clock.tick(speed)
+		clock.tick(global_config.speed)
 		pygame.display.update()
 		
 		# Dummy exit
-		if frame_count >= game_duration*speed:
+		if frame_count >= total_num_of_frames:
 			print('Game Over')
 			time.sleep(1)
 			break

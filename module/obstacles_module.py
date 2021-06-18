@@ -123,15 +123,16 @@ def collision_with_obstacle():
 	
 	for element in obstacle_classes:
 		for obstacle in element.collision_obstacles:
-			if obstacle.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
-				obstacle_mask = pygame.mask.from_surface(obstacle.img)
-				offset = obstacle.x - player.x, obstacle.y - player.y
+			if obstacle.x < (player.x + player.img.get_width()+10) and (obstacle.x + obstacle.img.get_width()) > player.x:	# Check x range
+				if obstacle.y < (player.y + player.img.get_height()+10) and (obstacle.y + obstacle.img.get_height() > player.y):	# Check x range
+					obstacle_mask = pygame.mask.from_surface(obstacle.img)
+					offset = obstacle.x - player.x, obstacle.y - player.y
 
-				collision_point_with_player = player_mask.overlap(obstacle_mask, offset)	# Checking collision with player
-				collision_point_with_propeller = propeller_mask.overlap(obstacle_mask, offset)	# Checking collision with propeller
+					collision_point_with_player = player_mask.overlap(obstacle_mask, offset)	# Checking collision with player
+					collision_point_with_propeller = propeller_mask.overlap(obstacle_mask, offset)	# Checking collision with propeller
 
-				if collision_point_with_player or collision_point_with_propeller:
-					element.collision_obstacles.remove(obstacle)
-					effects_module.Hit_effects.hit_effects_list.append(effects_module.Hit_effects())
-					return True
+					if collision_point_with_player or collision_point_with_propeller:
+						element.collision_obstacles.remove(obstacle)
+						effects_module.Hit_effects.hit_effects_list.append(effects_module.Hit_effects())
+						return True
 	return False
