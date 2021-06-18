@@ -39,6 +39,7 @@ def check_play():
 	if 320 <= mouse[0] <= 480 and ((100 <= mouse[1] <= 150) or (200 <= mouse[1] <= 250)):
 		if right_click:
 			value = 1 
+	
 	return value
 
 class Cursor:
