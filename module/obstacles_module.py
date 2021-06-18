@@ -123,8 +123,8 @@ def collision_with_obstacle():
 	
 	for element in obstacle_classes:
 		for obstacle in element.collision_obstacles:
-			if obstacle.x < (player.x + player.img.get_width()+10) and (obstacle.x + obstacle.img.get_width()) > player.x:	# Check x range
-				if obstacle.y < (player.y + player.img.get_height()+10) and (obstacle.y + obstacle.img.get_height() > player.y):	# Check x range
+			if obstacle.x < (player.x + player.img.get_width()) and (obstacle.x + obstacle.img.get_width()) > player.x:	# Check x range
+				if obstacle.y < (player.y + player.img.get_height()) and (obstacle.y + obstacle.img.get_height()) > player.y:	# Check x range
 					obstacle_mask = pygame.mask.from_surface(obstacle.img)
 					offset = obstacle.x - player.x, obstacle.y - player.y
 

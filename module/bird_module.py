@@ -100,13 +100,14 @@ def collision_with_bird():
 
 	if len(Bird.collision_birds)!=0:
 		for bird in Bird.collision_birds:
-			if bird.x < (player.x + player.img.get_width()+10) and bird.x > player.x and bird.y < (player.y + player.img.get_height()+10) and bird.y > player.y:	# Checking for collision if near player
-				bird_mask = pygame.mask.from_surface(bird.img)
-				offset = int(bird.x - player.x), int(bird.y - player.y)
-				collision_point_with_player = player_mask.overlap(bird_mask, offset)
-				collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
+			if bird.x < (player.x + player.img.get_width()) and (bird.x + bird.img.get_width()) > player.x:
+				if bird.y < (player.y + player.img.get_height()) and (bird.y + bird.img.get_height()) > player.y:	# Checking for collision if near player
+					bird_mask = pygame.mask.from_surface(bird.img)
+					offset = int(bird.x - player.x), int(bird.y - player.y)
+					collision_point_with_player = player_mask.overlap(bird_mask, offset)
+					collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
 
-				if collision_point_with_player or collision_point_with_propeller:
-					Bird.collision_birds.remove(bird)
-					return True
+					if collision_point_with_player or collision_point_with_propeller:
+						Bird.collision_birds.remove(bird)
+						return True
 	return False
