@@ -124,8 +124,8 @@ class Volume_control:
 	"""
 	Creates a dropdown when the settings is clicked. 
 	"""
-	x = 740
-	y = 60
+	x = 760
+	y = 40
 
 	button_flag = False
 	
@@ -184,8 +184,8 @@ class Mute_button:
 		self.centroid_y = 0
 
 		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'mute.png')).convert_alpha()
-		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
-		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/5), int(self.img_original.get_height()/5)))
+		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
+		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
 		self.img = self.img_small
 	
@@ -198,8 +198,8 @@ class Unmute_button:
 		self.centroid_y = 0
 
 		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'unmute.png')).convert_alpha()		
-		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/6), int(self.img_original.get_height()/6)))
-		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/5), int(self.img_original.get_height()/5)))
+		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
+		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
 		self.img = self.img_small
 	   

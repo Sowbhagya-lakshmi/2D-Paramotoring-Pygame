@@ -2,8 +2,8 @@ import pygame
 import sys
 import os
 
-import main
-from module import music_module , interface_module
+# import main
+# from module import music_module , interface_module
 
 win = None
 cursor = None
@@ -66,8 +66,8 @@ def display_playbutton() :
 	global win, cursor
 	global mute_button, unmute_button
 	
-	main.speed = 60		# fps
-	main.run = True
+	speed = 60		# fps
+	run = True
 	
 	
 	# Home screen interface
@@ -88,25 +88,25 @@ def display_playbutton() :
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-    while True:
 
-        event_loop()
+	while True:
+		event_loop()
 
-        win.fill((255,255,255))
-        win.blit(screen_home,(0,0))
-        win.blit(button_mode_gesture, (320,100))
-        win.blit(button_mode_mouse, (320,200))
-        
-       
+		win.fill((255,255,255))
+		win.blit(screen_home,(0,0))
+		win.blit(button_mode_gesture, (320,100))
+		win.blit(button_mode_mouse, (320,200))
+		
+		
 		mouse = pygame.mouse.get_pos()
 
-        cursor.draw()   # should be at last, to avoid overlapping
+		cursor.draw()   # should be at last, to avoid overlapping
 
-        pygame.display.update()
+		pygame.display.update()
 
 		
-	
+
 	# Bring back the original cursor
-    pygame.mouse.set_visible(True)
+pygame.mouse.set_visible(True)
 
 
