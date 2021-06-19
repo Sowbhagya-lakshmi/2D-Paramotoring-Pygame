@@ -14,32 +14,68 @@ value = 0
 
 mute_button, unmute_button = None, None
 
-#Loading Button Images
-screen =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
+#Loading Button and Screen Images
+screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
 
-button_about =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_about.png'))
-button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.2),int(button_about.get_height()*1.2)))
+button_about =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_About.png'))
+button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.1),int(button_about.get_height()*1.1)))
+button_about_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_About_click.png'))
 
-button_highscore =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_highscore.png'))
-button_highscore_enlarge = pygame.transform.scale(button_highscore, (int(button_highscore.get_width()*1.2),int(button_highscore.get_height()*1.2)))
+button_highscore =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_HighScore.png'))
+button_highscore_enlarge = pygame.transform.scale(button_highscore, (int(button_highscore.get_width()*1.1),int(button_highscore.get_height()*1.1)))
+button_highscore_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_inverted.png'))
 
-button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_instructions.png'))
-button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.2),int(button_instructions.get_height()*1.2)))
+button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions.png'))
+button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.1),int(button_instructions.get_height()*1.1)))
+button_instructions_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions_click.png'))
 
-button_play =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_play.png'))
-button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_width()*1.2),int(button_play.get_height()*1.2)))
+button_play =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Play.png'))
+button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_width()*1.1),int(button_play.get_height()*1.1)))
+button_play_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Play_click.png'))
 
-button_resume =  pygame.image.load(os.path.join('Utils/Pics/Interface','button_resume.png'))
-button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.2),int(button_resume.get_height()*1.2)))
+button_resume =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume.png'))
+button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
+button_resume_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume_click.png'))
 
 
-def check_play():
+def check_play(screen):
 	global value, right_click
+	i=0
 	mouse = pygame.mouse.get_pos()
-	if 320 <= mouse[0] <= 480 and ((100 <= mouse[1] <= 150) or (200 <= mouse[1] <= 250)):
-		if right_click:
-			value = 1 
-	
+	if 320 <= mouse[0] <= 480:
+		if 100 <= mouse[1] <= 150:
+			if right_click:
+				while i<20:
+					screen.blit(button_play_click, (320,100))
+					i +=1
+				value = 1 
+		if 200 <= mouse[1] <= 250:
+			if right_click:
+				while i<20:
+					screen.blit(button_resume_click, (320,200))
+					i +=1
+				value = 1
+		if 300 <= mouse[1] <= 350:
+			if right_click:
+				while i<20:
+					screen.blit(button_highscore_click, (320,300))
+					i +=1
+				value = 2
+		if 400 <= mouse[1] <= 450:
+			if right_click:
+				while i<20:
+					screen.blit(button_instructions_click, (320,400))
+					i +=1
+				value = 3
+		if 200 <= mouse[1] <= 250:
+			if right_click:
+				while i<20:
+					screen.blit(button_about_click, (320,500))
+					i +=1
+				value = 4
+		clock = pygame.time.Clock()		
+		clock.tick(main.speed)		
+		pygame.display.update()
 	return value
 
 class Cursor:
@@ -110,7 +146,7 @@ class Volume_control:
 			# If clicked, button is changed
 			if right_click:
 				button = self.buttons_list[not(self.buttons_list.index(button))]
-				# SOund effect
+				# Sound effect
 				if pop_sound_play == False:
 					music_module.sound_button_enlarge.play()
 					pop_sound_play = True
@@ -175,7 +211,6 @@ def display_buttons():
 	
 	main.speed = 60		# fps
 	main.run = True
-	count = 0
 	
 	
 	# Home screen interface
@@ -203,12 +238,12 @@ def display_buttons():
 
 	while True:	
 
-		value = check_play()
+		value = check_play(win)
 		if value == 1: break 	# breaks interface loop
 
 		win.fill((255,255,255))
 
-		win.blit(screen,(0,0))
+		win.blit(screen_home,(0,0))
 		win.blit(button_play, (320,100))
 		win.blit(button_resume, (320,200))
 		win.blit(button_highscore, (320,300))
@@ -220,31 +255,36 @@ def display_buttons():
 		mouse = pygame.mouse.get_pos()
 
 		if 320 <= mouse[0] <= 480 and 100 <= mouse[1] <= 150 :
-			win.blit(button_play_enlarge, (310,100))
+			if right_click == 0:
+				win.blit(button_play_enlarge, (310,100))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			  	
 		elif 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
-			win.blit(button_resume_enlarge, (310,200))
+			if right_click == 0:
+				win.blit(button_resume_enlarge, (310,200))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 
 		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
-			win.blit(button_highscore_enlarge, (310,300))
+			if right_click == 0:
+				win.blit(button_highscore_enlarge, (310,300))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
 		elif 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
-			win.blit(button_instructions_enlarge, (310,400))
+			if right_click == 0:
+				win.blit(button_instructions_enlarge, (310,400))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
 		elif 320 <= mouse[0] <= 480 and 500 <= mouse[1] <= 550 :
-			win.blit(button_about_enlarge, (310,500))
+			if right_click == 0:
+				win.blit(button_about_enlarge, (310,500))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
@@ -259,7 +299,7 @@ def display_buttons():
 		clock.tick(main.speed)
 		pygame.display.update()
 
-		count += 1 
+		
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
