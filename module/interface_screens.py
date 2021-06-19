@@ -2,8 +2,8 @@ import pygame
 import sys
 import os
 
-# import main
-# from module import music_module , interface_module
+import main
+from module import music_module , interface_module
 
 win = None
 cursor = None
@@ -16,7 +16,7 @@ pygame.init()
 screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
 
 button_mode_gesture =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_HandGesture.png'))
-button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Button_Mouse.png'))
+button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
 
 class Cursor:
 	"""
@@ -66,8 +66,8 @@ def display_playbutton() :
 	global win, cursor
 	global mute_button, unmute_button
 	
-	speed = 60		# fps
-	run = True
+	main.speed = 60		# fps
+	main.run = True
 	
 	
 	# Home screen interface
@@ -88,25 +88,21 @@ def display_playbutton() :
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-
-	while True:
+	i = 0
+	while i<1000:
 		event_loop()
 
-		win.fill((255,255,255))
+		win.fill((255,0,0))
 		win.blit(screen_home,(0,0))
-		win.blit(button_mode_gesture, (320,100))
-		win.blit(button_mode_mouse, (320,200))
-		
-		
-		mouse = pygame.mouse.get_pos()
+		win.blit(button_mode_gesture, (50,150))
+		win.blit(button_mode_mouse,(230,150))
 
-		cursor.draw()   # should be at last, to avoid overlapping
+		i=i+1
+		cursor.draw()
 
 		pygame.display.update()
 
-		
-
-	# Bring back the original cursor
-pygame.mouse.set_visible(True)
+	pygame.mouse.set_visible(False)
+    
 
 

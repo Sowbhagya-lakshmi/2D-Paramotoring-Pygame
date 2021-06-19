@@ -2,7 +2,7 @@ import os
 import pygame
 
 # Background Image
-bg = pygame.image.load(os.path.join('Utils/Pics/Background','bg.png'))
+bg = pygame.image.load(os.path.join('Utils/Pics/Background','bg_.png'))
 bg_x = 0
 bg_width = bg.get_width()  
 background_speed = 2	# Background shifts by 2 pixels in each game loop

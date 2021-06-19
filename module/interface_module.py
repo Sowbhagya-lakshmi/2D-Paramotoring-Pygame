@@ -4,6 +4,7 @@ import os
 
 import main
 from module import music_module
+from module import interface_screens
 
 # Global variables
 win = None
@@ -239,7 +240,8 @@ def display_buttons():
 	while True:	
 
 		value = check_play(win)
-		if value == 1: break 	# breaks interface loop
+		if value == 1: interface_screens.display_playbutton()
+		break 	# breaks interface loop
 
 		win.fill((255,255,255))
 
