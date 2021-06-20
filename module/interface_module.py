@@ -42,6 +42,7 @@ button_resume_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Butt
 def check_play(screen):
 	global value, right_click
 	i=0
+	value = 0
 	mouse = pygame.mouse.get_pos()
 	if 320 <= mouse[0] <= 480:
 		if 100 <= mouse[1] <= 150:

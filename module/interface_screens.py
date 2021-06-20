@@ -35,6 +35,8 @@ def check_mode(screen):
 	global value, right_click
 	i=0
 	mouse = pygame.mouse.get_pos()
+
+	mode = None
 	
 	if 50 <= mouse[0] <= 170 and 150 <= mouse[1] <= 310:
 		if right_click:
@@ -50,10 +52,12 @@ def check_mode(screen):
 			mode = 2
 	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
 			if right_click:
-				while z<10:
+				while i<10:
 					win.blit(button_home_click,(210,350))
-					z = z+1
+					i = i+1
 				mode = 3
+	else:
+		mode = None
 		
 	clock = pygame.time.Clock()		
 	clock.tick(main.speed)		
