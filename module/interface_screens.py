@@ -13,7 +13,7 @@ value = 0
 
 pygame.init()
 
-screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
+screen_home =  pygame.image.load(os.path.join('Utils/Pics/Background','bg.png'))
 
 button_mode_gesture =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_HandGesture.png'))
 button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
