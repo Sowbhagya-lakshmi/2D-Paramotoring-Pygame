@@ -127,6 +127,7 @@ if __name__ == '__main__':
 							# print('collected life', num)
 							del extra_life
 							num_of_lives += 1
+							coins_module.Coin.num_coins_collected -= 10
 			except:
 				pass
 
