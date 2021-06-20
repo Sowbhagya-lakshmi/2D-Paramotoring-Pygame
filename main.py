@@ -47,7 +47,7 @@ def change_img_pixel_format():
 	coins_module.coin_board = coins_module.coin_board.convert_alpha()
 
 	obstacles_module.Tree.resized_imgs = [img.convert_alpha() for img in obstacles_module.Tree.imgs]
-	obstacles_module.Rock_n_Bush.resized_imgs = [img.convert_alpha() for img in obstacles_module.Rock_n_Bush.resized_imgs]	
+	obstacles_module.Rock_n_Bush.imgs = [img.convert_alpha() for img in obstacles_module.Rock_n_Bush.imgs]	
 
 	effects_module.Coin_spark_effects.imgs = [img.convert_alpha() for img in effects_module.Coin_spark_effects.imgs]
 	effects_module.Hit_effects.imgs = [img.convert_alpha() for img in effects_module.Hit_effects.imgs]
@@ -77,8 +77,7 @@ def draw_all_objects():
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
 	display_module.draw_minimap(win,frame_count)
-
-
+	
 # MAIN ALGORITHM
 if __name__ == '__main__':
 
@@ -96,6 +95,13 @@ if __name__ == '__main__':
 		frame_count += 1
 
 		draw_all_objects()
+		
+
+		if frame_count < 3*global_config.speed:
+			display_module.countdown.draw(win)
+		elif frame_count == 3*global_config.speed:
+			pygame.event.set_allowed(pygame.USEREVENT+1)
+		
 		event_module.event_loop()
 
 		# Coin collection
