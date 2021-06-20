@@ -104,7 +104,7 @@ if __name__ == '__main__':
 	# GAME LOOP
 	while run:
 		frame_count += 1
-
+		
 		draw_all_objects()
 		event_module.event_loop()
 
