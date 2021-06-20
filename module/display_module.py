@@ -1,7 +1,11 @@
 import os
 import pygame
+import random
 
 import global_config
+from module import coins_module
+from module import foreground_module
+from module import player_module
 
 # LIVES
 heart = pygame.image.load(os.path.join('Utils/Pics/Display/', 'life.png'))
@@ -15,6 +19,32 @@ def display_lives(win, num_of_lives):
 		win.blit(heart, (x_pos,75))
 		x_pos += heart.get_width() + 3
 
+class Extra_life:
+	def __init__(self):
+		self.x = global_config.window_width + heart.get_width()
+		free_zone_y = coins_module.find_free_zone_y()
+		self.y = random.randint(0,free_zone_y)	
+		self.img = heart	
+	
+	def draw(self,win):
+		if self.x > -1*heart.get_width():
+			win.blit(heart, (self.x, self.y))
+			self.x -= foreground_module.foreground_speed
+		else:
+			del self
+	def check_collision(self):
+		player = player_module.player
+		propeller = player_module.propeller
+		player_mask = pygame.mask.from_surface(player.img)
+		propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+
+		heart_mask = pygame.mask.from_surface(heart)
+
+		offset = self.x - player.x, self.y - player.y
+		collision_point_with_player = player_mask.overlap(heart_mask, offset)	# Checking collision with player
+		if collision_point_with_player:
+			return True
+		return False
 
 # MINIMAP
 line = pygame.image.load(os.path.join('Utils/Pics/Display/','line.png'))
@@ -56,6 +86,8 @@ class Countdown:
 	num_of_imgs = 3
 	imgs_big = [pygame.image.load(os.path.join('Utils/Pics/Countdown/',str(x) + '.png')) for x in range(num_of_imgs, 0, -1)]
 	imgs = [pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2)) for img in imgs_big]
+	imgs.append(pygame.image.load(os.path.join('Utils/Pics/Countdown/','go.png')))
+	num_of_imgs = 4
 
 	def __init__(self):
 		self.x, self.y = global_config.window_width//2, global_config.window_height//2

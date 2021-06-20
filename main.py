@@ -1,5 +1,6 @@
 import os
 import pygame
+import random
 import time
 
 import global_config
@@ -97,9 +98,9 @@ if __name__ == '__main__':
 		draw_all_objects()
 		
 
-		if frame_count < 3*global_config.speed:
+		if frame_count < 4*global_config.speed:
 			display_module.countdown.draw(win)
-		elif frame_count == 3*global_config.speed:
+		elif frame_count == 4*global_config.speed:
 			pygame.event.set_allowed(pygame.USEREVENT+1)
 		
 		event_module.event_loop()
@@ -110,6 +111,24 @@ if __name__ == '__main__':
 			music_module.sound_coins.play()
 			coins_module.Coin.num_coins_collected += 1
 		coins_module.display_num_coins_collected(win)
+
+		# Extra life
+		if coins_module.Coin.num_coins_collected%10 == 0 and num_of_lives!=3:
+			extra_life = display_module.Extra_life()
+		elif coins_module.Coin.num_coins_collected > 5:
+			try:
+				extra_life.draw(win)
+				player = player_module.player
+				if extra_life.x < (player.x + player.img.get_width()) and (extra_life.x + extra_life.img.get_width()) > player.x:	# Check x range
+					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
+						bool = extra_life.check_collision()
+						if bool:
+							# num = random.randint(1,1000)
+							# print('collected life', num)
+							del extra_life
+							num_of_lives += 1
+			except:
+				pass
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
