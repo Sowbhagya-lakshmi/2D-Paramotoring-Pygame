@@ -244,6 +244,10 @@ def display_buttons():
 			interface_screens.display_playbutton()
 			break 	# breaks interface loop
 
+		elif value == 3:
+			interface_screens.display_instructions()
+			break
+
 		win.fill((255,255,255))
 
 		win.blit(screen_home,(0,0))
