@@ -17,21 +17,24 @@ screen_home =  pygame.image.load(os.path.join('Utils/Pics/Background','bg.png'))
 
 button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_small = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*0.8),int(button_instructions.get_height()*0.8)))
-button_instructions_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions_click.png'))
+
+button_restart =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Restart.png'))
+button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
+
+button_resume =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume.png'))
+button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
 button_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Home.png'))
 button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
-button_home_click =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Home_click.png'))
+button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_width()*0.8),int(button_home.get_height()*0.8)))
 
 button_mode_gesture =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_HandGesture.png'))
 button_mode_gesture_enlarge = pygame.transform.scale(button_mode_gesture, (int(button_mode_gesture.get_width()*1.1),int(button_mode_gesture.get_height()*1.1)))
-button_mode_gesture_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_HandGesture_click.png'))
 
 button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
-button_mode_mouse_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse_click.png'))
 
-def check_mode(screen):
+def check_mode_playbutton( ):
 	global value, right_click
 	i=0
 	mouse = pygame.mouse.get_pos()
@@ -40,21 +43,36 @@ def check_mode(screen):
 	
 	if 50 <= mouse[0] <= 170 and 150 <= mouse[1] <= 310:
 		if right_click:
-			while i<50:
-				screen.blit(button_mode_gesture_click, (50,150))
-				i +=1
 			mode = 1
-	if 320 <= mouse[1] <= 440 and 150 <= mouse[1] <= 310:
+	if 320 <= mouse[0] <= 440 and 150 <= mouse[1] <= 310:
 		if right_click:
-			while i<50:
-				screen.blit(button_mode_mouse_click, (330,150))
-				i +=1
 			mode = 2
 	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
 			if right_click:
-				while i<10:
-					win.blit(button_home_click,(210,350))
-					i = i+1
+				mode = 3
+	else:
+		mode = None
+		
+	clock = pygame.time.Clock()		
+	clock.tick(main.speed)		
+	pygame.display.update()
+	return mode
+
+def check_mode_pausebutton( ):
+	global value, right_click
+	i=0
+	mouse = pygame.mouse.get_pos()
+
+	mode = None
+	
+	if 170 <= mouse[0] <= 330 and 150 <= mouse[1] <= 200:
+		if right_click:
+			mode = 1
+	if 170 <= mouse[1] <= 330 and 250 <= mouse[1] <= 300:
+		if right_click:
+			mode = 2
+	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
+			if right_click:
 				mode = 3
 	else:
 		mode = None
@@ -137,11 +155,13 @@ def display_playbutton() :
 	i = 0
 	while i<1000:
 
-		mode = check_mode(win)
+		mode = check_mode_playbutton( )
 		if mode == 3: 
 			interface_module.display_buttons()
 			break 	# breaks interface loop
-	
+		elif mode == 2 or mode == 1 :
+			display_pausebutton()
+			break
 
 		win.fill((255,0,0))
 		win.blit(screen_home,(0,0))
@@ -177,7 +197,7 @@ def display_playbutton() :
 		
 		elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
 			if right_click == 0:
-				win.blit(button_home, (200,340))
+				win.blit(button_home_enlarge, (205,340))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
@@ -189,5 +209,78 @@ def display_playbutton() :
 
 	pygame.mouse.set_visible(False)
     
+def display_pausebutton() :
 
+	global win, cursor
+	global mute_button, unmute_button
+	
+	main.speed = 60		# fps
+	main.run = True
+	
+	
+	# Home screen interface
+	width, height = 500,450
+	win = pygame.display.set_mode((width, height))	
+	pygame.display.set_caption('Pause Button Interface')
+
+	cursor = Cursor()
+
+	clock = pygame.time.Clock()
+
+	# Hide the original cursor
+	pygame.mouse.set_visible(False)
+
+	pop_sound_play = False
+
+	#Music Variable
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	pygame.mixer.music.play(-1)
+
+	i = 0
+	while i<1000:
+
+		mode = check_mode_pausebutton( )
+		if mode == 1: 
+			interface_module.display_buttons()
+			break 	# breaks interface loop
+	
+
+		win.fill((255,0,0))
+		win.blit(screen_home,(0,0))
+		win.blit(button_resume, (170,150))
+		win.blit(button_restart,(170,250))
+		win.blit(button_home_small,(210,350))
+
+		event_loop()
+
+		mouse = pygame.mouse.get_pos()
+		
+		if 170 <= mouse[0] <= 330 and 150 <= mouse[1] <= 200 :
+			if right_click == 0:
+				win.blit(button_resume_enlarge, (165,150))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+
+		elif 170 <= mouse[0] <= 330 and 250 <= mouse[1] <= 300 :
+			if right_click == 0:
+				win.blit(button_restart_enlarge, (165,250))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+		
+		elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
+			if right_click == 0:
+				win.blit(button_home_enlarge, (205,340))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+			
+		i=i+1
+		cursor.draw()
+
+		pygame.display.update()
+
+	pygame.mouse.set_visible(False)
+    
 
