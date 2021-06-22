@@ -249,9 +249,12 @@ def display_pausebutton() :
 	while i<1000:
 
 		mode = check_mode_pausebutton( )
-		if mode == 1: 
+		if mode == 3: 
 			interface_module.display_buttons()
 			break 	# breaks interface loop
+		elif mode == 1:
+			display_playbutton()
+			break
 	
 
 		win.fill((255,0,0))
