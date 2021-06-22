@@ -1,9 +1,14 @@
 import pygame
 import sys
 import os
+import pyttsx3
 
 import main
 from module import music_module , interface_module
+
+engine = pyttsx3.init()
+voices = engine.getProperty('voices')
+engine.setProperty('voice' , voices[1].id)
 
 win = None
 cursor = None
@@ -50,7 +55,7 @@ def check_mode_playbutton( ):
 	elif 320 <= mouse[0] <= 440 and 150 <= mouse[1] <= 310:
 		if right_click:
 			mode = 2
-	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425:
+	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 435:
 		if right_click:
 			mode = 3
 	if 185 <= mouse[0] <= 310 and 280 <= mouse[1] <= 320:
@@ -162,12 +167,11 @@ def display_playbutton() :
 	while i<1000:
 
 		mode = check_mode_playbutton( )
+		
 		if mode == 3: 
 			interface_module.display_buttons()
 			break 	# breaks interface loop
-		elif mode == 2 or mode == 1 :
-			display_pausebutton()
-			break
+		
 		elif mode == 4:
 			display_instructions()
 			break
@@ -178,6 +182,9 @@ def display_playbutton() :
 		win.blit(button_mode_mouse,(330,150))
 		win.blit(button_instructions_small, (185,280))
 		win.blit(button_home_small,(210,350))
+
+		engine.say('Choose the mode of game')
+		engine.runAndWait
 
 		event_loop()
 
