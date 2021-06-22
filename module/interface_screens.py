@@ -53,7 +53,7 @@ def check_mode_playbutton( ):
 	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425:
 		if right_click:
 			mode = 3
-	if 185 <= mouse[0] <= 310 and 280 <= mouse[1] <= 320:
+	elif 185 <= mouse[0] <= 310 and 280 <= mouse[1] <= 320:
 		if right_click:
 			mode = 4
 	else:
@@ -74,7 +74,7 @@ def check_mode_pausebutton( ):
 	if 170 <= mouse[0] <= 330 and 150 <= mouse[1] <= 200:
 		if right_click:
 			mode = 1
-	if 170 <= mouse[1] <= 330 and 250 <= mouse[1] <= 300:
+	elif 170 <= mouse[1] <= 330 and 250 <= mouse[1] <= 300:
 		if right_click:
 			mode = 2
 	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
