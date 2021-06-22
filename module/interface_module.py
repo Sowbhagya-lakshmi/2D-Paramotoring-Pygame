@@ -69,7 +69,7 @@ def check_play(screen):
 					screen.blit(button_instructions_click, (320,400))
 					i +=1
 				value = 3
-		if 200 <= mouse[1] <= 250:
+		if 500 <= mouse[1] <= 550:
 			if right_click:
 				while i<20:
 					screen.blit(button_about_click, (320,500))
