@@ -1,14 +1,9 @@
 import pygame
 import sys
 import os
-import pyttsx3
 
 import main
 from module import music_module , interface_module
-
-engine = pyttsx3.init()
-voices = engine.getProperty('voices')
-engine.setProperty('voice' , voices[1].id)
 
 win = None
 cursor = None
@@ -183,9 +178,6 @@ def display_playbutton() :
 		win.blit(button_instructions_small, (185,280))
 		win.blit(button_home_small,(210,350))
 
-		engine.say('Choose the mode of game')
-		engine.runAndWait
-
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
@@ -262,7 +254,6 @@ def display_pausebutton() :
 		elif mode == 1:
 			display_playbutton()
 			break
-	
 
 		win.fill((255,0,0))
 		win.blit(screen_home,(0,0))
