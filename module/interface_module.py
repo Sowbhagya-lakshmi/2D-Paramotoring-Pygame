@@ -248,6 +248,10 @@ def display_buttons():
 			interface_screens.display_instructions()
 			break
 
+		elif value == 4:
+			interface_screens.display_aboutbutton()
+			break
+
 		win.fill((255,255,255))
 
 		win.blit(screen_home,(0,0))
