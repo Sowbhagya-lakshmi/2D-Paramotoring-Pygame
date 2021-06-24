@@ -117,7 +117,7 @@ class Fuel:
 	red = 255
 	green = 255
 	bar_color = (red, green, 0)
-	max_fuel = global_config.speed * 10  # 60 seconds
+	max_fuel = global_config.speed * 60  # 60 seconds
 
 	def __init__(self):
 		self.x = global_config.window_width
@@ -149,9 +149,19 @@ class Fuel:
 	def calculate_fuel(self):
 		pass
 
-	def draw_fuel_bar(self, win, fuel_available):
+	def draw_fuel_bar(self, win, fuel_available, bool):
 		win.blit(self.img_icon, (10, 140))
-		self.bar_color = (self.red, self.green, 0)
+
+		if bool:
+			# self.red += 255/self.max_fuel
+			self.green -= 255/self.max_fuel
+
+			if self.red >= 255:
+				self.red == 255
+			if self.green <0:
+				self.green = 0
+
+		self.bar_color = (int(self.red), int(self.green), 0)
 		progress = fuel_available/self.max_fuel
 	
 		pygame.draw.rect(win, self.border_color, (*self.bar_pos, *self.bar_size), 3)

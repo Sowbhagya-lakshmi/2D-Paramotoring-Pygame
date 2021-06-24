@@ -22,7 +22,11 @@ run = True
 
 frame_count = 0
 num_of_lives = 3
-fuel_available = global_config.speed*10
+fuel_count = 0
+fuel_available = global_config.speed*60
+
+start_fuel = False
+
 
 win = None
 game_window = None
@@ -88,9 +92,9 @@ def draw_all_objects():
 	display_module.display_lives(win, num_of_lives)
 	display_module.draw_minimap(win,frame_count)
 
-	if frame_count%10 == 0:
+	if start_fuel:
 		fuel_available -= 1
-	display_module.fuel.draw_fuel_bar(win, fuel_available)
+	display_module.fuel.draw_fuel_bar(win, fuel_available, start_fuel)
 	
 # MAIN ALGORITHM
 if __name__ == '__main__':
@@ -124,6 +128,7 @@ if __name__ == '__main__':
 			display_module.countdown.draw(win)
 		elif frame_count == 4*global_config.speed:
 			pygame.event.set_allowed(pygame.USEREVENT+1)
+			start_fuel = True
 		
 		event_module.event_loop()
 
