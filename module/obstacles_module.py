@@ -24,12 +24,12 @@ class Tree:
 		self.num = num
 
 		# Randomizing the size of imgs
-		self.random_size = random.uniform(1.15, 1.25)	
+		self.random_size = random.uniform(1.15, 1.7)	
 		self.org_img = self.imgs[self.num]
 		self.img = pygame.transform.scale(self.org_img, ((int(self.org_img.get_width()//self.random_size), int(self.org_img.get_height()//self.random_size))))
 		
 		self.x = x
-		self.y = foreground_module.ground_y - self.img.get_height() + 230 # push the image slightly down
+		self.y = foreground_module.ground_y - self.img.get_height() + 180 # push the image slightly down
 	
 		# Width and height of obstacle
 		self.width = self.img.get_width()
@@ -47,16 +47,19 @@ class Rock_n_Bush:
 	# Loading images 
 	num_of_imgs = 4
 	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')) for x in range(num_of_imgs)]
-	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.3), int(img.get_height()*1.3))) for img in imgs]		# scaling factor - 1.3 
+	# resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.3), int(img.get_height()*1.3))) for img in imgs]		# scaling factor - 1.3 
 
 	obstacles = []
 	collision_obstacles = []
 
 	def __init__(self, x, num):
 		self.num = num
-		self.img = self.resized_imgs[self.num]
+		random_num = random.uniform(0.5, 1.3)
+		self.img_original = self.imgs[self.num]
+		self.img = pygame.transform.scale(self.img_original, (int(self.img_original.get_width()*random_num), int(self.img_original.get_height()*random_num)))
+		
 		self.x = x
-		self.y = foreground_module.ground_y - self.img.get_height() + 250 # push the image slightly down
+		self.y = foreground_module.ground_y - self.img.get_height() + 180 # push the image slightly down
 
 		# Width and height of obstacle
 		self.width = self.img.get_width()
@@ -123,15 +126,16 @@ def collision_with_obstacle():
 	
 	for element in obstacle_classes:
 		for obstacle in element.collision_obstacles:
-			if obstacle.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
-				obstacle_mask = pygame.mask.from_surface(obstacle.img)
-				offset = obstacle.x - player.x, obstacle.y - player.y
+			if obstacle.x < (player.x + player.img.get_width()) and (obstacle.x + obstacle.img.get_width()) > player.x:	# Check x range
+				if obstacle.y < (player.y + player.img.get_height()) and (obstacle.y + obstacle.img.get_height()) > player.y:	# Check y range
+					obstacle_mask = pygame.mask.from_surface(obstacle.img)
+					offset = obstacle.x - player.x, obstacle.y - player.y
 
-				collision_point_with_player = player_mask.overlap(obstacle_mask, offset)	# Checking collision with player
-				collision_point_with_propeller = propeller_mask.overlap(obstacle_mask, offset)	# Checking collision with propeller
+					collision_point_with_player = player_mask.overlap(obstacle_mask, offset)	# Checking collision with player
+					collision_point_with_propeller = propeller_mask.overlap(obstacle_mask, offset)	# Checking collision with propeller
 
-				if collision_point_with_player or collision_point_with_propeller:
-					element.collision_obstacles.remove(obstacle)
-					effects_module.Hit_effects.hit_effects_list.append(effects_module.Hit_effects())
-					return True
+					if collision_point_with_player or collision_point_with_propeller:
+						element.collision_obstacles.remove(obstacle)
+						effects_module.Hit_effects.hit_effects_list.append(effects_module.Hit_effects())
+						return True
 	return False

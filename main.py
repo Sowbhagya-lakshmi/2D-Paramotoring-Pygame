@@ -1,5 +1,6 @@
 import os
 import pygame
+import random
 import time
 
 import global_config
@@ -17,20 +18,25 @@ from module import player_module
 
 
 # Global variables
-
-speed = global_config.speed
-game_duration = global_config.game_duration
 run = True
 
 frame_count = 0
 num_of_lives = 3
 
 win = None
+game_window = None
 
 def create_game_window():
-	global win	
-	win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
+	global win, game_window
+	# Game Window
+	game_window = pygame.display.set_mode((global_config.window_width, global_config.window_height), pygame.RESIZABLE)
 	pygame.display.set_caption('Game Window')
+	
+	# Copy of game window which will be later resized according to the resolution, and blit onto the original game window.
+	win = game_window.copy()
+
+total_num_of_frames = global_config.speed*global_config.game_duration
+	
 
 def change_img_pixel_format():
 	"""
@@ -48,7 +54,7 @@ def change_img_pixel_format():
 	coins_module.coin_board = coins_module.coin_board.convert_alpha()
 
 	obstacles_module.Tree.resized_imgs = [img.convert_alpha() for img in obstacles_module.Tree.imgs]
-	obstacles_module.Rock_n_Bush.resized_imgs = [img.convert_alpha() for img in obstacles_module.Rock_n_Bush.resized_imgs]	
+	obstacles_module.Rock_n_Bush.imgs = [img.convert_alpha() for img in obstacles_module.Rock_n_Bush.imgs]	
 
 	effects_module.Coin_spark_effects.imgs = [img.convert_alpha() for img in effects_module.Coin_spark_effects.imgs]
 	effects_module.Hit_effects.imgs = [img.convert_alpha() for img in effects_module.Hit_effects.imgs]
@@ -78,8 +84,7 @@ def draw_all_objects():
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
 	display_module.draw_minimap(win,frame_count)
-
-
+	
 # MAIN ALGORITHM
 if __name__ == '__main__':
 
@@ -106,6 +111,13 @@ if __name__ == '__main__':
 		frame_count += 1
 		
 		draw_all_objects()
+		
+
+		if frame_count < 4*global_config.speed:
+			display_module.countdown.draw(win)
+		elif frame_count == 4*global_config.speed:
+			pygame.event.set_allowed(pygame.USEREVENT+1)
+		
 		event_module.event_loop()
 
 		# Coin collection
@@ -115,6 +127,25 @@ if __name__ == '__main__':
 				music_module.sound_coins.play()
 			coins_module.Coin.num_coins_collected += 1
 		coins_module.display_num_coins_collected(win)
+
+		# Extra life
+		if coins_module.Coin.num_coins_collected%10 == 0 and num_of_lives!=3:
+			extra_life = display_module.Extra_life()
+		elif coins_module.Coin.num_coins_collected > 5:
+			try:
+				extra_life.draw(win)
+				player = player_module.player
+				if extra_life.x < (player.x + player.img.get_width()) and (extra_life.x + extra_life.img.get_width()) > player.x:	# Check x range
+					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
+						bool = extra_life.check_collision()
+						if bool:
+							# num = random.randint(1,1000)
+							# print('collected life', num)
+							del extra_life
+							num_of_lives += 1
+							coins_module.Coin.num_coins_collected -= 10
+			except:
+				pass
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
@@ -128,11 +159,14 @@ if __name__ == '__main__':
 				interface_module.display_endscreen()
 				break
 
-		clock.tick(speed)
+		# Resize and blit the copy of game window onto main game window
+		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
+
+		clock.tick(global_config.speed)
 		pygame.display.update()
 		
 		# Dummy exit
-		if frame_count >= game_duration*speed:
+		if frame_count >= total_num_of_frames:
 			print('Game Over')
 			time.sleep(1)
 			break
