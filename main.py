@@ -22,6 +22,7 @@ run = True
 
 frame_count = 0
 num_of_lives = 3
+fuel_available = global_config.speed*10
 
 win = None
 game_window = None
@@ -70,6 +71,8 @@ def draw_all_objects():
 	"""
 	Draws the background, foreground, obstacles, coins, special effects, player, bird, lives, minimap.
 	"""
+	global fuel_available
+
 	background_module.draw_bg(win)
 	obstacles_module.draw_obstacles(win)
 	coins_module.draw_coins(win)
@@ -84,7 +87,10 @@ def draw_all_objects():
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
 	display_module.draw_minimap(win,frame_count)
-	display_module.fuel.draw_fuel_bar(win, 5000)
+
+	if frame_count%10 == 0:
+		fuel_available -= 1
+	display_module.fuel.draw_fuel_bar(win, fuel_available)
 	
 # MAIN ALGORITHM
 if __name__ == '__main__':

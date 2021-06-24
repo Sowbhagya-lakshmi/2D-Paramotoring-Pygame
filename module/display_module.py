@@ -117,7 +117,7 @@ class Fuel:
 	red = 255
 	green = 255
 	bar_color = (red, green, 0)
-	max_fuel = 10000
+	max_fuel = global_config.speed * 10  # 60 seconds
 
 	def __init__(self):
 		self.x = global_config.window_width
@@ -145,11 +145,14 @@ class Fuel:
 		if collision_point_with_player or collision_point_with_propeller:
 			return True
 		return False
+	
+	def calculate_fuel(self):
+		pass
 
-	def draw_fuel_bar(self, win, curr_progress):
+	def draw_fuel_bar(self, win, fuel_available):
 		win.blit(self.img_icon, (10, 140))
 		self.bar_color = (self.red, self.green, 0)
-		progress = curr_progress/self.max_fuel
+		progress = fuel_available/self.max_fuel
 	
 		pygame.draw.rect(win, self.border_color, (*self.bar_pos, *self.bar_size), 3)
 		innerPos  = (self.bar_pos[0]+3, self.bar_pos[1]+3)
