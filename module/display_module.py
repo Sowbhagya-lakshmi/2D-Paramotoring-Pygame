@@ -24,11 +24,11 @@ class Extra_life:
 		self.x = global_config.window_width + heart.get_width()
 		free_zone_y = coins_module.find_free_zone_y()
 		self.y = random.randint(0,free_zone_y)	
-		self.img = heart	
+		self.img = pygame.image.load(os.path.join('Utils/Pics/Display/', 'extra_life.png'))
 	
 	def draw(self,win):
-		if self.x > -1*heart.get_width():
-			win.blit(heart, (self.x, self.y))
+		if self.x > -1*self.img.get_width():
+			win.blit(self.img, (self.x, self.y))
 			self.x -= foreground_module.foreground_speed
 		else:
 			del self
@@ -38,11 +38,12 @@ class Extra_life:
 		player_mask = pygame.mask.from_surface(player.img)
 		propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
-		heart_mask = pygame.mask.from_surface(heart)
+		heart_mask = pygame.mask.from_surface(self.img)
 
 		offset = self.x - player.x, self.y - player.y
 		collision_point_with_player = player_mask.overlap(heart_mask, offset)	# Checking collision with player
-		if collision_point_with_player:
+		collision_point_with_propeller = propeller_mask.overlap(heart_mask, offset)	# Checking collision with player
+		if collision_point_with_player or collision_point_with_propeller:
 			return True
 		return False
 
@@ -103,6 +104,56 @@ class Countdown:
 			return True
 		else:
 			return False
-		
 
 countdown = Countdown()
+
+class Fuel:
+	img = pygame.image.load(os.path.join('Utils/Pics/Display/', 'fuel2.png'))
+	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
+	# Fuel bar
+	bar_pos      = (50, 145)
+	bar_size     = (120, 20)
+	border_color = (0,0,0)
+	red = 255
+	green = 255
+	bar_color = (red, green, 0)
+	max_fuel = 10000
+
+	def __init__(self):
+		self.x = global_config.window_width
+		free_zone_y = coins_module.find_free_zone_y()
+		self.y = random.randint(0,free_zone_y)	
+
+	def draw(self, win):
+		if self.x > -1*self.img.get_width():
+			win.blit(self.img, (self.x, self.y))
+			self.x -= foreground_module.foreground_speed
+		else:
+			del self
+
+	def check_collision(self):
+		player = player_module.player
+		propeller = player_module.propeller
+		player_mask = pygame.mask.from_surface(player.img)
+		propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+
+		fuel_mask = pygame.mask.from_surface(self.img)
+
+		offset = self.x - player.x, self.y - player.y
+		collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
+		collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
+		if collision_point_with_player or collision_point_with_propeller:
+			return True
+		return False
+
+	def draw_fuel_bar(self, win, curr_progress):
+		win.blit(self.img_icon, (10, 140))
+		self.bar_color = (self.red, self.green, 0)
+		progress = curr_progress/self.max_fuel
+	
+		pygame.draw.rect(win, self.border_color, (*self.bar_pos, *self.bar_size), 3)
+		innerPos  = (self.bar_pos[0]+3, self.bar_pos[1]+3)
+		innerSize = ((self.bar_size[0]-6) * progress, self.bar_size[1]-6)
+		pygame.draw.rect(win, self.bar_color, (*innerPos, *innerSize))
+
+fuel = Fuel()

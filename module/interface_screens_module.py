@@ -193,7 +193,7 @@ def display_playbutton():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 	i=0
-	while i<1000:
+	while i<100:
 
 		mode = check_mode_playbutton( )
 		
