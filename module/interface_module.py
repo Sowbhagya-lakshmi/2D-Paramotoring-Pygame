@@ -39,15 +39,15 @@ button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume
 button_resume_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume_click.png'))
 
 
-def check_value_home(screen):
+def check_home(screen):
 	"""
 	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
 	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
 	button is clicked, and 4 if About button is clicked
 	"""
-	global home_value, right_click
+	global value, right_click
 	i=0
-	home_value = 0
+	value = 0
 	mouse = pygame.mouse.get_pos()
 	if 320 <= mouse[0] <= 480:
 		if 100 <= mouse[1] <= 150:
@@ -55,31 +55,31 @@ def check_value_home(screen):
 				while i<20:
 					screen.blit(button_play_click, (320,100))
 					i +=1
-				home_value = 1 
+				value = 1 
 		if 200 <= mouse[1] <= 250:
 			if right_click:
 				while i<20:
 					screen.blit(button_resume_click, (320,200))
 					i +=1
-				home_value = 1
+				value = 1
 		if 300 <= mouse[1] <= 350:
 			if right_click:
 				while i<20:
 					screen.blit(button_highscore_click, (320,300))
 					i +=1
-				home_value = 2
+				value = 2
 		if 400 <= mouse[1] <= 450:
 			if right_click:
 				while i<20:
 					screen.blit(button_instructions_click, (320,400))
 					i +=1
-				home_value = 3
+				value = 3
 		if 500 <= mouse[1] <= 550:
 			if right_click:
 				while i<20:
 					screen.blit(button_about_click, (320,500))
 					i +=1
-				home_value = 4
+				value = 4
 		clock = pygame.time.Clock()		
 		clock.tick(main.speed)		
 		pygame.display.update()
@@ -247,16 +247,16 @@ def display_homescreen():
 	pygame.mixer.music.play(-1)
 
 	while True:	
-		home_value = check_value_home(win)
-		if home_value == 1: 
+		value = check_home(win)
+		if value == 1: 
 			interface_screens_module.display_playbutton()
 			break 	# breaks interface loop
 
-		elif home_value == 3:
+		elif value == 3:
 			interface_screens_module.display_instructions()
 			break
 
-		elif home_value == 4:
+		elif value == 4:
 			interface_screens_module.display_aboutbutton()
 			break
 
