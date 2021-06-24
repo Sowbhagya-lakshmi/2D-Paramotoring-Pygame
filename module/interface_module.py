@@ -4,7 +4,7 @@ import os
 
 import main
 from module import music_module
-from module import interface_screens
+from module import interface_screens_module
 
 # Global variables
 win = None
@@ -213,6 +213,10 @@ class Unmute_button:
 
 def display_homescreen():
 
+	"""
+	Creates a Homescreen to display the buttons when the game starts
+	"""
+
 	global win, cursor
 	global mute_button, unmute_button
 	
@@ -222,7 +226,7 @@ def display_homescreen():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('Game Interface')
+	pygame.display.set_caption('Home Screen')
 
 	# Creating objects of classes
 	mute_button = Mute_button()
@@ -245,15 +249,15 @@ def display_homescreen():
 	while True:	
 		value = check_home(win)
 		if value == 1: 
-			interface_screens.display_playbutton()
+			interface_screens_module.display_playbutton()
 			break 	# breaks interface loop
 
 		elif value == 3:
-			interface_screens.display_instructions()
+			interface_screens_module.display_instructions()
 			break
 
 		elif value == 4:
-			interface_screens.display_aboutbutton()
+			interface_screens_module.display_aboutbutton()
 			break
 
 		win.fill((255,255,255))
@@ -320,3 +324,111 @@ def display_homescreen():
 	pygame.mouse.set_visible(True)
 
 	return not(volume_control.button_flag)
+
+def display_endscreen():
+	
+	"""
+	Creates a screen to display the buttons at the end of the game
+	"""
+
+	global win, cursor
+	global mute_button, unmute_button
+	
+	main.speed = 60		# fps
+	main.run = True
+	
+	# Home screen interface
+	width, height = 800,600
+	win = pygame.display.set_mode((width, height))	
+	pygame.display.set_caption('End Screen')
+
+	# Creating objects of classes
+	cursor = Cursor()
+
+	clock = pygame.time.Clock()
+
+	# Hide the original cursor
+	pygame.mouse.set_visible(False)
+
+	pop_sound_play = False
+	volume_button = unmute_button
+
+	#Music Variable
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	pygame.mixer.music.play(-1)
+
+	while True:	
+		value = check_home(win)
+		if value == 1: 
+			interface_screens_module.display_playbutton()
+			break 	# breaks interface loop
+
+		elif value == 3:
+			interface_screens_module.display_instructions()
+			break
+
+		elif value == 4:
+			interface_screens_module.display_aboutbutton()
+			break
+
+		win.fill((255,255,255))
+
+		win.blit(screen_home,(0,0))
+		win.blit(button_play, (320,100))
+		win.blit(button_resume, (320,200))
+		win.blit(button_highscore, (320,300))
+		win.blit(button_instructions, (320,400))
+		win.blit(button_about, (320,500))
+
+		event_loop()
+
+		mouse = pygame.mouse.get_pos()
+
+		if 320 <= mouse[0] <= 480 and 100 <= mouse[1] <= 150 :
+			if right_click == 0:
+				win.blit(button_play_enlarge, (310,100))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+			  	
+		elif 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
+			if right_click == 0:
+				win.blit(button_resume_enlarge, (310,200))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+
+		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
+			if right_click == 0:
+				win.blit(button_highscore_enlarge, (310,300))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+			
+		elif 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
+			if right_click == 0:
+				win.blit(button_instructions_enlarge, (310,400))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+			
+		elif 320 <= mouse[0] <= 480 and 500 <= mouse[1] <= 550 :
+			if right_click == 0:
+				win.blit(button_about_enlarge, (310,500))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+
+		else:
+			pop_sound_play = False
+							
+
+		cursor.draw()   # should be at last, to avoid overlapping
+
+		clock.tick(main.speed)
+		pygame.display.update()
+
+		
+	
+	# Bring back the original cursor
+	pygame.mouse.set_visible(True)

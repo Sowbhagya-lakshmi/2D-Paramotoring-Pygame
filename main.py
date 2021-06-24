@@ -125,6 +125,7 @@ if __name__ == '__main__':
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 
 				time.sleep(1)
+				interface_module.display_endscreen()
 				break
 
 		clock.tick(speed)

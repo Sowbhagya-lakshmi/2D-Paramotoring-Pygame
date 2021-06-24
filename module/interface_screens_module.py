@@ -11,8 +11,7 @@ cursor = None
 right_click = False
 value = 0
 
-pygame.init()
-
+#Loading Button and Screen Images
 screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
 screen_playbutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_PlayButton.png'))
 screen_pausebutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_PauseButton.png'))
