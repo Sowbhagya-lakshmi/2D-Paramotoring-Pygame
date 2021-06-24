@@ -86,7 +86,7 @@ if __name__ == '__main__':
 	pygame.init()
 
 	# Home screen interface window
-	volume_button_on_status = interface_module.display_buttons()
+	volume_button_on_status = interface_module.display_homescreen()
 
 	# Game window
 	create_game_window()

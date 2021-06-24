@@ -39,7 +39,12 @@ button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume
 button_resume_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume_click.png'))
 
 
-def check_play(screen):
+def check_home(screen):
+	"""
+	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
+	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
+	button is clicked, and 4 if About button is clicked
+	"""
 	global value, right_click
 	i=0
 	value = 0
@@ -206,14 +211,13 @@ class Unmute_button:
 		self.img = self.img_small
 	   
 
-def display_buttons():
+def display_homescreen():
 
 	global win, cursor
 	global mute_button, unmute_button
 	
 	main.speed = 60		# fps
 	main.run = True
-	
 	
 	# Home screen interface
 	width, height = 800,600
@@ -239,7 +243,7 @@ def display_buttons():
 	pygame.mixer.music.play(-1)
 
 	while True:	
-		value = check_play(win)
+		value = check_home(win)
 		if value == 1: 
 			interface_screens.display_playbutton()
 			break 	# breaks interface loop

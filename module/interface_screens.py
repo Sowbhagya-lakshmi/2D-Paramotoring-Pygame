@@ -41,74 +41,87 @@ button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOf
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
 
 def check_mode_playbutton( ):
+	"""
+	Checks the button that is clicked from the play button interface and returns 1 if Hand Gesture mode
+	of game is clicked,2 if Mouse control mode of game is clicked,3 if home button is clicked and 4 if 
+	instructions button is clicked
+
+	"""
 	global right_click
 	i=0
 	mouse = pygame.mouse.get_pos()
 
-	mode = None
+	play_mode = None
 	
 	if 50 <= mouse[0] <= 170 and 150 <= mouse[1] <= 310:
 		if right_click:
-			mode = 1
+			play_mode = 1
 	elif 320 <= mouse[0] <= 440 and 150 <= mouse[1] <= 310:
 		if right_click:
-			mode = 2
+			play_mode = 2
 	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 435:
 		if right_click:
-			mode = 3
+			play_mode = 3
 	elif 185 <= mouse[0] <= 310 and 280 <= mouse[1] <= 320:
 		if right_click:
-			mode = 4
+			play_mode = 4
 	else:
-		mode = None
+		play_mode = None
 		
 	clock = pygame.time.Clock()		
 	clock.tick(main.speed)		
 	pygame.display.update()
-	return mode
+	return play_mode
 
 def check_mode_pausebutton( ):
+	"""
+	Checks the button that is clicked from the pause button interface and returns 1 if resume button is
+	clicked, 2 if restart button is clicked, and 3 if home button is clicked
+	"""
 	global right_click
 	i=0
 	mouse = pygame.mouse.get_pos()
 
-	mode = None
+	pause_mode = None
 	
 	if 170 <= mouse[0] <= 330 and 150 <= mouse[1] <= 200:
 		if right_click:
-			mode = 1
+			pause_mode = 1
 	elif 170 <= mouse[1] <= 330 and 250 <= mouse[1] <= 300:
 		if right_click:
-			mode = 2
+			pause_mode = 2
 	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
-			if right_click:
-				mode = 3
+		if right_click:
+			pause_mode = 3
 	else:
-		mode = None
+		pause_mode = None
 		
 	clock = pygame.time.Clock()		
 	clock.tick(main.speed)		
 	pygame.display.update()
-	return mode
+	return pause_mode
 
 def check_mode_aboutbutton( ):
+	"""
+	Checks if the skip button is clicked from the about button and returns  1 if skip button is clicked
+	"""
 	global right_click
 	i=0
 	mouse = pygame.mouse.get_pos()
 
-	mode = None
+	about_mode = None
 	
-	if 365 <= mouse[0] <= 435 and 515 <= mouse[1] <= 585:
+	if 640 <= mouse[0] <= 780 and 520 <= mouse[1] <= 570:
 			if right_click: 
-				mode = 1
+				about_mode = 1
 	
 	else:
-		mode = None
+		about_mode = None
 		
 	clock = pygame.time.Clock()		
 	clock.tick(main.speed)		
 	pygame.display.update()
-	return mode
+	return about_mode
 
 class Cursor:
 	"""
@@ -153,8 +166,10 @@ def cursor_over_button(cursor, button):
 	return collision
 
 
-def display_playbutton() :
-
+def display_playbutton():
+	"""
+	Creates a screen when we click the play button to choose the mode of the game 
+	"""
 	global win, cursor
 	
 	main.speed = 60		# fps
@@ -178,14 +193,13 @@ def display_playbutton() :
 	#Music Variable
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
-
-	i = 0
+	i=0
 	while i<1000:
 
 		mode = check_mode_playbutton( )
 		
 		if mode == 3: 
-			interface_module.display_buttons()
+			interface_module.display_homescreen()
 			break 	# breaks interface loop
 		
 		elif mode == 4:
@@ -238,8 +252,10 @@ def display_playbutton() :
 
 	pygame.mouse.set_visible(False)
     
-def display_pausebutton() :
-
+def display_pausebutton():
+	"""
+	Creates a screen when we click the pause button from the game screen
+	"""
 	global win, cursor
 	
 	main.speed = 60		# fps
@@ -267,11 +283,11 @@ def display_pausebutton() :
 	i = 0
 	while i<1000:
 
-		mode = check_mode_pausebutton( )
-		if mode == 3: 
-			interface_module.display_buttons()
+		pause_mode = check_mode_pausebutton( )
+		if pause_mode == 3: 
+			interface_module.display_homescreen()
 			break 	# breaks interface loop
-		elif mode == 1:
+		elif pause_mode == 1:
 			display_playbutton()
 			break
 
@@ -315,6 +331,9 @@ def display_pausebutton() :
     
 	
 def display_instructions():
+	"""
+	Creates a screen when we click instructions screen. Contains Instructions related to the game
+	"""
 
 	global win, cursor
 	
@@ -373,7 +392,9 @@ def display_instructions():
 	pygame.mouse.set_visible(True)
 
 def display_aboutbutton():
-
+	"""
+	Creates a screen a when we click About button
+	"""
 	global win, cursor
 	
 	main.speed = 60		# fps
@@ -399,11 +420,11 @@ def display_aboutbutton():
 	pygame.mixer.music.play(-1)
 
 	i = 0
-	while i<1000:
+	while True:
 
-		mode = check_mode_aboutbutton()
-		if mode == 1:
-			interface_module.display_buttons()
+		about_mode = check_mode_aboutbutton()
+		if about_mode == 1:
+			interface_module.display_homescreen()
 			break 	# breaks interface loop
 
 
@@ -411,13 +432,13 @@ def display_aboutbutton():
 
 		win.fill((255,0,0))
 		win.blit(screen_aboutbutton_interface,(0,0))
-		win.blit(button_home_small,(365,515))
+		win.blit(button_skip,(640,520))
 
 		event_loop()
 
-		if 365 <= mouse[0] <= 435 and 515 <= mouse[1] <= 585 :
+		if 640 <= mouse[0] <= 780 and 520 <= mouse[1] <= 570 :
 			if right_click == 0:
-				win.blit(button_home_enlarge, (360,510))
+				win.blit(button_skip_enlarge, (630,515))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
