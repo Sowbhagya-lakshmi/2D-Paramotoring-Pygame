@@ -16,7 +16,8 @@ value = 0
 mute_button, unmute_button = None, None
 
 #Loading Button and Screen Images
-screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
+screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para.png'))
+screen_end =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_End.png'))
 
 button_about =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_About.png'))
 button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.1),int(button_about.get_height()*1.1)))
@@ -49,40 +50,34 @@ def check_home(screen):
 	i=0
 	value = 0
 	mouse = pygame.mouse.get_pos()
-	if 320 <= mouse[0] <= 480:
-		if 100 <= mouse[1] <= 150:
-			if right_click:
-				while i<20:
-					screen.blit(button_play_click, (320,100))
-					i +=1
-				value = 1 
-		if 200 <= mouse[1] <= 250:
-			if right_click:
-				while i<20:
-					screen.blit(button_resume_click, (320,200))
-					i +=1
-				value = 1
-		if 300 <= mouse[1] <= 350:
-			if right_click:
-				while i<20:
-					screen.blit(button_highscore_click, (320,300))
-					i +=1
-				value = 2
-		if 400 <= mouse[1] <= 450:
-			if right_click:
-				while i<20:
-					screen.blit(button_instructions_click, (320,400))
-					i +=1
-				value = 3
-		if 500 <= mouse[1] <= 550:
-			if right_click:
-				while i<20:
-					screen.blit(button_about_click, (320,500))
-					i +=1
-				value = 4
-		clock = pygame.time.Clock()		
-		clock.tick(main.speed)		
-		pygame.display.update()
+		
+	if 370 <= mouse[1] <= 420 and 320 <= mouse[0] <=480:
+		if right_click:
+			while i<20:
+				screen.blit(button_play_click, (320,470))
+				i +=1
+			value = 1 
+	elif 470 <= mouse[1] <= 520 and 320 <= mouse[0] <= 480:
+		if right_click:
+			while i<20:
+				screen.blit(button_resume_click, (320,470))
+				i +=1
+			value = 1
+	elif 500 <= mouse[1] <= 550 and 70 <= mouse[0] <= 230:
+		if right_click:
+			while i<20:
+				screen.blit(button_instructions_click, (320,400))
+				i +=1
+			value = 3
+	if 500 <= mouse[1] <= 550 and 570 <= mouse[0] <= 730:
+		if right_click:
+			while i<20:
+				screen.blit(button_about_click, (320,500))
+				i +=1
+			value = 4
+	clock = pygame.time.Clock()		
+	clock.tick(main.speed)		
+	pygame.display.update()
 	return value
 
 class Cursor:
@@ -263,47 +258,39 @@ def display_homescreen():
 		win.fill((255,255,255))
 
 		win.blit(screen_home,(0,0))
-		win.blit(button_play, (320,100))
-		win.blit(button_resume, (320,200))
-		win.blit(button_highscore, (320,300))
-		win.blit(button_instructions, (320,400))
-		win.blit(button_about, (320,500))
+		win.blit(button_play, (320,370))
+		win.blit(button_resume, (320,470))
+		win.blit(button_instructions, (70,500))
+		win.blit(button_about, (570,500))
 
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
-		if 320 <= mouse[0] <= 480 and 100 <= mouse[1] <= 150 :
+		if 320 <= mouse[0] <= 480 and 370 <= mouse[1] <= 420 :
 			if right_click == 0:
-				win.blit(button_play_enlarge, (310,100))
+				win.blit(button_play_enlarge, (310,365))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			  	
-		elif 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
+		elif 320 <= mouse[0] <= 480 and 470 <= mouse[1] <= 520 :
 			if right_click == 0:
-				win.blit(button_resume_enlarge, (310,200))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
-
-		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
-			if right_click == 0:
-				win.blit(button_highscore_enlarge, (310,300))
+				win.blit(button_resume_enlarge, (310,465))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		elif 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
+		elif 70 <= mouse[0] <= 230 and 500 <= mouse[1] <= 550 :
 			if right_click == 0:
-				win.blit(button_instructions_enlarge, (310,400))
+				win.blit(button_instructions_enlarge, (60,495))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		elif 320 <= mouse[0] <= 480 and 500 <= mouse[1] <= 550 :
+		elif 570 <= mouse[0] <= 730 and 500 <= mouse[1] <= 550 :
 			if right_click == 0:
-				win.blit(button_about_enlarge, (310,500))
+				win.blit(button_about_enlarge, (560,495))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
@@ -373,7 +360,7 @@ def display_endscreen():
 
 		win.fill((255,255,255))
 
-		win.blit(screen_home,(0,0))
+		win.blit(screen_end,(0,0))
 		win.blit(button_play, (320,100))
 		win.blit(button_resume, (320,200))
 		win.blit(button_highscore, (320,300))
