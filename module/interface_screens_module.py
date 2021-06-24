@@ -1,10 +1,15 @@
 import pygame
 import sys
 import os
+import multiprocessing
+from multiprocessing import Queue
+from AVM import main_avm
+
 
 import main
 from module import music_module , interface_module
-
+#from main_mp import process_object
+global queue_shared
 win = None
 cursor = None
 
@@ -38,6 +43,23 @@ button_mode_gesture_enlarge = pygame.transform.scale(button_mode_gesture, (int(b
 
 button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
+
+
+from queue import Empty
+import queue
+
+# class ClearableQueue(Queue):
+
+#     def clear(self):
+#         try:
+#             while True:
+#                 self.get_nowait()
+#         except Empty:
+#             pass
+
+
+queue_shared = multiprocessing.Queue()
+process_object = multiprocessing.Process(target = main_avm, args = (queue_shared,))
 
 def check_mode_playbutton( ):
 	"""
@@ -193,11 +215,21 @@ def display_playbutton():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 	i=0
+	
+
 	while i<100:
 
 		mode = check_mode_playbutton( )
+
+		if mode == 1:
+			print("Hand gesture")
+			process_object.start()
+
+
+		elif mode == 2:
+			print("mouse")
 		
-		if mode == 3: 
+		elif mode == 3: 
 			interface_module.display_homescreen()
 			break 	# breaks interface loop
 		
@@ -448,3 +480,14 @@ def display_aboutbutton():
 		pygame.display.update()
 
 	pygame.mouse.set_visible(False)
+
+def check_index(queue_shared):
+	#queue.get()
+	#print(queue_shared)
+	if queue_shared.empty():
+		# print("index_found")
+		pass
+	else: pass
+		# print("No index")
+		#queue_shared.get()
+

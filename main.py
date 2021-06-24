@@ -1,7 +1,10 @@
 import os
+import queue
 import pygame
 import random
 import time
+import multiprocessing
+
 
 import global_config
 from module import background_module
@@ -15,6 +18,10 @@ from module import interface_module
 from module import music_module
 from module import obstacles_module
 from module import player_module
+from module.interface_screens_module import process_object
+from module.interface_screens_module import check_index
+from module.interface_screens_module import queue_shared
+from window import draw_control_screen_actual, draw_player_position
 
 
 # Global variables
@@ -160,6 +167,11 @@ if __name__ == '__main__':
 							coins_module.Coin.num_coins_collected -= 10
 			except:
 				pass
+		
+		draw_control_screen_actual(win)
+		draw_player_position(win)
+		
+		check_index(queue_shared)
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
@@ -170,8 +182,15 @@ if __name__ == '__main__':
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 
 				time.sleep(1)
+				
+				# process_object.terminate()
 				interface_module.display_endscreen()
 				break
+		
+		
+
+		# Resize and blit the copy of game window onto main game window
+		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
 		# Resize and blit the copy of game window onto main game window
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))

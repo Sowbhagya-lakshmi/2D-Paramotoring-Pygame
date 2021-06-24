@@ -34,6 +34,7 @@ class Player:
 		self.img = self.imgs[self.index]
 		win.blit(self.img, (self.x,self.y))
 		self.run_count += 1 
+		pygame.display.update()
 
 class Propeller:
 	"""
@@ -78,3 +79,7 @@ def draw_player(win):
 
 	propeller.draw(win)
 	player.draw(win)
+
+	x_pos, y_pos = player.x, player.y
+
+	return x_pos, y_pos

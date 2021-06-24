@@ -1,0 +1,120 @@
+import cv2
+import numpy as np
+import HandTrackingMod as htm
+import time
+import autopy
+#from global_config import num_of_lives
+from module.display_module  import process_object1
+
+###################
+# #######
+wCam, hCam = 520, 370
+frameR_h = 160  # Frame Reduction
+frameR_w = 90
+smoothening = 8
+#########################
+
+
+
+def main_avm(queue_shared):
+
+    pTime = 0
+    detector = htm.HandDetector(maxHands=1)
+    wScr, hScr = autopy.screen.size()
+    
+    plocX, plocY = 0, 0
+    clocX, clocY = 0, 0
+
+    cap = cv2.VideoCapture(0)
+    cap.set(9, wCam)
+    cap.set(11, hCam)
+
+    i = 0
+    while True:
+        #  Find hand Landmarks
+        success, img_org = cap.read()
+        width = int(cap.get(3))
+        height = int(cap.get(4))
+        print(width, height)
+        img = cv2.resize(img_org, (0,0), fx = 0.7, fy = 0.7)
+        
+
+        #img = np.zeros(img_org.shape, np.uint8)
+
+        img = detector.findHands(img)
+        #img_org = detector.findHands(img_org)
+
+        lmlist, bbox = detector.findPosition(img)
+        #lmlist, bbox = detector.findPosition(img_org)
+
+
+        #  Get the tip of the index and middle fingers
+        if len(lmlist) != 0:
+            x1, y1 = lmlist[8][1:]
+
+
+            # Check which fingers are up
+            fingers = detector.fingersUp()
+            #print(fingers)
+
+            #cv2.rectangle(img_org, (frameR_w, frameR_h), (wScr - frameR_w, hScr - frameR_h), (0, 0, 255), 2)
+
+
+            cv2.rectangle(img, (frameR_w, frameR_h), (wCam - frameR_w, hCam - frameR_h), (255, 0, 255), 2)
+            #cv2.rectangle(img_org, (frameR_w, frameR_h), (wCam - frameR_w, hCam - frameR_h), (255, 0, 255), 2)
+
+
+            #  Only Index Finger : Moving Mode
+            if fingers[1] == 1 and fingers[2] == 0:
+            
+            # 5. Convert Coordinates
+                x3 = np.interp(x1, (frameR_w, wCam - frameR_w), (0, wScr))
+                y3 = np.interp(y1, (frameR_h, hCam - frameR_h), (0, hScr))
+                # Smoothen Values
+                clocX = plocX + (x3 - plocX) / smoothening
+                clocY = plocY + (y3 - plocY) / smoothening
+                # Move Mouse
+                print(clocX, clocY)
+                autopy.mouse.move(wScr - clocX, clocY)
+                
+                circle_img =  cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
+                
+                if process_object1.is_alive():
+                    process_object1.terminate()
+                plocX, plocY = clocX, clocY
+
+            else:
+                i += 1
+                print("Index finger not found",i)
+                #process_object1.start()
+                queue_shared.put(0)
+                #print(queue_shared)
+                #print(queue)
+                
+
+        #  Frame Rate
+        cTime = time.time()
+        fps = 1 / (cTime - pTime)
+        pTime = cTime
+        cv2.putText(img, str(int(fps)), (20, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
+        #  Display
+        
+        #cv2.imshow("Image", img)
+        
+
+        
+        
+
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+            break
+            
+    cap.release()
+    cv2.destroyAllWindows()
+
+
+    
+
+if __name__ == "__main__":
+    main_avm()
+
+
