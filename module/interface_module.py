@@ -19,13 +19,23 @@ mute_button, unmute_button = None, None
 screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para.png'))
 screen_end =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_End.png'))
 
+button_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Home.png'))
+button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
+button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_width()*0.8),int(button_home.get_height()*0.8)))
+
+button_restart =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Restart.png'))
+button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
+button_restart_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Restart_click.png'))
+
 button_about =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_About.png'))
 button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.1),int(button_about.get_height()*1.1)))
 button_about_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_About_click.png'))
 
 button_highscore =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_HighScore.png'))
-button_highscore_enlarge = pygame.transform.scale(button_highscore, (int(button_highscore.get_width()*1.1),int(button_highscore.get_height()*1.1)))
-button_highscore_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_inverted.png'))
+button_score =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Score.png'))
+
+button_inverted =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_inverted.png'))
+button_inverted_enlarge = pygame.transform.scale(button_inverted, (int(button_inverted.get_width()*1.1),int(button_inverted.get_height()*1.1)))
 
 button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.1),int(button_instructions.get_height()*1.1)))
@@ -361,11 +371,11 @@ def display_endscreen():
 		win.fill((255,255,255))
 
 		win.blit(screen_end,(0,0))
-		win.blit(button_play, (320,100))
-		win.blit(button_resume, (320,200))
-		win.blit(button_highscore, (320,300))
-		win.blit(button_instructions, (320,400))
-		win.blit(button_about, (320,500))
+		win.blit(button_restart, (320,200))
+		win.blit(button_score, (320,300))
+		win.blit(button_highscore, (320,400))
+		win.blit(button_home_small,(360,500))
+
 
 		event_loop()
 
