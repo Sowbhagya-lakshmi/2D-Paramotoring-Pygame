@@ -16,7 +16,7 @@ class Player:
 
 	# Loading player images
 	imgs_big = [pygame.image.load('Utils/Pics/Player/'+img) for img in img_name_lst]
-	imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in imgs_big ] 
+	imgs = [pygame.transform.scale(img, (int(img.get_width()/4), int(img.get_height()/4))) for img in imgs_big ] 
 
 	def __init__(self):
 		self.x = 0
@@ -46,7 +46,7 @@ class Propeller:
 
 	# Loading propeller images
 	org_propeller_imgs = [pygame.image.load('Utils/Pics/Propeller/'+img) for img in img_name_lst]
-	propeller_imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in org_propeller_imgs ]
+	propeller_imgs = [pygame.transform.scale(img, (int(img.get_width()/4), int(img.get_height()/4))) for img in org_propeller_imgs ]
 
 	def __init__(self):
 		self.run_count = 0
@@ -79,4 +79,6 @@ def draw_player(win):
 	propeller.draw(win)
 	player.draw(win)
 
-	return player.x, player.y
+	x_pos, y_pos = player.x, player.y
+
+	return x_pos, y_pos

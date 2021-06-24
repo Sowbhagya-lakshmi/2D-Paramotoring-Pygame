@@ -22,8 +22,7 @@ class Bird():
 	for colour in colour_list:
 		imgs = []
 		for x in range(num_of_imgs):
-			img = pygame.image.load(os.path.join(path, colour +"/bird"+ str(x) + '.png'))
-			imgs.append(pygame.transform.scale(img, (int(img.get_width()//6), int(img.get_height()//6))))
+			imgs.append(pygame.image.load(os.path.join(path, colour +"/bird"+ str(x) + '.png')))
 		list_of_lists.append(imgs)
 
 	birds_list = []
@@ -34,6 +33,9 @@ class Bird():
 		self.y = y
 		self.run_count = 0
 		self.colour_num = colour_num
+
+		random_num = random.uniform(6, 10)
+		self.bird_list = [pygame.transform.scale(img, (int(img.get_width()/random_num), int(img.get_height()/random_num))) for img in self.list_of_lists[colour_num]]
 
 		# Variables for sine wave trajectory calculation
 		self.org_y = y									# initial y value where the bird is spawned
@@ -50,7 +52,7 @@ class Bird():
 		self.run_count += 1
 		
 		# Drawing bird image
-		self.img = self.list_of_lists[self.colour_num][self.index]
+		self.img = self.bird_list[self.index]
 		self.randomize_movement()
 		win.blit(self.img, (self.x,self.y))
 		
@@ -99,13 +101,14 @@ def collision_with_bird():
 
 	if len(Bird.collision_birds)!=0:
 		for bird in Bird.collision_birds:
-			if bird.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
-				bird_mask = pygame.mask.from_surface(bird.img)
-				offset = int(bird.x - player.x), int(bird.y - player.y)
-				collision_point_with_player = player_mask.overlap(bird_mask, offset)
-				collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
+			if bird.x < (player.x + player.img.get_width()) and (bird.x + bird.img.get_width()) > player.x:
+				if bird.y < (player.y + player.img.get_height()) and (bird.y + bird.img.get_height()) > player.y:	# Checking for collision if near player
+					bird_mask = pygame.mask.from_surface(bird.img)
+					offset = int(bird.x - player.x), int(bird.y - player.y)
+					collision_point_with_player = player_mask.overlap(bird_mask, offset)
+					collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
 
-				if collision_point_with_player or collision_point_with_propeller:
-					Bird.collision_birds.remove(bird)
-					return True
+					if collision_point_with_player or collision_point_with_propeller:
+						Bird.collision_birds.remove(bird)
+						return True
 	return False

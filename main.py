@@ -1,43 +1,49 @@
 import os
+import queue
 import pygame
+import random
 import time
+import multiprocessing
 
-import AVM as avm
 
 import global_config
 from module import background_module
 from module import bird_module
 from module import coins_module
 from module import display_module
-from module import event_module
 from module import effects_module
+from module import event_module
 from module import foreground_module
+from module import interface_module
 from module import music_module
 from module import obstacles_module
 from module import player_module
+from module.interface_screens_module import process_object
+from module.interface_screens_module import check_index
+from module.interface_screens_module import queue_shared
 from window import draw_control_screen_actual, draw_player_position
 
-# Global variables
 
-speed = global_config.speed
-game_duration = global_config.game_duration
+# Global variables
 run = True
 
 frame_count = 0
 num_of_lives = 3
 
-pygame.init()
-
-
-# Game Window
-# win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
-# pygame.display.set_caption('Game Window 2')
+win = None
+game_window = None
 
 def create_game_window():
-	global win	
-	win = pygame.display.set_mode((global_config.window_width, global_config.window_height))
+	global win, game_window
+	# Game Window
+	game_window = pygame.display.set_mode((global_config.window_width, global_config.window_height), pygame.RESIZABLE)
 	pygame.display.set_caption('Game Window')
+	
+	# Copy of game window which will be later resized according to the resolution, and blit onto the original game window.
+	win = game_window.copy()
 
+total_num_of_frames = global_config.speed*global_config.game_duration
+	
 
 def change_img_pixel_format():
 	"""
@@ -55,7 +61,7 @@ def change_img_pixel_format():
 	coins_module.coin_board = coins_module.coin_board.convert_alpha()
 
 	obstacles_module.Tree.resized_imgs = [img.convert_alpha() for img in obstacles_module.Tree.imgs]
-	obstacles_module.Rock_n_Bush.resized_imgs = [img.convert_alpha() for img in obstacles_module.Rock_n_Bush.resized_imgs]	
+	obstacles_module.Rock_n_Bush.imgs = [img.convert_alpha() for img in obstacles_module.Rock_n_Bush.imgs]	
 
 	effects_module.Coin_spark_effects.imgs = [img.convert_alpha() for img in effects_module.Coin_spark_effects.imgs]
 	effects_module.Hit_effects.imgs = [img.convert_alpha() for img in effects_module.Hit_effects.imgs]
@@ -81,88 +87,105 @@ def draw_all_objects():
 	for hit_effect_object in effects_module.Hit_effects.hit_effects_list:
 		hit_effect_object.draw(win)
 
-	player_y = player_module.draw_player(win)
+	player_module.draw_player(win)
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
 	display_module.draw_minimap(win,frame_count)
-
-
+	display_module.fuel.draw_fuel_bar(win, 5000)
+	
 # MAIN ALGORITHM
-#if __name__ == '__main__':
-def main_game():
-	
+if __name__ == '__main__':
 
-	#----------------Added----------------
-	
 	pygame.init()
 
-	speed = global_config.speed
-	game_duration = global_config.game_duration
-	run = True
+	# Home screen interface window
+	volume_button_on_status = interface_module.display_homescreen()
 
-	frame_count = 0
-	num_of_lives = 3
-
+	# Game window
 	create_game_window()
-	#-------------------------------------
+
+	change_img_pixel_format()
 
 	clock = pygame.time.Clock()
 	event_module.setting_up_events()
-
-	change_img_pixel_format()
 	
 	#Music Variable
-	Music_background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
-	pygame.mixer.music.play(-1)
-
-	fps_count = 0
-	start_time = time.time()
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	if volume_button_on_status:
+		pygame.mixer.music.play(-1)
 
 	# GAME LOOP
 	while run:
 		frame_count += 1
-
+		
 		draw_all_objects()
+
+		
+		
+
+		if frame_count < 4*global_config.speed:
+			display_module.countdown.draw(win)
+		elif frame_count == 4*global_config.speed:
+			pygame.event.set_allowed(pygame.USEREVENT+1)
+		
 		event_module.event_loop()
 
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
 		if collected:
-			music_module.sound_coins.play()
+			if volume_button_on_status:
+				music_module.sound_coins.play()
 			coins_module.Coin.num_coins_collected += 1
 		coins_module.display_num_coins_collected(win)
+
+		# Extra life
+		if coins_module.Coin.num_coins_collected%10 == 0 and num_of_lives!=3:
+			extra_life = display_module.Extra_life()
+		elif coins_module.Coin.num_coins_collected > 5:
+			try:
+				extra_life.draw(win)
+				player = player_module.player
+				if extra_life.x < (player.x + player.img.get_width()) and (extra_life.x + extra_life.img.get_width()) > player.x:	# Check x range
+					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
+						bool = extra_life.check_collision()
+						if bool:
+							# num = random.randint(1,1000)
+							# print('collected life', num)
+							del extra_life
+							num_of_lives += 1
+							coins_module.Coin.num_coins_collected -= 10
+			except:
+				pass
+		
+		draw_control_screen_actual(win)
+		draw_player_position(win)
+		
+		check_index(queue_shared)
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
 		collision_with_bird = bird_module.collision_with_bird()
 		if collision_with_obstacle or collision_with_bird:		# Dummy exit
-			music_module.sound_collided.play()
+			if volume_button_on_status:
+				music_module.sound_collided.play()
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 
 				time.sleep(1)
+				
+				process_object.terminate()
+				interface_module.display_endscreen()
 				break
 		
-		draw_control_screen_actual(win)
-		draw_player_position(win)
+		
 
-		clock.tick(speed)
+		# Resize and blit the copy of game window onto main game window
+		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
+
+		clock.tick(global_config.speed)
 		pygame.display.update()
 		
 		# Dummy exit
-		if frame_count >= game_duration*speed:
+		if frame_count >= total_num_of_frames:
 			print('Game Over')
 			time.sleep(1)
 			break
-
-		fps_count += 1
-		now = time.time()
-		diff = now - start_time
-
-		if diff >= 5:
-			fps = fps_count//5
-			print("fps: ", fps)
-			start_time = time.time()		
-			fps_count = 0
-
-if __name__ == "__main__":
-	main_game()

@@ -18,6 +18,7 @@ class Coin:
 	imgs = [pygame.image.load(os.path.join('Utils/Pics/Coins/', "coin"+ str(x) + '.png')) for x in range(1, num_of_imgs+1)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//50), int(img.get_height()//50))) for img in imgs]
 
+	del imgs
 	coins_list = []
 	num_coins_collected = 0
 
@@ -78,7 +79,7 @@ def update_coins_position():
 	Updates the x coordinates of coins. If coin goes offscreen, remove it from the list.
 	"""
 	for coin in Coin.coins_list:
-		coin_width = coin.imgs[0].get_width()
+		coin_width = coin.resized_imgs[0].get_width()
 		if coin.x < -1*coin_width: # If coin goes offscreen, removing it from coins list 
 			Coin.coins_list.remove(coin)
 		else:
@@ -92,14 +93,15 @@ def coin_collection(player):
 	player_mask = pygame.mask.from_surface(player.img)
 	for coin in Coin.coins_list:
 		try:
-			if coin.x < (player.x + player.img.get_width()+10):	# Checking for collision if near player
-				coin_mask = pygame.mask.from_surface(coin.img)
-				offset = coin.x - player.x, coin.y - player.y
-				collision_point = player_mask.overlap(coin_mask, offset)		# returns collision point else returns None
-				if collision_point:
-					Coin.coins_list.remove(coin)	# Stop drawing
-					effects_module.Coin_spark_effects.coin_effects_list.append(effects_module.Coin_spark_effects(coin.x, coin.y))	# create a spark object
-					return True
+			if coin.x < (player.x + player.img.get_width()) and (coin.x + coin.img.get_width()) > player.x:			# Check x range
+				if coin.y < (player.y + player.img.get_height()) and (coin.y + coin.img.get_height()) > player.y:	# Check y range
+					coin_mask = pygame.mask.from_surface(coin.img)
+					offset = coin.x - player.x, coin.y - player.y
+					collision_point = player_mask.overlap(coin_mask, offset)		# returns collision point else returns None
+					if collision_point:
+						Coin.coins_list.remove(coin)	# Stop drawing
+						effects_module.Coin_spark_effects.coin_effects_list.append(effects_module.Coin_spark_effects(coin.x, coin.y))	# create a spark object
+						return True
 		except: pass
 	return False
 

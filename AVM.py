@@ -3,21 +3,25 @@ import numpy as np
 import HandTrackingMod as htm
 import time
 import autopy
+#from global_config import num_of_lives
+from module.display_module  import process_object1
 
-##########################
-wCam, hCam = 520, 270
-frameR = 50  # Frame Reduction
+###################
+# #######
+wCam, hCam = 520, 370
+frameR_h = 160  # Frame Reduction
+frameR_w = 90
 smoothening = 8
 #########################
 
 
 
-def main_avm():
+def main_avm(queue_shared):
 
     pTime = 0
     detector = htm.HandDetector(maxHands=1)
     wScr, hScr = autopy.screen.size()
-    #print(wScr, hScr)
+    
     plocX, plocY = 0, 0
     clocX, clocY = 0, 0
 
@@ -25,74 +29,88 @@ def main_avm():
     cap.set(9, wCam)
     cap.set(11, hCam)
 
+    i = 0
     while True:
-        # 1. Find hand Landmarks
-        success, img = cap.read()
-        img = detector.findHands(img)
-        lmlist, bbox = detector.findPosition(img)
-        #print("AVM lmlist:", detector.lmlist)
+        #  Find hand Landmarks
+        success, img_org = cap.read()
+        width = int(cap.get(3))
+        height = int(cap.get(4))
+        print(width, height)
+        img = cv2.resize(img_org, (0,0), fx = 0.7, fy = 0.7)
+        
 
-        # 2. Get the tip of the index and middle fingers
+        #img = np.zeros(img_org.shape, np.uint8)
+
+        img = detector.findHands(img)
+        #img_org = detector.findHands(img_org)
+
+        lmlist, bbox = detector.findPosition(img)
+        #lmlist, bbox = detector.findPosition(img_org)
+
+
+        #  Get the tip of the index and middle fingers
         if len(lmlist) != 0:
             x1, y1 = lmlist[8][1:]
-            #x2, y2 = lmlist[12][1:]
-            #print(x1, y1, x2, y2)
 
-            #3. Check which fingers are up
+
+            # Check which fingers are up
             fingers = detector.fingersUp()
             #print(fingers)
 
-            cv2.rectangle(img, (frameR, frameR), (wCam - frameR, hCam - frameR), (255, 0, 255), 2)
+            #cv2.rectangle(img_org, (frameR_w, frameR_h), (wScr - frameR_w, hScr - frameR_h), (0, 0, 255), 2)
 
 
-            # 4. Only Index Finger : Moving Mode
+            cv2.rectangle(img, (frameR_w, frameR_h), (wCam - frameR_w, hCam - frameR_h), (255, 0, 255), 2)
+            #cv2.rectangle(img_org, (frameR_w, frameR_h), (wCam - frameR_w, hCam - frameR_h), (255, 0, 255), 2)
+
+
+            #  Only Index Finger : Moving Mode
             if fingers[1] == 1 and fingers[2] == 0:
+            
             # 5. Convert Coordinates
-                x3 = np.interp(x1, (frameR, wCam - frameR), (0, wScr))
-                y3 = np.interp(y1, (frameR, hCam - frameR), (0, hScr))
-                # 6. Smoothen Values
+                x3 = np.interp(x1, (frameR_w, wCam - frameR_w), (0, wScr))
+                y3 = np.interp(y1, (frameR_h, hCam - frameR_h), (0, hScr))
+                # Smoothen Values
                 clocX = plocX + (x3 - plocX) / smoothening
                 clocY = plocY + (y3 - plocY) / smoothening
-                # 7. Move Mouse
+                # Move Mouse
+                print(clocX, clocY)
                 autopy.mouse.move(wScr - clocX, clocY)
-                #autopy.mouse.move(wScr - x3, y3)
-                cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
+                
+                circle_img =  cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
+                
+                if process_object1.is_alive():
+                    process_object1.terminate()
                 plocX, plocY = clocX, clocY
 
-            """
-            # 8. Both Index and middle fingers are up : Clicking Mode
-            if fingers[1] == 1 and fingers[2] == 1:
-                # 9. Find distance between fingers
-                length, img, lineInfo = detector.findDistance(8, 12, img)
-
-                if length < 40:
-                    pass
-                #print(length)
+            else:
+                i += 1
+                print("Index finger not found",i)
+                #process_object1.start()
+                queue_shared.put(0)
+                #print(queue_shared)
+                #print(queue)
                 
-                # 10. Click mouse if distance short
-                if length < 40:
-                    cv2.circle(img, (lineInfo[4], lineInfo[5]), 15, (0, 255, 0), cv2.FILLED)
-                    #autopy.mouse.click()
-                    break
-                """
-            
-            
 
-        # 11. Frame Rate
+        #  Frame Rate
         cTime = time.time()
         fps = 1 / (cTime - pTime)
         pTime = cTime
         cv2.putText(img, str(int(fps)), (20, 50), cv2.FONT_HERSHEY_PLAIN, 3, (255, 0, 0), 3)
-        # 12. Display
-        cv2.imshow("Image", img)
+        #  Display
+        
+        #cv2.imshow("Image", img)
+        
+
+        
+        
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
-        #if length < 40:
-            #break
-    return x1, y1
-
+            
+    cap.release()
     cv2.destroyAllWindows()
+
 
     
 
