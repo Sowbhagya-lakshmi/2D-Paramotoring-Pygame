@@ -94,7 +94,9 @@ def draw_all_objects():
 
 	if start_fuel:
 		fuel_available -= 1
-	display_module.fuel.draw_fuel_bar(win, fuel_available, start_fuel)
+	fuel_available = display_module.fuel_bar.draw_fuel_bar(win, fuel_available, start_fuel)
+
+	display_module.draw_fuel(win)
 	
 # MAIN ALGORITHM
 if __name__ == '__main__':

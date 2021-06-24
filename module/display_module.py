@@ -1,4 +1,5 @@
 import os
+from sys import base_prefix
 import pygame
 import random
 
@@ -108,9 +109,63 @@ class Countdown:
 countdown = Countdown()
 
 class Fuel:
+
+	fuel_list = []
+
+	def __init__(self):
+		self.x = global_config.window_width
+		free_zone_y = coins_module.find_free_zone_y()
+		self.y = random.randint(0,free_zone_y)	
+		self.img = pygame.image.load(os.path.join('Utils/Pics/Display/','fuel2.png'))
+
+	def draw(self, win):
+		# print('drawing')
+		for fuel in self.fuel_list:
+			if fuel.x > -1*fuel.img.get_width():
+				# print('blitting')
+				win.blit(fuel.img, (fuel.x, fuel.y))
+				# print(fuel.x, fuel.y)
+				fuel.x -= foreground_module.foreground_speed
+			else:
+				self.fuel_list.remove(fuel)
+
+		self.fuel_collection()
+
+	def check_collision(self):
+		for fuel in self.fuel_list:
+			player = player_module.player
+			propeller = player_module.propeller
+			player_mask = pygame.mask.from_surface(player.img)
+			propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+
+			fuel_mask = pygame.mask.from_surface(fuel.img)
+
+			offset = fuel.x - player.x, fuel.y - player.y
+			collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
+			collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
+			if collision_point_with_player or collision_point_with_propeller:
+				return True
+		return False
+
+	def fuel_collection(self):
+		global fuel_bar
+		bool = self.check_collision()
+		if bool:
+			for fuel in self.fuel_list:
+				self.fuel_list.remove(fuel)
+				del fuel_bar
+				fuel_bar = Fuel_bar()
+				# fuel_bar.fuel_available = fuel_bar.max_fuel
+
+
+def draw_fuel(win):
+		for fuel in Fuel.fuel_list:
+			fuel.draw(win)	
+
+class Fuel_bar:
 	img = pygame.image.load(os.path.join('Utils/Pics/Display/', 'fuel2.png'))
 	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
-	# Fuel bar
+
 	bar_pos      = (50, 145)
 	bar_size     = (120, 20)
 	border_color = (0,0,0)
@@ -118,38 +173,15 @@ class Fuel:
 	green = 255
 	bar_color = (red, green, 0)
 	max_fuel = global_config.speed * 60  # 60 seconds
+	fuel_available = max_fuel
 
-	def __init__(self):
-		self.x = global_config.window_width
-		free_zone_y = coins_module.find_free_zone_y()
-		self.y = random.randint(0,free_zone_y)	
-
-	def draw(self, win):
-		if self.x > -1*self.img.get_width():
-			win.blit(self.img, (self.x, self.y))
-			self.x -= foreground_module.foreground_speed
-		else:
-			del self
-
-	def check_collision(self):
-		player = player_module.player
-		propeller = player_module.propeller
-		player_mask = pygame.mask.from_surface(player.img)
-		propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
-
-		fuel_mask = pygame.mask.from_surface(self.img)
-
-		offset = self.x - player.x, self.y - player.y
-		collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
-		collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
-		if collision_point_with_player or collision_point_with_propeller:
-			return True
-		return False
-	
-	def calculate_fuel(self):
-		pass
+	bool_check = True
 
 	def draw_fuel_bar(self, win, fuel_available, bool):
+		if self.bar_color == (255,255, 0):
+			self.fuel_available = self.max_fuel
+		else:
+			self.fuel_available = fuel_available
 		win.blit(self.img_icon, (10, 140))
 
 		if bool:
@@ -162,11 +194,21 @@ class Fuel:
 				self.green = 0
 
 		self.bar_color = (int(self.red), int(self.green), 0)
-		progress = fuel_available/self.max_fuel
+		progress = self.fuel_available/self.max_fuel
+		# print(progress)
+
+		if self.bool_check:
+			if progress <= 0.25:
+				# print('inside')
+				self.bool_check = False
+				fuel = Fuel()
+				Fuel.fuel_list.append(fuel)
 	
 		pygame.draw.rect(win, self.border_color, (*self.bar_pos, *self.bar_size), 3)
 		innerPos  = (self.bar_pos[0]+3, self.bar_pos[1]+3)
 		innerSize = ((self.bar_size[0]-6) * progress, self.bar_size[1]-6)
 		pygame.draw.rect(win, self.bar_color, (*innerPos, *innerSize))
 
-fuel = Fuel()
+		return self.fuel_available
+
+fuel_bar = Fuel_bar()
