@@ -89,7 +89,7 @@ if __name__ == '__main__':
 	
 	#Music Variable
 	Music_background = pygame.mixer.music.load(os.path.join('Utils\Music\BG1music.wav'))
-	# pygame.mixer.music.play(-1)
+	pygame.mixer.music.play(-1)
 
 	# GAME LOOP
 	while run:
