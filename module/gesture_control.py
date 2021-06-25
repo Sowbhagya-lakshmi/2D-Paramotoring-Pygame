@@ -1,10 +1,8 @@
 import cv2
 import numpy as np
-import HandTrackingMod as htm
+import module.hand_tracking_module as htm
 import time
 import autopy
-#from global_config import num_of_lives
-from module.display_module  import process_object1
 
 ###################
 # #######
@@ -79,18 +77,13 @@ def main_avm(queue_shared):
                 
                 circle_img =  cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)
                 
-                if process_object1.is_alive():
-                    process_object1.terminate()
                 plocX, plocY = clocX, clocY
 
             else:
                 i += 1
-                print("Index finger not found",i)
-                #process_object1.start()
+                # print("Index finger not found",i)
                 queue_shared.put(0)
-                #print(queue_shared)
-                #print(queue)
-                
+
 
         #  Frame Rate
         cTime = time.time()
@@ -100,10 +93,6 @@ def main_avm(queue_shared):
         #  Display
         
         #cv2.imshow("Image", img)
-        
-
-        
-        
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
