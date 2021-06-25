@@ -214,14 +214,3 @@ class Fuel_bar:
 
 fuel_bar = Fuel_bar()
 
-def index_finger():
-	while True:
-		pass
-
-process_object1 = multiprocessing.Process(target = index_finger)
-
-result = process_object1.is_alive()
-
-if result:
-	print("************************************************************************************************")
-	

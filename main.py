@@ -21,7 +21,7 @@ from module import player_module
 from module.interface_screens_module import process_object
 from module.interface_screens_module import check_index
 from module.interface_screens_module import queue_shared
-from window import draw_control_screen_actual, draw_player_position
+from module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 
 # Global variables
@@ -181,9 +181,8 @@ if __name__ == '__main__':
 				music_module.sound_collided.play()
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 
+				process_object.terminate()
 				time.sleep(1)
-				
-				# process_object.terminate()
 				interface_module.display_endscreen()
 				break
 		
