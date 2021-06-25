@@ -6,6 +6,8 @@ import random
 from module import background_module
 from module import foreground_module
 from module import player_module
+from module import music_module
+
 
 class Bird():
 	"""
@@ -76,6 +78,7 @@ def create_bird():
 def draw_bird(win):
 	for bird in Bird.birds_list:
 		bird.draw(win)
+		music_module.sound_bird.play()
 	update_birds_position()
 	
 def update_birds_position():
