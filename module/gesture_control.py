@@ -33,7 +33,7 @@ def main_avm(queue_shared):
         success, img_org = cap.read()
         width = int(cap.get(3))
         height = int(cap.get(4))
-        print(width, height)
+        # print(width, height)
         img = cv2.resize(img_org, (0,0), fx = 0.7, fy = 0.7)
         
 
@@ -72,7 +72,7 @@ def main_avm(queue_shared):
                 clocX = plocX + (x3 - plocX) / smoothening
                 clocY = plocY + (y3 - plocY) / smoothening
                 # Move Mouse
-                print(clocX, clocY)
+                # print(clocX, clocY)
                 autopy.mouse.move(wScr - clocX, clocY)
                 
                 circle_img =  cv2.circle(img, (x1, y1), 15, (255, 0, 255), cv2.FILLED)

@@ -36,9 +36,10 @@ def draw_control_screen_actual(win):
     pygame.draw.line(win, color1, start_pos, end_pos, width=3)    
 
 def draw_player_position(win):
-    x_pos, y_pos = player_module.draw_player(win)
+    x_pos, y_pos = player_module.player.x, player_module.player.y
     player_x = 0.25*x_pos + 0.75*global_config.window_width
     player_y = 0.25*y_pos + 20
     #print(player_x,player_y)
     pygame.draw.circle(win, (255,0,0), (player_x,player_y), 15, 15)
+    pygame.display.update()
 

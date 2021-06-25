@@ -15,11 +15,13 @@ from module import effects_module
 from module import event_module
 from module import foreground_module
 from module import interface_module
+# from module import interface_screens_module
 from module import music_module
 from module import obstacles_module
 from module import player_module
 from module.interface_screens_module import process_object
 from module.interface_screens_module import check_index
+from module.interface_screens_module import display_no_hand_info
 from module.interface_screens_module import queue_shared
 from module.player_movement_box import draw_control_screen_actual, draw_player_position
 
@@ -31,9 +33,9 @@ frame_count = 0
 num_of_lives = 3
 fuel_count = 0
 fuel_available = global_config.speed*60
-
 start_fuel = False
 
+display_pop_up = False
 
 win = None
 game_window = None
@@ -171,7 +173,21 @@ if __name__ == '__main__':
 		draw_control_screen_actual(win)
 		draw_player_position(win)
 		
-		check_index(queue_shared)
+		bool_val = check_index(queue_shared)
+		
+		if bool_val:
+			display_pop_up = True
+			start_loop = 0
+
+
+		if display_pop_up:
+			# print('inside if')
+			start_loop += 1
+			# print('displaying')
+			display_no_hand_info()
+			if start_loop >= global_config.speed:
+				print('disabling pop up')
+				display_pop_up = False
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
@@ -185,11 +201,6 @@ if __name__ == '__main__':
 				time.sleep(1)
 				interface_module.display_endscreen()
 				break
-		
-		
-
-		# Resize and blit the copy of game window onto main game window
-		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
 		# Resize and blit the copy of game window onto main game window
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))

@@ -468,12 +468,13 @@ def display_aboutbutton():
 def check_index(queue_shared):
 	#queue.get()
 	if queue_shared.empty():
-		pass
 		#print("*")
+		return False
 	else:
 		queue_shared.get()
-		#print("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
-		display_no_hand_info()
+		print("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
+		return True
+		
 		
 def display_no_hand_info():
 	win.blit(index_finger_not_detected,(300,300))

@@ -34,7 +34,6 @@ class Player:
 		self.img = self.imgs[self.index]
 		win.blit(self.img, (self.x,self.y))
 		self.run_count += 1 
-		pygame.display.update()
 
 class Propeller:
 	"""
