@@ -184,7 +184,7 @@ if __name__ == '__main__':
 			# print('inside if')
 			start_loop += 1
 			# print('displaying')
-			display_no_hand_info()
+			display_no_hand_info(win)
 			if start_loop >= global_config.speed:
 				print('disabling pop up')
 				display_pop_up = False

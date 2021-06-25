@@ -472,13 +472,13 @@ def check_index(queue_shared):
 		return False
 	else:
 		queue_shared.get()
-		print("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
+		# print("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
 		return True
 		
 		
-def display_no_hand_info():
+def display_no_hand_info(win):
 	win.blit(index_finger_not_detected,(300,300))
-	pygame.display.update()
+	# pygame.display.update()
 	#time.sleep(2)
 
 
