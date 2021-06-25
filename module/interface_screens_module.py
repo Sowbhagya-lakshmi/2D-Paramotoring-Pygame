@@ -1,6 +1,7 @@
 import pygame
 import sys
 import os
+import time
 import multiprocessing
 from multiprocessing import Queue
 from module.gesture_control import main_avm
@@ -212,6 +213,7 @@ def display_playbutton():
 
 		if mode == 1:	
 			process_object.start()
+			
 		
 		elif mode == 3: 
 			interface_module.display_homescreen()
@@ -477,6 +479,7 @@ def check_index(queue_shared):
 		
 def display_no_hand_info():
 	win.blit(index_finger_not_detected,(300,300))
+	#time.sleep(0.05)
 	pygame.display.update()
 	#time.sleep(2)
 

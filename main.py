@@ -181,7 +181,10 @@ if __name__ == '__main__':
 				music_module.sound_collided.play()
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 
-				process_object.terminate()
+				try:
+					process_object.terminate()
+				except:
+					pass
 				time.sleep(1)
 				interface_module.display_endscreen()
 				break
@@ -192,7 +195,7 @@ if __name__ == '__main__':
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
 		# Resize and blit the copy of game window onto main game window
-		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
+		#game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
 		clock.tick(global_config.speed)
 		pygame.display.update()
