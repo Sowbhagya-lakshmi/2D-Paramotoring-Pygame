@@ -1,3 +1,4 @@
+import multiprocessing
 import os
 from sys import base_prefix
 import pygame
@@ -212,3 +213,15 @@ class Fuel_bar:
 		return self.fuel_available
 
 fuel_bar = Fuel_bar()
+
+def index_finger():
+	while True:
+		pass
+
+process_object1 = multiprocessing.Process(target = index_finger)
+
+result = process_object1.is_alive()
+
+if result:
+	print("************************************************************************************************")
+	

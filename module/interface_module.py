@@ -16,7 +16,7 @@ value = 0
 mute_button, unmute_button = None, None
 
 #Loading Button and Screen Images
-screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para.png'))
+screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
 screen_end =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_End.png'))
 
 button_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Home.png'))
@@ -376,7 +376,6 @@ def display_endscreen():
 		win.blit(button_highscore, (320,400))
 		win.blit(button_home_small,(360,500))
 
-
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
@@ -395,13 +394,6 @@ def display_endscreen():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 
-		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
-			if right_click == 0:
-				win.blit(button_highscore_enlarge, (310,300))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
-			
 		elif 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
 			if right_click == 0:
 				win.blit(button_instructions_enlarge, (310,400))
