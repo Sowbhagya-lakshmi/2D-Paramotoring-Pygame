@@ -171,7 +171,7 @@ if __name__ == '__main__':
 				pass
 		
 		draw_control_screen_actual(win)
-		draw_player_position(win)
+		draw_player_position(win)		# draws black screen
 		
 		bool_val = check_index(queue_shared)
 		
