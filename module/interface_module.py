@@ -90,6 +90,29 @@ def check_home(screen):
 	pygame.display.update()
 	return value
 
+def check_end():
+	"""
+	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
+	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
+	button is clicked, and 4 if About button is clicked
+	"""
+	global value, right_click
+	i=0
+	value = 0
+	mouse = pygame.mouse.get_pos()
+		
+	if 200 <= mouse[1] <= 250 and 320 <= mouse[0] <= 480:
+		if right_click:
+			value = 1 
+	elif 500 <= mouse[1] <= 570 and 365 <= mouse[0] <= 435:
+		if right_click:
+			value = 2
+
+	clock = pygame.time.Clock()		
+	clock.tick(main.speed)		
+	pygame.display.update()
+	return value
+
 class Cursor:
 	"""
 	Define a custom cursor for the game instead of the system's cursor. Placing an image of a cursor at the mouse coordinates.
@@ -355,18 +378,15 @@ def display_endscreen():
 	pygame.mixer.music.play(-1)
 
 	while True:	
-		value = check_home(win)
+		value = check_end()
 		if value == 1: 
 			interface_screens_module.display_playbutton()
 			break 	# breaks interface loop
 
-		elif value == 3:
-			interface_screens_module.display_instructions()
+		elif value == 2:
+			interface_screens_module.display_homescreen()
 			break
 
-		elif value == 4:
-			interface_screens_module.display_aboutbutton()
-			break
 
 		win.fill((255,255,255))
 
@@ -380,30 +400,30 @@ def display_endscreen():
 
 		mouse = pygame.mouse.get_pos()
 
-		if 320 <= mouse[0] <= 480 and 100 <= mouse[1] <= 150 :
+		if 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
 			if right_click == 0:
-				win.blit(button_play_enlarge, (310,100))
+				win.blit(button_restart_enlarge, (310,200))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-			  	
-		elif 320 <= mouse[0] <= 480 and 200 <= mouse[1] <= 250 :
+
+		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
-				win.blit(button_resume_enlarge, (310,200))
+				win.blit(button_inverted_enlarge, (310,400))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 
 		elif 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
 			if right_click == 0:
-				win.blit(button_instructions_enlarge, (310,400))
+				win.blit(button_inverted_enlarge, (310,400))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		elif 320 <= mouse[0] <= 480 and 500 <= mouse[1] <= 550 :
+		elif 365 <= mouse[0] <= 435 and 500 <= mouse[1] <= 570 :
 			if right_click == 0:
-				win.blit(button_about_enlarge, (310,500))
+				win.blit(button_home_enlarge, (360,495))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
