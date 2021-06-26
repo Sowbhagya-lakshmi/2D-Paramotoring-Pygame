@@ -42,6 +42,7 @@ game_window = None
 
 def create_game_window():
 	global win, game_window
+	
 	# Game Window
 	game_window = pygame.display.set_mode((global_config.window_width, global_config.window_height), pygame.RESIZABLE)
 	pygame.display.set_caption('Game Window')
@@ -106,7 +107,8 @@ def draw_all_objects():
 	fuel_available = display_module.fuel_bar.draw_fuel_bar(win, fuel_available, start_fuel)
 
 	display_module.draw_fuel(win)
-	
+	cursor.draw(win)
+
 # MAIN ALGORITHM
 if __name__ == '__main__':
 
@@ -122,6 +124,8 @@ if __name__ == '__main__':
 
 	clock = pygame.time.Clock()
 	event_module.setting_up_events()
+	cursor = interface_module.Cursor()
+	pygame.mouse.set_visible(False)
 	
 	#Music Variable
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
@@ -152,9 +156,11 @@ if __name__ == '__main__':
 		coins_module.display_num_coins_collected(win)
 
 		# Extra life
-		if coins_module.Coin.num_coins_collected%10 == 0 and num_of_lives!=3:
+
+		num_of_coins_inexchange_for_life = 50
+		if coins_module.Coin.num_coins_collected%num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
 			extra_life = display_module.Extra_life()
-		elif coins_module.Coin.num_coins_collected > 5:
+		elif coins_module.Coin.num_coins_collected > num_of_coins_inexchange_for_life:
 			try:
 				extra_life.draw(win)
 				player = player_module.player
@@ -174,7 +180,7 @@ if __name__ == '__main__':
 
 		
 		#print("success")
-		draw_player_position(win)		# draws black screen
+		draw_player_position(win)		     # draws black screen
 		
 		bool_val = check_index(queue_shared)
 		
@@ -189,7 +195,6 @@ if __name__ == '__main__':
 			# print('displaying')
 			display_no_hand_info(win)
 			if start_loop >= global_config.speed:
-				# print('disabling pop up')
 				display_pop_up = False
 
 		# Collision with Obstacles
