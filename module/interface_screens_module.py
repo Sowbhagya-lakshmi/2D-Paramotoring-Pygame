@@ -6,7 +6,7 @@ import multiprocessing
 from multiprocessing import Queue
 from module.gesture_control import main_avm
 from module import player_module
-from global_config import queue_shared, process_object
+from mp import queue_shared, process_object
 
 
 import main
