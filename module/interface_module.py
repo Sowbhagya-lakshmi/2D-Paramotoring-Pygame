@@ -5,6 +5,8 @@ import os
 import global_config
 from module import music_module
 from module import interface_screens_module
+from module import coins_module
+
 
 # Global variables
 win = None
@@ -354,7 +356,7 @@ def display_endscreen():
 	
 	global_config.speed = 60		# fps
 	
-	
+	coin = coins_module.Coin.num_coins_collected
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
@@ -408,6 +410,10 @@ def display_endscreen():
 		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,300))
+				font_size = 40
+				font = pygame.font.Font('freesansbold.ttf', font_size)
+				text = font.render(str(coin), True, (255,255,255))
+				win.blit(text, (380, 310))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
