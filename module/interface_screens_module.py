@@ -148,7 +148,7 @@ def check_mode_aboutbutton( ):
 
 	about_mode = None
 	
-	if 640 <= mouse[0] <= 780 and 520 <= mouse[1] <= 570:
+	if 365 <= mouse[0] <= 435 and 523 <= mouse[1] <= 587:
 			if right_click: 
 				about_mode = 1
 	
@@ -233,7 +233,7 @@ def display_playbutton():
 	i=0
 	
 
-	while i<100:
+	while i<1000:
 
 		mode = check_mode_playbutton( )
 
@@ -471,13 +471,13 @@ def display_aboutbutton():
 
 		win.fill((255,0,0))
 		win.blit(screen_aboutbutton_interface,(0,0))
-		win.blit(button_skip,(640,520))
+		win.blit(button_home_small,(365,520))
 
 		event_loop()
 
-		if 640 <= mouse[0] <= 780 and 520 <= mouse[1] <= 570 :
+		if 365 <= mouse[0] <= 435 and 522 <= mouse[1] <= 587 :
 			if right_click == 0:
-				win.blit(button_skip_enlarge, (630,515))
+				win.blit(button_home_enlarge, (360,515))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
