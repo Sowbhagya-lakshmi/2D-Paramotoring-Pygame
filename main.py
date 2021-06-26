@@ -284,11 +284,11 @@ if __name__ == '__main__':
 
 		# Dummy exit
 		if collected_map:
-			time.sleep(2)
+			# time.sleep(2)
 			print('Game Over')
 			try:
 				process_object.terminate()
 			except: pass
-			sys.exit()
-
+			interface_module.display_endscreen()
+			break
 			
