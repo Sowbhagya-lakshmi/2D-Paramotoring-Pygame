@@ -26,6 +26,9 @@ from module import player_module
 from mp import process_object
 from module.interface_screens_module import check_index
 from module.interface_screens_module import display_no_hand_info
+from module.interface_screens_module import display_fail_msg
+from module.interface_screens_module import display_success_msg
+
 from mp import queue_shared
 from module.player_movement_box import draw_control_screen_actual, draw_player_position
 
@@ -134,6 +137,12 @@ def lost():
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 
+	music_module.sound_aftercollided.play()
+	i=0
+	while i<10:
+		display_fail_msg(win)
+		i=i+1
+
 	if player_module.player.y > foreground_module.ground_y:
 
 		try:
@@ -148,6 +157,10 @@ def won():
 	"""
 	If the player 
 	"""
+	i=0
+	while i<10:
+		display_success_msg(win)
+		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 	collected_map = display_module.display_map(win)
@@ -257,7 +270,8 @@ if __name__ == '__main__':
 		
 		if num_of_lives == 0:
 
-			pygame.mixer.music.stop()
+			#pygame.mixer.music.stop()
+
 			
 									# If all 3 lives are gone
 			game_end = lost()
