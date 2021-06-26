@@ -9,7 +9,7 @@ from module import player_module
 from mp import queue_shared, process_object
 
 
-import main
+import global_config
 from module import music_module , interface_module
 
 
@@ -86,7 +86,7 @@ def check_mode_playbutton( ):
 		play_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(main.speed)		
+	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return play_mode
 
@@ -114,7 +114,7 @@ def check_mode_pausebutton( ):
 		pause_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(main.speed)		
+	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return pause_mode
 
@@ -128,7 +128,7 @@ def check_mode_aboutbutton( ):
 
 	about_mode = None
 	
-	if 640 <= mouse[0] <= 780 and 520 <= mouse[1] <= 570:
+	if 365 <= mouse[0] <= 435 and 520 <= mouse[1] <= 570:
 			if right_click: 
 				about_mode = 1
 	
@@ -136,7 +136,7 @@ def check_mode_aboutbutton( ):
 		about_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(main.speed)		
+	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return about_mode
 
@@ -158,7 +158,7 @@ def check_mode_instructions( ):
 		skip_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(main.speed)		
+	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return skip_mode
 
@@ -211,9 +211,7 @@ def display_playbutton():
 	"""
 	global win, cursor
 	
-	main.speed = 60		# fps
-	main.run = True
-	
+	global_config.speed = 60		# fps
 	
 	# Home screen interface
 	width, height = 500,450
@@ -234,14 +232,15 @@ def display_playbutton():
 	pygame.mixer.music.play(-1)
 	i=0
 	
-
-	while i<100:
+	while True:
 
 		mode = check_mode_playbutton( )
 
 		if mode == 1:	
 			process_object.start()	
-		
+			break
+		elif mode == 2:
+			break		
 		elif mode == 3: 
 			interface_module.display_homescreen()
 			break 	# breaks interface loop
@@ -302,9 +301,7 @@ def display_pausebutton():
 	"""
 	global win, cursor
 	
-	main.speed = 60		# fps
-	main.run = True
-	
+	global_config.speed = 60		# fps
 	
 	# Home screen interface
 	width, height = 500,450
@@ -381,8 +378,8 @@ def display_instructions():
 
 	global win, cursor
 	
-	main.speed = 60		# fps
-	main.run = True
+	global_config.speed = 60		# fps
+	
 	
 	
 	# Home screen interface
@@ -487,7 +484,7 @@ def display_instructions():
 
 											e=e+1	
 
-											clock.tick(main.speed)	
+											clock.tick(global_config.speed)	
 											pygame.display.update()
 
 								else:
@@ -497,7 +494,7 @@ def display_instructions():
 
 								d=d+1	
 
-								clock.tick(main.speed)	
+								clock.tick(global_config.speed)	
 								pygame.display.update()
 
 					else:
@@ -507,7 +504,7 @@ def display_instructions():
 
 					c=c+1	
 
-					clock.tick(main.speed)	
+					clock.tick(global_config.speed)	
 					pygame.display.update()
 
 		else:
@@ -517,7 +514,7 @@ def display_instructions():
 
 		i = i+1
 
-		clock.tick(main.speed)
+		clock.tick(global_config.speed)
 		pygame.display.update()
 
 		
@@ -531,8 +528,8 @@ def display_aboutbutton():
 	"""
 	global win, cursor
 	
-	main.speed = 60		# fps
-	main.run = True
+	global_config.speed = 60		# fps
+	
 	
 	
 	# Home screen interface

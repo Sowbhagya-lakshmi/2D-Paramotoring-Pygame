@@ -2,7 +2,7 @@ import pygame
 import sys
 import os
 
-import main
+import global_config
 from module import music_module
 from module import interface_screens_module
 
@@ -86,7 +86,7 @@ def check_home(screen):
 				i +=1
 			value = 4
 	clock = pygame.time.Clock()		
-	clock.tick(main.speed)		
+	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return value
 
@@ -107,7 +107,7 @@ def check_end():
 			value = 2
 
 	clock = pygame.time.Clock()		
-	clock.tick(main.speed)		
+	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return value
 
@@ -246,8 +246,8 @@ def display_homescreen():
 	global win, cursor
 	global mute_button, unmute_button
 	
-	main.speed = 60		# fps
-	main.run = True
+	global_config.speed = 60		# fps
+	
 	
 	# Home screen interface
 	width, height = 800,600
@@ -333,7 +333,7 @@ def display_homescreen():
 
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
-		clock.tick(main.speed)
+		clock.tick(global_config.speed)
 		pygame.display.update()
 
 		
@@ -352,8 +352,8 @@ def display_endscreen():
 	global win, cursor
 	global mute_button, unmute_button
 	
-	main.speed = 60		# fps
-	main.run = True
+	global_config.speed = 60		# fps
+	
 	
 	# Home screen interface
 	width, height = 800,600
@@ -432,7 +432,7 @@ def display_endscreen():
 
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
-		clock.tick(main.speed)
+		clock.tick(global_config.speed)
 		pygame.display.update()
 
 		
