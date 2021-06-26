@@ -269,7 +269,7 @@ def display_homescreen():
 	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	while True:	
@@ -372,7 +372,7 @@ def display_endscreen():
 	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	while True:	

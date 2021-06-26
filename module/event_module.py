@@ -5,7 +5,7 @@ import time
 from module import bird_module
 from module import coins_module
 from module import obstacles_module
-from global_config import process_object
+from mp import process_object
 
 
 
