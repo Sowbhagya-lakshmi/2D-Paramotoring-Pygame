@@ -98,7 +98,7 @@ class Cursor:
 		self.img = pygame.image.load(os.path.join('Utils/Pics/Interface', 'cursor.png')).convert_alpha()
 		self.x, self.y  = pygame.mouse.get_pos()
 
-	def draw(self):
+	def draw(self,win):
 		self.x, self.y  = pygame.mouse.get_pos()
 		win.blit(self.img, (self.x, self.y))
 	
@@ -310,7 +310,7 @@ def display_homescreen():
 		
 		volume_button, pop_sound_play = volume_control.check_status(volume_button, pop_sound_play)					
 
-		cursor.draw()   # should be at last, to avoid overlapping
+		cursor.draw(win)   # should be at last, to avoid overlapping
 
 		clock.tick(main.speed)
 		pygame.display.update()
@@ -412,7 +412,7 @@ def display_endscreen():
 			pop_sound_play = False
 							
 
-		cursor.draw()   # should be at last, to avoid overlapping
+		cursor.draw(win)   # should be at last, to avoid overlapping
 
 		clock.tick(main.speed)
 		pygame.display.update()
