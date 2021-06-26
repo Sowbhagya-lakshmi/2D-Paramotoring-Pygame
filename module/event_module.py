@@ -23,6 +23,8 @@ def setting_up_events():
 def event_loop():
 	global right_click
 
+	right_click =  False
+
 	for event in pygame.event.get():		
 		if event.type == pygame.QUIT:
 			pygame.quit()
