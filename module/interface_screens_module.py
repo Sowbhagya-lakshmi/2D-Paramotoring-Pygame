@@ -22,6 +22,11 @@ screen_playbutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interf
 screen_pausebutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_PauseButton.png'))
 screen_aboutbutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_AboutButton.png'))
 
+screen_instruction1 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen1.png'))
+screen_instruction2 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen2.png'))
+screen_instruction3 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen3.png'))
+screen_instruction4 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen4.png'))
+
 button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_small = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*0.8),int(button_instructions.get_height()*0.8)))
 
@@ -296,8 +301,7 @@ def display_pausebutton():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-	i = 0
-	while i<1000:
+	while True:
 
 		pause_mode = check_mode_pausebutton( )
 		if pause_mode == 3: 
@@ -338,7 +342,7 @@ def display_pausebutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		i=i+1
+	
 		cursor.draw()
 
 		pygame.display.update()
@@ -374,11 +378,10 @@ def display_instructions():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-	i = 0
-	while i<1000:	
+	
+	while True:	
 		win.fill((255,255,255))
-
-		win.blit(screen_home,(0,0))
+		win.blit(screen_instruction1,(0,0))
 		win.blit(button_skip,(620,515))
 
 		event_loop()
@@ -435,14 +438,12 @@ def display_aboutbutton():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-	i = 0
 	while True:
 
 		about_mode = check_mode_aboutbutton()
 		if about_mode == 1:
 			interface_module.display_homescreen()
 			break 	# breaks interface loop
-
 
 		mouse = pygame.mouse.get_pos()
 
@@ -459,7 +460,6 @@ def display_aboutbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		i=i+1
 		cursor.draw()
 
 		pygame.display.update()
