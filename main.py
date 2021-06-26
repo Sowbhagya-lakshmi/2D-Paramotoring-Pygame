@@ -105,6 +105,11 @@ def draw_all_objects():
 
 	if num_of_lives == 0:
 		player_module.player.y += 1
+		Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+
+
+		pygame.mixer.music.stop()
+		music_module.sound_aftercollided.play()
 		player_module.propeller.draw(win)
 		player_module.player.draw(win)
 	elif won_bool:
