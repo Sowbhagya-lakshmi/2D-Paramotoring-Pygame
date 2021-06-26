@@ -213,8 +213,6 @@ def display_playbutton():
 	
 	global_config.speed = 60		# fps
 	
-	
-	
 	# Home screen interface
 	width, height = 500,450
 	win = pygame.display.set_mode((width, height))	
@@ -234,14 +232,15 @@ def display_playbutton():
 	pygame.mixer.music.play(-1)
 	i=0
 	
-
-	while i<100:
+	while True:
 
 		mode = check_mode_playbutton( )
 
 		if mode == 1:	
 			process_object.start()	
-		
+			break
+		elif mode == 2:
+			break		
 		elif mode == 3: 
 			interface_module.display_homescreen()
 			break 	# breaks interface loop
@@ -303,8 +302,6 @@ def display_pausebutton():
 	global win, cursor
 	
 	global_config.speed = 60		# fps
-	
-	
 	
 	# Home screen interface
 	width, height = 500,450
