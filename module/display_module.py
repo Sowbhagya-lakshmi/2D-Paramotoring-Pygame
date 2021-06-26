@@ -254,8 +254,8 @@ class Pause_play_button:
 	"""
 	For pausing the game.
 	"""
-	x = 500
-	y = 500
+	x = 50
+	y = 750
 
 	button_flag = False
 	
