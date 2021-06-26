@@ -382,7 +382,7 @@ def display_endscreen():
 			break 	# breaks interface loop
 
 		elif value == 2:
-			interface_screens_module.display_homescreen()
+			display_homescreen()
 			break
 
 
@@ -430,7 +430,7 @@ def display_endscreen():
 			pop_sound_play = False
 							
 
-		cursor.draw()   # should be at last, to avoid overlapping
+		cursor.draw(win)   # should be at last, to avoid overlapping
 
 		clock.tick(main.speed)
 		pygame.display.update()
