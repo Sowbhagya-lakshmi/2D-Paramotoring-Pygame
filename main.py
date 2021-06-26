@@ -246,7 +246,7 @@ if __name__ == '__main__':
 			
 									# If all 3 lives are gone
 			game_end = lost()
-			
+			#music_module.sound_aftercollided.play()
 			player_module.propeller.frames_per_propeller_img += 0.01
 
 			if game_end:
