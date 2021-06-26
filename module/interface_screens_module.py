@@ -230,7 +230,7 @@ def display_playbutton():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 	i=0
 	
@@ -321,7 +321,7 @@ def display_pausebutton():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i = 0
@@ -399,7 +399,7 @@ def display_instructions():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
@@ -550,7 +550,7 @@ def display_aboutbutton():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i = 0
