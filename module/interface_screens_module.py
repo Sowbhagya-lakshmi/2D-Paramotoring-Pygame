@@ -5,6 +5,8 @@ import time
 import multiprocessing
 from multiprocessing import Queue
 from module.gesture_control import main_avm
+from module import player_module
+
 
 
 import main
@@ -45,7 +47,7 @@ button_mode_gesture_enlarge = pygame.transform.scale(button_mode_gesture, (int(b
 button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
 
-index_finger_not_detected = pygame.image.load(os.path.join('Utils/Pics/Interface','INDEX_FINGeR_NOT_DETECTED.png'))
+index_finger_not_detected = pygame.image.load(os.path.join('Utils/Pics/Interface','pop-up.png'))
 
 
 queue_shared = multiprocessing.Queue()
@@ -213,7 +215,8 @@ def display_playbutton():
 
 		if mode == 1:	
 			process_object.start()
-			
+
+					
 		
 		elif mode == 3: 
 			interface_module.display_homescreen()
@@ -470,17 +473,17 @@ def display_aboutbutton():
 def check_index(queue_shared):
 	#queue.get()
 	if queue_shared.empty():
-		pass
-		#print("*")
+		return False
 	else:
 		queue_shared.get()
-		#print("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
-		display_no_hand_info()
+		return True
 		
-def display_no_hand_info():
-	win.blit(index_finger_not_detected,(300,300))
-	#time.sleep(0.05)
-	pygame.display.update()
-	#time.sleep(2)
+		
+def display_no_hand_info(win):
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y 
+	win.blit(index_finger_not_detected,(pos_x,pos_y))
+	#pygame.display.update()
+
+
 
 
