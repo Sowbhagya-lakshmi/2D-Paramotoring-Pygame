@@ -104,11 +104,6 @@ def draw_all_objects():
 
 	if num_of_lives == 0:
 		player_module.player.y += 1
-		Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
-
-
-		pygame.mixer.music.stop()
-		music_module.sound_aftercollided.play()
 		player_module.propeller.draw(win)
 		player_module.player.draw(win)
 	else:
@@ -133,7 +128,9 @@ def lost():
 	pygame.event.set_blocked(pygame.USEREVENT+1)
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
+
 	if player_module.player.y > foreground_module.ground_y:
+
 		try:
 			process_object.terminate()
 		except: pass
@@ -243,9 +240,15 @@ if __name__ == '__main__':
 			if num_of_lives <= 0:
 				num_of_lives = 0
 		
-		if num_of_lives == 0:	# If all 3 lives are gone
+		if num_of_lives == 0:
+
+			pygame.mixer.music.stop()
+			
+									# If all 3 lives are gone
 			game_end = lost()
+			
 			player_module.propeller.frames_per_propeller_img += 0.01
+
 			if game_end:
 				break
 
@@ -259,6 +262,7 @@ if __name__ == '__main__':
 
 		# Dummy exit
 		if frame_count >= total_num_of_frames:
+
 			print('Game Over')
 			time.sleep(1)
 			break
