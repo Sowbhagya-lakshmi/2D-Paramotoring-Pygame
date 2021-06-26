@@ -6,7 +6,7 @@ import multiprocessing
 from multiprocessing import Queue
 from module.gesture_control import main_avm
 from module import player_module
-
+from global_config import queue_shared, process_object
 
 
 import main
@@ -50,8 +50,7 @@ button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(butto
 index_finger_not_detected = pygame.image.load(os.path.join('Utils/Pics/Interface','pop-up.png'))
 
 
-queue_shared = multiprocessing.Queue()
-process_object = multiprocessing.Process(target = main_avm, args = (queue_shared,))
+
 
 def check_mode_playbutton( ):
 	"""

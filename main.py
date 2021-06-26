@@ -21,10 +21,10 @@ from module import music_module
 from module import obstacles_module
 from module import player_module
 
-from module.interface_screens_module import process_object
+from global_config import process_object
 from module.interface_screens_module import check_index
 from module.interface_screens_module import display_no_hand_info
-from module.interface_screens_module import queue_shared
+from global_config import queue_shared
 from module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 
