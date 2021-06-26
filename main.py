@@ -22,10 +22,10 @@ from module import music_module
 from module import obstacles_module
 from module import player_module
 
-from module.interface_screens_module import process_object
+from global_config import process_object
 from module.interface_screens_module import check_index
 from module.interface_screens_module import display_no_hand_info
-from module.interface_screens_module import queue_shared
+from global_config import queue_shared
 from module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 
@@ -47,6 +47,7 @@ game_window = None
 
 def create_game_window():
 	global win, game_window
+	
 	# Game Window
 	game_window = pygame.display.set_mode((global_config.window_width, global_config.window_height), pygame.RESIZABLE)
 	pygame.display.set_caption('Game Window')
@@ -204,22 +205,28 @@ if __name__ == '__main__':
 				pass
 		
 		draw_control_screen_actual(win)
-		draw_player_position(win)		# draws black screen
+
 		
-		bool_val = check_index(queue_shared)
-		
-		if bool_val:
-			display_pop_up = True
-			start_loop = 0
+		#print("success")
+		draw_player_position(win)		     # draws black screen
+		try:
+			bool_val = check_index(queue_shared)
+			if bool_val:
+				display_pop_up = True
+				start_loop = 0
 
 
-		if display_pop_up:
-			# print('inside if')
-			start_loop += 1
-			# print('displaying')
-			display_no_hand_info(win)
-			if start_loop >= global_config.speed:
-				display_pop_up = False
+			if display_pop_up:
+				# print('inside if')
+				start_loop += 1
+				# print('displaying')
+				display_no_hand_info(win)
+				if start_loop >= global_config.speed:
+					display_pop_up = False
+		except:
+			pass
+
+		
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
@@ -232,7 +239,6 @@ if __name__ == '__main__':
 				num_of_lives = 0
 		
 		if num_of_lives == 0:	# If all 3 lives are gone
-			print('%%%%%%%%%%%5')
 			game_end = lost()
 			if game_end:
 				break
@@ -244,7 +250,7 @@ if __name__ == '__main__':
 
 		clock.tick(global_config.speed)
 		pygame.display.update()
-		
+
 		# Dummy exit
 		if frame_count >= total_num_of_frames:
 			print('Game Over')

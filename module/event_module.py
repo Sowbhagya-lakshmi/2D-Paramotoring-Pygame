@@ -1,9 +1,13 @@
 import pygame
 import sys
+import time
 
 from module import bird_module
 from module import coins_module
 from module import obstacles_module
+from global_config import process_object
+
+
 
 right_click = False
 
@@ -27,10 +31,16 @@ def event_loop():
 
 	for event in pygame.event.get():		
 		if event.type == pygame.QUIT:
+			if process_object.is_alive():
+				process_object.terminate()
+				time.sleep(1)
 			pygame.quit()
 			sys.exit()		
-		if event.type == pygame.KEYDOWN:
+		elif event.type == pygame.KEYDOWN:
 			if event.key == 27:		# press esc to quit
+				if process_object.is_alive():
+					process_object.terminate()
+					time.sleep(1)
 				pygame.quit()
 				sys.exit()		
 		elif event.type == pygame.MOUSEBUTTONDOWN:

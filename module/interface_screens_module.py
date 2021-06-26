@@ -1,9 +1,12 @@
 import pygame
 import sys
 import os
+import time
 import multiprocessing
 from multiprocessing import Queue
 from module.gesture_control import main_avm
+from module import player_module
+from global_config import queue_shared, process_object
 
 
 import main
@@ -21,11 +24,6 @@ screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escap
 screen_playbutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_PlayButton.png'))
 screen_pausebutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_PauseButton.png'))
 screen_aboutbutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_AboutButton.png'))
-
-screen_instruction1 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen1.png'))
-screen_instruction2 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen2.png'))
-screen_instruction3 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen3.png'))
-screen_instruction4 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen4.png'))
 
 button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_small = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*0.8),int(button_instructions.get_height()*0.8)))
@@ -49,11 +47,10 @@ button_mode_gesture_enlarge = pygame.transform.scale(button_mode_gesture, (int(b
 button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
 
-index_finger_not_detected = pygame.image.load(os.path.join('Utils/Pics/Interface','INDEX_FINGeR_NOT_DETECTED.png'))
+index_finger_not_detected = pygame.image.load(os.path.join('Utils/Pics/Interface','pop-up.png'))
 
 
-queue_shared = multiprocessing.Queue()
-process_object = multiprocessing.Process(target = main_avm, args = (queue_shared,))
+
 
 def check_mode_playbutton( ):
 	"""
@@ -216,8 +213,7 @@ def display_playbutton():
 		mode = check_mode_playbutton( )
 
 		if mode == 1:	
-			process_object.start()
-			pass
+			process_object.start()	
 		
 		elif mode == 3: 
 			interface_module.display_homescreen()
@@ -301,7 +297,8 @@ def display_pausebutton():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-	while True:
+	i = 0
+	while i<1000:
 
 		pause_mode = check_mode_pausebutton( )
 		if pause_mode == 3: 
@@ -342,7 +339,7 @@ def display_pausebutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-	
+		i=i+1
 		cursor.draw()
 
 		pygame.display.update()
@@ -378,10 +375,11 @@ def display_instructions():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-	
-	while True:	
+	i = 0
+	while i<1000:	
 		win.fill((255,255,255))
-		win.blit(screen_instruction1,(0,0))
+
+		win.blit(screen_home,(0,0))
 		win.blit(button_skip,(620,515))
 
 		event_loop()
@@ -438,12 +436,14 @@ def display_aboutbutton():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
+	i = 0
 	while True:
 
 		about_mode = check_mode_aboutbutton()
 		if about_mode == 1:
 			interface_module.display_homescreen()
 			break 	# breaks interface loop
+
 
 		mouse = pygame.mouse.get_pos()
 
@@ -460,6 +460,7 @@ def display_aboutbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
+		i=i+1
 		cursor.draw()
 
 		pygame.display.update()
@@ -469,17 +470,17 @@ def display_aboutbutton():
 def check_index(queue_shared):
 	#queue.get()
 	if queue_shared.empty():
-		#print("*")
 		return False
 	else:
 		queue_shared.get()
-		# print("----------------------------------------------------------------------------------------------------------------------------------------------------------------")
 		return True
 		
 		
 def display_no_hand_info(win):
-	win.blit(index_finger_not_detected,(300,300))
-	# pygame.display.update()
-	#time.sleep(2)
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y 
+	win.blit(index_finger_not_detected,(pos_x,pos_y))
+	#pygame.display.update()
+
+
 
 
