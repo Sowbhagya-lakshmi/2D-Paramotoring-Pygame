@@ -47,6 +47,7 @@ class Propeller:
 	# Loading propeller images
 	org_propeller_imgs = [pygame.image.load('Utils/Pics/Propeller/'+img) for img in img_name_lst]
 	propeller_imgs = [pygame.transform.scale(img, (int(img.get_width()/4), int(img.get_height()/4))) for img in org_propeller_imgs ]
+	frames_per_propeller_img = 2
 
 	def __init__(self):
 		self.run_count = 0
@@ -54,11 +55,12 @@ class Propeller:
 	
 	def draw(self, win):
 		# Draw propeller
-		self.frames_per_propeller_img = 2
-		if self.propeller_count >= self.frames_per_propeller_img*self.num_of_propeller_imgs :
+		frames_per_propeller_img = int(self.frames_per_propeller_img)
+		# print(frames_per_propeller_img)
+		if self.propeller_count >= frames_per_propeller_img*self.num_of_propeller_imgs :
 			self.propeller_count = 0
 		
-		self.index = self.propeller_count//self.frames_per_propeller_img
+		self.index = self.propeller_count//frames_per_propeller_img
 		self.propeller_img = self.propeller_imgs[self.index]
 		win.blit(self.propeller_img, (player.x,player.y))
 		self.propeller_count += 1 

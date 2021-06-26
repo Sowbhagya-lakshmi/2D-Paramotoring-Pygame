@@ -78,7 +78,7 @@ def create_bird():
 def draw_bird(win):
 	for bird in Bird.birds_list:
 		bird.draw(win)
-		music_module.sound_bird.play()
+		# music_module.sound_bird.play()
 	update_birds_position()
 	
 def update_birds_position():

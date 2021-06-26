@@ -240,6 +240,7 @@ if __name__ == '__main__':
 		
 		if num_of_lives == 0:	# If all 3 lives are gone
 			game_end = lost()
+			player_module.propeller.frames_per_propeller_img += 0.01
 			if game_end:
 				break
 
