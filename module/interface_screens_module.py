@@ -94,7 +94,6 @@ def check_mode_pausebutton( ):
 	clicked, 2 if restart button is clicked, and 3 if home button is clicked
 	"""
 	global right_click
-	i=0
 	mouse = pygame.mouse.get_pos()
 
 	pause_mode = None
@@ -102,6 +101,7 @@ def check_mode_pausebutton( ):
 	if 170 <= mouse[0] <= 330 and 150 <= mouse[1] <= 200:
 		if right_click:
 			pause_mode = 1
+	
 	elif 170 <= mouse[1] <= 330 and 250 <= mouse[1] <= 300:
 		if right_click:
 			pause_mode = 2
@@ -115,6 +115,28 @@ def check_mode_pausebutton( ):
 	clock.tick(main.speed)		
 	pygame.display.update()
 	return pause_mode
+
+def check_mode_instructions( ):
+	"""
+	Checks if the skip button is clicked from the instructions button interface and returns 1 if skip button is
+	clicked
+	"""
+	global right_click
+	mouse = pygame.mouse.get_pos()
+
+	skip_mode = None
+	
+	if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
+		if right_click:
+			skip_mode = 1
+	else:
+		skip_mode = None
+		
+	clock = pygame.time.Clock()		
+	clock.tick(main.speed)		
+	pygame.display.update()
+	return skip_mode
+
 
 def check_mode_aboutbutton( ):
 	"""
