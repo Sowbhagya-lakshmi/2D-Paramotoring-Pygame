@@ -92,9 +92,7 @@ def check_home(screen):
 
 def check_end():
 	"""
-	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
-	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
-	button is clicked, and 4 if About button is clicked
+	Checks the button that is clicked from the end screen and returns the corrseponding values.
 	"""
 	global value, right_click
 	i=0
@@ -121,7 +119,7 @@ class Cursor:
 		self.img = pygame.image.load(os.path.join('Utils/Pics/Interface', 'cursor.png')).convert_alpha()
 		self.x, self.y  = pygame.mouse.get_pos()
 
-	def draw(self):
+	def draw(self,win):
 		self.x, self.y  = pygame.mouse.get_pos()
 		win.blit(self.img, (self.x, self.y))
 	
@@ -333,7 +331,7 @@ def display_homescreen():
 		
 		volume_button, pop_sound_play = volume_control.check_status(volume_button, pop_sound_play)					
 
-		cursor.draw()   # should be at last, to avoid overlapping
+		cursor.draw(win)   # should be at last, to avoid overlapping
 
 		clock.tick(main.speed)
 		pygame.display.update()
