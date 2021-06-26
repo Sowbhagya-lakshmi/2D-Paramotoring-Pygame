@@ -400,8 +400,9 @@ def display_instructions():
 	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
 	pygame.mixer.music.play(-1)
 
-	
-	while True:	
+	i=0
+	while i<10000:
+
 		win.fill((255,255,255))
 		win.blit(screen_instruction1,(0,0))
 		win.blit(button_skip,(620,515))
@@ -410,12 +411,101 @@ def display_instructions():
 
 		mouse = pygame.mouse.get_pos()
 
+		skip_mode1 = check_mode_instructions()
+
 		if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
 			if right_click == 0:
 				win.blit(button_skip_enlarge, (610,515))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
+
+				
+			if skip_mode1 == 1:
+				c=0
+				while c<10000:
+		
+					win.blit(screen_instruction2,(0,0))
+					win.blit(button_skip,(620,515))
+
+					event_loop()
+
+					if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
+						if right_click == 0:
+							win.blit(button_skip_enlarge, (610,515))
+						if pop_sound_play == False:
+							music_module.sound_button_enlarge.play()
+						pop_sound_play = True
+
+						skip_mode2 = check_mode_instructions()
+
+						if skip_mode2 == 1:
+							d=0
+							while d<10000:
+	
+								win.blit(screen_instruction3,(0,0))
+								win.blit(button_skip,(620,515))
+
+								event_loop()
+
+								if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
+									if right_click == 0:
+										win.blit(button_skip_enlarge, (610,515))
+									if pop_sound_play == False:
+										music_module.sound_button_enlarge.play()
+									pop_sound_play = True
+
+									skip_mode3 = check_mode_instructions()
+									if skip_mode3 == 1:
+										e=0
+										while e<10000:
+	
+											win.blit(screen_instruction4,(0,0))
+											win.blit(button_skip,(620,515))
+
+											event_loop()
+
+											if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
+												if right_click == 0:
+													win.blit(button_skip_enlarge, (610,515))
+												if pop_sound_play == False:
+													music_module.sound_button_enlarge.play()
+												pop_sound_play = True
+
+												skip_mode4 = check_mode_instructions()
+												if skip_mode4==1:
+													interface_module.display_homescreen()
+													break
+
+											else:
+												pop_sound_play=False
+
+											cursor.draw()
+
+											e=e+1	
+
+											clock.tick(main.speed)	
+											pygame.display.update()
+
+								else:
+									pop_sound_play=False
+
+								cursor.draw()
+
+								d=d+1	
+
+								clock.tick(main.speed)	
+								pygame.display.update()
+
+					else:
+						pop_sound_play=False
+
+					cursor.draw()
+
+					c=c+1	
+
+					clock.tick(main.speed)	
+					pygame.display.update()
 
 		else:
 			pop_sound_play = False				
