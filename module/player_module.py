@@ -69,11 +69,13 @@ class Propeller:
 player = Player()	
 propeller = Propeller()	
 
-def draw_player(win):
+def draw_player(win, player_won=False):
 	(mx, my) = pygame.mouse.get_pos()
 		
 	# limit player's movable region
-	if my < foreground_module.ground_y :
+	if player_won:
+		player.x, player.y = mx, my
+	elif my < foreground_module.ground_y :
 		player.x, player.y = 250, my
 	else:
 		player.x, player.y = 250, foreground_module.ground_y

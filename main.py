@@ -37,6 +37,7 @@ num_of_lives = 3
 fuel_count = 0
 ending_count = 0
 
+won_bool = False
 fuel_available = global_config.speed*60
 start_fuel = False
 
@@ -106,6 +107,8 @@ def draw_all_objects():
 		player_module.player.y += 1
 		player_module.propeller.draw(win)
 		player_module.player.draw(win)
+	elif won_bool:
+		player_module.draw_player(win, True)
 	else:
 		player_module.draw_player(win)
 		
@@ -136,6 +139,14 @@ def lost():
 		interface_module.display_endscreen()
 		return True
 	return False
+
+def won():
+	"""
+	If the player 
+	"""
+	pygame.event.set_blocked(pygame.USEREVENT+1)
+	foreground_module.foreground_speed = 0
+	background_module.background_speed = 0
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
@@ -246,6 +257,10 @@ if __name__ == '__main__':
 
 		display_module.pause_play_button.check_status(cursor, win)
 
+		if frame_count >= total_num_of_frames - 5*global_config.speed:	#last 5 seconds
+			won()
+			won_bool = True
+
 		# Resize and blit the copy of game window onto main game window
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
@@ -255,5 +270,5 @@ if __name__ == '__main__':
 		# Dummy exit
 		if frame_count >= total_num_of_frames:
 			print('Game Over')
-			time.sleep(1)
 			break
+print('broken')
