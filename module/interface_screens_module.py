@@ -211,7 +211,7 @@ def display_playbutton():
 		mode = check_mode_playbutton( )
 
 		if mode == 1:	
-			#process_object.start()
+			process_object.start()
 			pass
 		
 		elif mode == 3: 

@@ -4,10 +4,14 @@ from sys import base_prefix
 import pygame
 import random
 
+from pygame.mixer import pause
+
 import global_config
 from module import coins_module
 from module import event_module
 from module import foreground_module
+from module import interface_module
+from module import music_module
 from module import player_module
 
 # LIVES
@@ -223,7 +227,7 @@ class Pause_button:
 		self.centroid_x = 0
 		self.centroid_y = 0
 
-		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Display', 'pause.png')).convert_alpha()
+		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Display', 'pause.png'))
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
@@ -237,63 +241,63 @@ class Play_button:
 		self.centroid_x = 0
 		self.centroid_y = 0
 
-		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Display', 'play.png')).convert_alpha()		
+		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Display', 'play.png'))		
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
 		self.img = self.img_small
 
+pause_button = Pause_button()
+play_button = Play_button()
+
 class Pause_play_button:
 	"""
 	For pausing the game.
 	"""
-	x = 760
-	y = 40
+	x = 500
+	y = 500
 
 	button_flag = False
 	
 	def __init__(self):
-		# self.buttons_list = [unmute_button, mute_button]
+		self.buttons_list = [pause_button, play_button]
 		self.img = self.buttons_list[0].img
+		self.button = pause_button
 	
-	def check_status(self, button, pop_sound_play):
+	def check_status(self, cursor, win):
 		"""
 		Checks whether the cursor is over the button. And if it is clicked inverts the status of the button i.e mute to unmute or vice versa.
 		"""
-		collision_with_button = cursor_over_button(cursor, button)
+		collision_with_button = interface_module.cursor_over_button(cursor, self.button)
 
 		# If the cursor is over button, button enlarges
 		if collision_with_button:
-			button.img = button.img_big		
+			self.button.img = self.button.img_big		
 
 			# If clicked, button is changed
 			if event_module.right_click:
-				button = self.buttons_list[not(self.buttons_list.index(button))]
-				# Sound effect
-				if pop_sound_play == False:
-					music_module.sound_button_enlarge.play()
-					pop_sound_play = True
-				else:
-					pop_sound_play = False
+				self.button = self.buttons_list[not(self.buttons_list.index(self.button))]
 		else:
-			button.img = button.img_small		
+			self.button.img = self.button.img_small		
 
-		self.draw(button)		
-		self.functionality(button)
+		self.draw(self.button, win)		
+		self.functionality(self.button)
 
-		return button, pop_sound_play
+		return self.button
 
-	def functionality(self, volume_button):
+	def functionality(self, button):
 		
-		if self.buttons_list.index(volume_button) == 1:
+		if self.buttons_list.index(button) == 1:
 			pygame.mixer.music.stop()
 			self.button_flag = True
-		elif self.buttons_list.index(volume_button) == 0 and self.button_flag:
+		elif self.buttons_list.index(button) == 0 and self.button_flag:
 			pygame.mixer.music.play(-1)
 			self.button_flag = False
 
-	def draw(self, button):
-		button.centroid_x = Volume_control.x - button.img.get_width()//2
-		button.centroid_y = Volume_control.y - button.img.get_height()//2
+	def draw(self, button, win):
+		button.centroid_x = self.x - button.img.get_width()//2
+		button.centroid_y = self.y - button.img.get_height()//2
 
 		win.blit(button.img, (button.centroid_x, button.centroid_y))
+
+pause_play_button = Pause_play_button()
