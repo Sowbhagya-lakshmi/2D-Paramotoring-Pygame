@@ -1,6 +1,7 @@
 import os
 import pygame
 
+import global_config
 from module import foreground_module
 
 class Player:
@@ -74,7 +75,9 @@ def draw_player(win, player_won=False):
 		
 	# limit player's movable region
 	if player_won:
-		player.x, player.y = mx, my
+		if player.x < global_config.window_width - player.img.get_width():
+			player.x = player.x + 3
+		player.y = my
 	elif my < foreground_module.ground_y :
 		player.x, player.y = 250, my
 	else:

@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import module.hand_tracking_module as htm
 import time
-#import autopy
+import autopy
 
 ###################
 
@@ -25,6 +25,7 @@ def main_avm(queue_shared):
     clocX, clocY = 0, 0
 
     cap = cv2.VideoCapture(0)
+    print('capturin video')
     cap.set(9, wCam)
     cap.set(11, hCam)
 
