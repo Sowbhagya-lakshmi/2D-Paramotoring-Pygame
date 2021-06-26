@@ -301,3 +301,38 @@ class Pause_play_button:
 		win.blit(button.img, (button.centroid_x, button.centroid_y))
 
 pause_play_button = Pause_play_button()
+
+map_img_big = pygame.image.load(os.path.join('Utils/Pics/Display', 'map.png'))
+map_img = pygame.transform.scale(map_img_big, (map_img_big.get_width()//5, map_img_big.get_height()//5))
+	
+# map_x = global_config.window_width
+map_x = 1300
+map_y = random.randint(150, foreground_module.ground_y)
+
+# Map
+
+def check_collision_with_map():
+	player = player_module.player
+	propeller = player_module.propeller
+	player_mask = pygame.mask.from_surface(player.img)
+	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+
+	if map_x < (player.x + player.img.get_width()) and (map_x + map_img.get_width()) > player.x:
+		if map_y < (player.y + player.img.get_height()) and (map_y + map_img.get_height()) > player.y:	# Checking for collision if near player
+			bird_mask = pygame.mask.from_surface(map_img)
+			offset = int(map_x - player.x), int(map_y - player.y)
+			collision_point_with_player = player_mask.overlap(bird_mask, offset)
+			collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
+
+			if collision_point_with_player or collision_point_with_propeller:
+				return True
+	return False
+
+def display_map(win):
+	global map_x, map_y
+	win.blit(map_img, (map_x,map_y))
+
+	if check_collision_with_map():
+		return True
+	else:
+		return False
