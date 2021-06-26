@@ -137,8 +137,9 @@ def lost():
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 
+	music_module.sound_aftercollided.play()
 	i=0
-	while i<100:
+	while i<10:
 		display_fail_msg(win)
 		i=i+1
 
@@ -157,7 +158,7 @@ def won():
 	If the player 
 	"""
 	i=0
-	while i<200:
+	while i<10:
 		display_success_msg(win)
 		i=i+1
 	foreground_module.foreground_speed = 0
@@ -269,7 +270,8 @@ if __name__ == '__main__':
 		
 		if num_of_lives == 0:
 
-			pygame.mixer.music.stop()
+			#pygame.mixer.music.stop()
+
 			
 									# If all 3 lives are gone
 			game_end = lost()
