@@ -15,10 +15,12 @@ from module import effects_module
 from module import event_module
 from module import foreground_module
 from module import interface_module
+
 # from module import interface_screens_module
 from module import music_module
 from module import obstacles_module
 from module import player_module
+
 from module.interface_screens_module import process_object
 from module.interface_screens_module import check_index
 from module.interface_screens_module import display_no_hand_info
@@ -172,7 +174,7 @@ if __name__ == '__main__':
 							# print('collected life', num)
 							del extra_life
 							num_of_lives += 1
-							coins_module.Coin.num_coins_collected -= 10
+							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
 			except:
 				pass
 		
@@ -181,21 +183,24 @@ if __name__ == '__main__':
 		
 		#print("success")
 		draw_player_position(win)		     # draws black screen
-		
-		bool_val = check_index(queue_shared)
-		
-		if bool_val:
-			display_pop_up = True
-			start_loop = 0
+		try:
+			bool_val = check_index(queue_shared)
+			if bool_val:
+				display_pop_up = True
+				start_loop = 0
 
 
-		if display_pop_up:
-			# print('inside if')
-			start_loop += 1
-			# print('displaying')
-			display_no_hand_info(win)
-			if start_loop >= global_config.speed:
-				display_pop_up = False
+			if display_pop_up:
+				# print('inside if')
+				start_loop += 1
+				# print('displaying')
+				display_no_hand_info(win)
+				if start_loop >= global_config.speed:
+					display_pop_up = False
+		except:
+			pass
+
+		
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
@@ -205,13 +210,14 @@ if __name__ == '__main__':
 				music_module.sound_collided.play()
 			num_of_lives -= 1
 			if num_of_lives == 0:	# If all 3 lives are gone 
-				try:
-					process_object.terminate()
-				except:
-					pass
+				# if process_object.is_alive():
+				process_object.terminate()
+				
 				time.sleep(1)
 				interface_module.display_endscreen()
 				break
+
+		display_module.pause_play_button.check_status(cursor, win)
 
 		# Resize and blit the copy of game window onto main game window
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))

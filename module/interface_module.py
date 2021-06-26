@@ -407,7 +407,7 @@ def display_endscreen():
 
 		elif 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,400))
+				win.blit(button_inverted_enlarge, (310,300))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
