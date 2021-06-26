@@ -12,6 +12,7 @@ from module import bird_module
 from module import coins_module
 from module import display_module
 from module import effects_module
+# from module import ending_module
 from module import event_module
 from module import foreground_module
 from module import interface_module
@@ -21,10 +22,10 @@ from module import music_module
 from module import obstacles_module
 from module import player_module
 
-from module.interface_screens_module import process_object
+from global_config import process_object
 from module.interface_screens_module import check_index
 from module.interface_screens_module import display_no_hand_info
-from module.interface_screens_module import queue_shared
+from global_config import queue_shared
 from module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 
@@ -34,6 +35,8 @@ run = True
 frame_count = 0
 num_of_lives = 3
 fuel_count = 0
+ending_count = 0
+
 fuel_available = global_config.speed*60
 start_fuel = False
 
@@ -44,6 +47,7 @@ game_window = None
 
 def create_game_window():
 	global win, game_window
+	
 	# Game Window
 	game_window = pygame.display.set_mode((global_config.window_width, global_config.window_height), pygame.RESIZABLE)
 	pygame.display.set_caption('Game Window')
@@ -98,7 +102,14 @@ def draw_all_objects():
 	for hit_effect_object in effects_module.Hit_effects.hit_effects_list:
 		hit_effect_object.draw(win)
 
-	player_module.draw_player(win)
+	if num_of_lives == 0:
+		player_module.player.y += 1
+		player_module.propeller.draw(win)
+		player_module.player.draw(win)
+	else:
+		player_module.draw_player(win)
+		
+
 	bird_module.draw_bird(win)
 	display_module.display_lives(win, num_of_lives)
 	display_module.draw_minimap(win,frame_count)
@@ -109,6 +120,22 @@ def draw_all_objects():
 
 	display_module.draw_fuel(win)
 	cursor.draw(win)
+
+def lost():
+	"""
+	The player falls if all three lives are lost
+	"""
+	pygame.event.set_blocked(pygame.USEREVENT+1)
+	foreground_module.foreground_speed = 0
+	background_module.background_speed = 0
+	if player_module.player.y > foreground_module.ground_y:
+		try:
+			process_object.terminate()
+		except: pass
+		time.sleep(1)
+		interface_module.display_endscreen()
+		return True
+	return False
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
@@ -178,22 +205,28 @@ if __name__ == '__main__':
 				pass
 		
 		draw_control_screen_actual(win)
-		draw_player_position(win)		# draws black screen
+
 		
-		bool_val = check_index(queue_shared)
-		
-		if bool_val:
-			display_pop_up = True
-			start_loop = 0
+		#print("success")
+		draw_player_position(win)		     # draws black screen
+		try:
+			bool_val = check_index(queue_shared)
+			if bool_val:
+				display_pop_up = True
+				start_loop = 0
 
 
-		if display_pop_up:
-			# print('inside if')
-			start_loop += 1
-			# print('displaying')
-			display_no_hand_info(win)
-			if start_loop >= global_config.speed:
-				display_pop_up = False
+			if display_pop_up:
+				# print('inside if')
+				start_loop += 1
+				# print('displaying')
+				display_no_hand_info(win)
+				if start_loop >= global_config.speed:
+					display_pop_up = False
+		except:
+			pass
+
+		
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
@@ -202,12 +235,12 @@ if __name__ == '__main__':
 			if volume_button_on_status:
 				music_module.sound_collided.play()
 			num_of_lives -= 1
-			if num_of_lives == 0:	# If all 3 lives are gone 
-				try:
-					process_object.terminate()
-				except: pass
-				time.sleep(1)
-				interface_module.display_endscreen()
+			if num_of_lives <= 0:
+				num_of_lives = 0
+		
+		if num_of_lives == 0:	# If all 3 lives are gone
+			game_end = lost()
+			if game_end:
 				break
 
 		display_module.pause_play_button.check_status(cursor, win)
@@ -217,7 +250,7 @@ if __name__ == '__main__':
 
 		clock.tick(global_config.speed)
 		pygame.display.update()
-		
+
 		# Dummy exit
 		if frame_count >= total_num_of_frames:
 			print('Game Over')

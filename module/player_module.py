@@ -79,6 +79,6 @@ def draw_player(win):
 	propeller.draw(win)
 	player.draw(win)
 
-	x_pos, y_pos = player.x, player.y
+	x_pos, y_pos = player.x, player.y 
 
 	return x_pos, y_pos
