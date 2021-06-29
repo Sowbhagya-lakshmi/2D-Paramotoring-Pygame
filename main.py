@@ -4,6 +4,7 @@ import pygame
 import random
 import time
 import multiprocessing
+from multiprocessing import freeze_support
 
 
 import global_config
@@ -144,6 +145,7 @@ def lost():
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
+	freeze_support()
 
 	pygame.init()
 
@@ -262,3 +264,4 @@ if __name__ == '__main__':
 			print('Game Over')
 			time.sleep(1)
 			break
+
