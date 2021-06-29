@@ -48,6 +48,8 @@ start_fuel = False
 display_pop_up = False
 collected_map = False
 
+lost_music_count = 0
+
 win = None
 game_window = None
 
@@ -136,8 +138,6 @@ def lost():
 
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-
-	music_module.sound_aftercollided.play()
 	i=0
 	while i<10:
 		display_fail_msg(win)
@@ -270,9 +270,12 @@ if __name__ == '__main__':
 		
 		if num_of_lives == 0:
 
-			#pygame.mixer.music.stop()
+			lost_music_count += 1
+			if lost_music_count == 1:
 
-			
+				pygame.mixer.music.stop()
+				music_module.sound_aftercollided.play()
+
 									# If all 3 lives are gone
 			game_end = lost()
 			#music_module.sound_aftercollided.play()
