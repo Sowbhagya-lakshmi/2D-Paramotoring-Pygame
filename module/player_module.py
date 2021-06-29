@@ -1,6 +1,7 @@
 import os
 import pygame
 
+import global_config
 from module import foreground_module
 
 class Player:
@@ -16,7 +17,7 @@ class Player:
 
 	# Loading player images
 	imgs_big = [pygame.image.load('Utils/Pics/Player/'+img) for img in img_name_lst]
-	imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in imgs_big ] 
+	imgs = [pygame.transform.scale(img, (int(img.get_width()/4), int(img.get_height()/4))) for img in imgs_big ] 
 
 	def __init__(self):
 		self.x = 0
@@ -46,7 +47,8 @@ class Propeller:
 
 	# Loading propeller images
 	org_propeller_imgs = [pygame.image.load('Utils/Pics/Propeller/'+img) for img in img_name_lst]
-	propeller_imgs = [pygame.transform.scale(img, (int(img.get_width()/3), int(img.get_height()/3))) for img in org_propeller_imgs ]
+	propeller_imgs = [pygame.transform.scale(img, (int(img.get_width()/4), int(img.get_height()/4))) for img in org_propeller_imgs ]
+	frames_per_propeller_img = 2
 
 	def __init__(self):
 		self.run_count = 0
@@ -54,11 +56,12 @@ class Propeller:
 	
 	def draw(self, win):
 		# Draw propeller
-		self.frames_per_propeller_img = 2
-		if self.propeller_count >= self.frames_per_propeller_img*self.num_of_propeller_imgs :
+		frames_per_propeller_img = int(self.frames_per_propeller_img)
+		# print(frames_per_propeller_img)
+		if self.propeller_count >= frames_per_propeller_img*self.num_of_propeller_imgs :
 			self.propeller_count = 0
 		
-		self.index = self.propeller_count//self.frames_per_propeller_img
+		self.index = self.propeller_count//frames_per_propeller_img
 		self.propeller_img = self.propeller_imgs[self.index]
 		win.blit(self.propeller_img, (player.x,player.y))
 		self.propeller_count += 1 
@@ -67,14 +70,22 @@ class Propeller:
 player = Player()	
 propeller = Propeller()	
 
-def draw_player(win):
+def draw_player(win, player_won=False):
 	(mx, my) = pygame.mouse.get_pos()
 		
 	# limit player's movable region
-	if my < foreground_module.ground_y :
+	if player_won:
+		if player.x < global_config.window_width - player.img.get_width():
+			player.x = player.x + 3
+		player.y = my
+	elif my < foreground_module.ground_y :
 		player.x, player.y = 250, my
 	else:
 		player.x, player.y = 250, foreground_module.ground_y
 
 	propeller.draw(win)
 	player.draw(win)
+
+	x_pos, y_pos = player.x, player.y 
+
+	return x_pos, y_pos

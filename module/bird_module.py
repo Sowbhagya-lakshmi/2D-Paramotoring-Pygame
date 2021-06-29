@@ -6,6 +6,8 @@ import random
 from module import background_module
 from module import foreground_module
 from module import player_module
+from module import music_module
+
 
 class Bird():
 	"""
@@ -22,11 +24,9 @@ class Bird():
 	for colour in colour_list:
 		imgs = []
 		for x in range(num_of_imgs):
-			img = pygame.image.load(os.path.join(path, colour +"/bird"+ str(x) + '.png'))
-			imgs.append(pygame.transform.scale(img, (int(img.get_width()//6), int(img.get_height()//6))))
+			imgs.append(pygame.image.load(os.path.join(path, colour +"/bird"+ str(x) + '.png')))
 		list_of_lists.append(imgs)
 
-	del img
 	birds_list = []
 	collision_birds = []	# Birds for which we have to check collision
 
@@ -35,6 +35,9 @@ class Bird():
 		self.y = y
 		self.run_count = 0
 		self.colour_num = colour_num
+
+		random_num = random.uniform(6, 10)
+		self.bird_list = [pygame.transform.scale(img, (int(img.get_width()/random_num), int(img.get_height()/random_num))) for img in self.list_of_lists[colour_num]]
 
 		# Variables for sine wave trajectory calculation
 		self.org_y = y									# initial y value where the bird is spawned
@@ -51,7 +54,7 @@ class Bird():
 		self.run_count += 1
 		
 		# Drawing bird image
-		self.img = self.list_of_lists[self.colour_num][self.index]
+		self.img = self.bird_list[self.index]
 		self.randomize_movement()
 		win.blit(self.img, (self.x,self.y))
 		
@@ -75,6 +78,7 @@ def create_bird():
 def draw_bird(win):
 	for bird in Bird.birds_list:
 		bird.draw(win)
+		# music_module.sound_bird.play()
 	update_birds_position()
 	
 def update_birds_position():
