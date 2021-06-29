@@ -53,8 +53,8 @@ button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOf
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
 
 index_finger_not_detected = pygame.image.load(os.path.join('Utils/Pics/Interface','pop-up.png'))
-
-
+fail_msg = pygame.image.load(os.path.join('Utils/Pics/Interface','oh_no.png'))
+success_msg = pygame.image.load(os.path.join('Utils/Pics/Interface','we_made_it.png'))
 
 
 def check_mode_playbutton( ):
@@ -594,6 +594,16 @@ def display_no_hand_info(win):
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y 
 	win.blit(index_finger_not_detected,(pos_x,pos_y))
 	#pygame.display.update()
+
+
+def display_fail_msg(win):
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y 
+	win.blit(fail_msg,(pos_x,pos_y))
+
+
+def display_success_msg(win):
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y 
+	win.blit(success_msg,(pos_x,pos_y))
 
 
 
