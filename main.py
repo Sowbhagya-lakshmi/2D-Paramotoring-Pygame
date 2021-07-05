@@ -302,7 +302,7 @@ if __name__ == '__main__':
 
 		# Dummy exit
 		if collected_map:
-			# time.sleep(2)
+			time.sleep(4)
 			print('Game Over')
 			try:
 				process_object.terminate()

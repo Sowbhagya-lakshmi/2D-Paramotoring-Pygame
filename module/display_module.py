@@ -280,7 +280,7 @@ class Pause_play_button:
 		else:
 			self.button.img = self.button.img_small		
 
-		self.draw(self.button, win)		
+		# self.draw(self.button, win)		
 		self.functionality(self.button)
 
 		return self.button
