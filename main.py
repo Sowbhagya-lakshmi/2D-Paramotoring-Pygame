@@ -274,8 +274,9 @@ if __name__ == '__main__':
 			lost_music_count += 1
 			if lost_music_count == 1:
 
-				pygame.mixer.music.stop()
-				music_module.sound_aftercollided.play()
+				if volume_button_on_status:
+					pygame.mixer.music.stop()
+					music_module.sound_aftercollided.play()
 
 									# If all 3 lives are gone
 			game_end = lost()
