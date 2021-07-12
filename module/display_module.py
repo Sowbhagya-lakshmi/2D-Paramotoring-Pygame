@@ -306,7 +306,7 @@ map_img_big = pygame.image.load(os.path.join('Utils/Pics/Display', 'map.png'))
 map_img = pygame.transform.scale(map_img_big, (map_img_big.get_width()//5, map_img_big.get_height()//5))
 	
 # map_x = global_config.window_width
-map_x = 1300
+map_x = 1300 + 5*global_config.speed*foreground_module.foreground_speed
 map_y = random.randint(150, foreground_module.ground_y)
 
 # Map
@@ -330,6 +330,13 @@ def check_collision_with_map():
 
 def display_map(win):
 	global map_x, map_y
+	
+	if map_x < 1300:
+		pass
+	else:
+		map_x -= foreground_module.foreground_speed
+
+
 	win.blit(map_img, (map_x,map_y))
 
 	if check_collision_with_map():

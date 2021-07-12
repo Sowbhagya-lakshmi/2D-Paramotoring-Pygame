@@ -155,7 +155,7 @@ def lost():
 
 def won():
 	"""
-	If the player 
+	If the player wins the game
 	"""
 	i=0
 	while i<10:
@@ -163,9 +163,7 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	collected_map = display_module.display_map(win)
 
-	return collected_map
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
@@ -257,8 +255,6 @@ if __name__ == '__main__':
 		except:
 			pass
 
-		
-
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
 		collision_with_bird = bird_module.collision_with_bird()
@@ -289,9 +285,10 @@ if __name__ == '__main__':
 
 		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
 			pygame.event.set_blocked([pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4])
+			collected_map = display_module.display_map(win)
 
 		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
-			collected_map = won()
+			won()
 			won_bool = True
 
 		# Resize and blit the copy of game window onto main game window
