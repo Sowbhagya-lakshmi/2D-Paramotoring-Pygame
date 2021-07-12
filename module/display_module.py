@@ -124,6 +124,8 @@ class Fuel:
 		self.y = random.randint(0,free_zone_y)	
 		self.img = pygame.image.load(os.path.join('Utils/Pics/Display/','fuel2.png'))
 
+		fuel_bar.failed_to_collect = False
+
 	def draw(self, win):
 		# print('drawing')
 		for fuel in self.fuel_list:
@@ -134,6 +136,7 @@ class Fuel:
 				fuel.x -= foreground_module.foreground_speed
 			else:
 				self.fuel_list.remove(fuel)
+				fuel_bar.failed_to_collect = True
 
 		self.fuel_collection()
 
@@ -150,6 +153,7 @@ class Fuel:
 			collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
 			collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
 			if collision_point_with_player or collision_point_with_propeller:
+				# fuel_bar.bool_check = True
 				return True
 		return False
 
@@ -168,6 +172,8 @@ def draw_fuel(win):
 		for fuel in Fuel.fuel_list:
 			fuel.draw(win)	
 
+one_time_permission = True
+
 class Fuel_bar:
 	img = pygame.image.load(os.path.join('Utils/Pics/Display/', 'fuel2.png'))
 	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
@@ -181,9 +187,14 @@ class Fuel_bar:
 	max_fuel = global_config.speed * 60  # 60 seconds
 	fuel_available = max_fuel
 
-	bool_check = True
+	def __init__(self):
+
+		self.bool_check = True
+		self.failed_to_collect = False
 
 	def draw_fuel_bar(self, win, fuel_available, bool):
+		global one_time_permission
+
 		if self.bar_color == (255,255, 0):
 			self.fuel_available = self.max_fuel
 		else:
@@ -203,9 +214,14 @@ class Fuel_bar:
 		progress = self.fuel_available/self.max_fuel
 		# print(progress)
 
+		if self.failed_to_collect and progress <= 0.25 and one_time_permission:
+			one_time_permission = False
+			fuel = Fuel()
+			Fuel.fuel_list.append(fuel)
+			self.failed_to_collect == False
+
 		if self.bool_check:
-			if progress <= 0.25:
-				# print('inside')
+			if progress <= 0.5:
 				self.bool_check = False
 				fuel = Fuel()
 				Fuel.fuel_list.append(fuel)

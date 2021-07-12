@@ -110,7 +110,7 @@ def draw_all_objects():
 	for hit_effect_object in effects_module.Hit_effects.hit_effects_list:
 		hit_effect_object.draw(win)
 
-	if num_of_lives == 0:
+	if num_of_lives == 0 or fuel_available <= 0:
 		player_module.player.y += 1
 		player_module.propeller.draw(win)
 		player_module.player.draw(win)
@@ -193,8 +193,7 @@ if __name__ == '__main__':
 	while run:
 		frame_count += 1
 		
-		draw_all_objects()
-		
+		draw_all_objects()	
 
 		if frame_count < 4*global_config.speed:
 			display_module.countdown.draw(win)
@@ -225,9 +224,6 @@ if __name__ == '__main__':
 					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
 						bool = extra_life.check_collision()
 						if bool:
-							# num = random.randint(1,1000)
-							# print('collected life', num)
-							del extra_life
 							num_of_lives += 1
 							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
 			except:
@@ -265,7 +261,7 @@ if __name__ == '__main__':
 			if num_of_lives <= 0:
 				num_of_lives = 0
 		
-		if num_of_lives == 0:
+		if num_of_lives == 0 or fuel_available <= 0:
 
 			lost_music_count += 1
 			if lost_music_count == 1:
