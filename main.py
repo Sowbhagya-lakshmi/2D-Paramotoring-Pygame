@@ -110,7 +110,7 @@ def draw_all_objects():
 	for hit_effect_object in effects_module.Hit_effects.hit_effects_list:
 		hit_effect_object.draw(win)
 
-	if num_of_lives == 0:
+	if num_of_lives == 0 or fuel_available <= 0:
 		player_module.player.y += 1
 		player_module.propeller.draw(win)
 		player_module.player.draw(win)
@@ -155,7 +155,7 @@ def lost():
 
 def won():
 	"""
-	If the player 
+	If the player wins the game
 	"""
 	i=0
 	while i<10:
@@ -163,9 +163,7 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	collected_map = display_module.display_map(win)
 
-	return collected_map
 
 # MAIN ALGORITHM
 if __name__ == '__main__':
@@ -195,8 +193,7 @@ if __name__ == '__main__':
 	while run:
 		frame_count += 1
 		
-		draw_all_objects()
-		
+		draw_all_objects()	
 
 		if frame_count < 4*global_config.speed:
 			display_module.countdown.draw(win)
@@ -227,9 +224,6 @@ if __name__ == '__main__':
 					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
 						bool = extra_life.check_collision()
 						if bool:
-							# num = random.randint(1,1000)
-							# print('collected life', num)
-							del extra_life
 							num_of_lives += 1
 							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
 			except:
@@ -257,8 +251,6 @@ if __name__ == '__main__':
 		except:
 			pass
 
-		
-
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
 		collision_with_bird = bird_module.collision_with_bird()
@@ -269,7 +261,7 @@ if __name__ == '__main__':
 			if num_of_lives <= 0:
 				num_of_lives = 0
 		
-		if num_of_lives == 0:
+		if num_of_lives == 0 or fuel_available <= 0:
 
 			lost_music_count += 1
 			if lost_music_count == 1:
@@ -290,9 +282,10 @@ if __name__ == '__main__':
 
 		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
 			pygame.event.set_blocked([pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4])
+			collected_map = display_module.display_map(win)
 
 		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
-			collected_map = won()
+			won()
 			won_bool = True
 
 		# Resize and blit the copy of game window onto main game window
@@ -303,7 +296,7 @@ if __name__ == '__main__':
 
 		# Dummy exit
 		if collected_map:
-			# time.sleep(2)
+			time.sleep(4)
 			print('Game Over')
 			try:
 				process_object.terminate()
