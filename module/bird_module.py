@@ -5,9 +5,9 @@ import random
 
 from module import background_module
 from module import foreground_module
-from module import player_module
 from module import music_module
-
+from module import obstacles_module
+from module import player_module
 
 class Bird():
 	"""
@@ -56,6 +56,7 @@ class Bird():
 		# Drawing bird image
 		self.img = self.bird_list[self.index]
 		self.randomize_movement()
+		self.avoid_blocking_path()
 		win.blit(self.img, (self.x,self.y))
 		
 
@@ -64,7 +65,16 @@ class Bird():
 		self.y= self.org_y + self.amplitude*math.sin(2*math.pi*self.frequency*self.time)
 		self.time += 1
 
-
+	def avoid_blocking_path(self):
+		"""
+		Checks if there is a tree to not block the space for the player to move
+		"""
+		for obstacle in obstacles_module.Tree.obstacles:
+			if obstacle.x < (player_module.player.x + player_module.player.img.get_width()+150):	# Checking if tree is near player given a threshold of 150
+				if self.x < (obstacle.x + obstacle.width+150):	# Checking if tree is near player given a threshold of 150
+					if self.y < obstacle.y + 50 and obstacle.y < player_module.player.img.get_height() + 150:	# if bird flies above tree about to block the path of the player
+						self.org_y += 3		# shifting the sine wave down
+		
 def create_bird():
 	"""
 	Creates a bird in the free space. 
