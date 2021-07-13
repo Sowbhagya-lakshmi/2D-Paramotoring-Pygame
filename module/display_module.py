@@ -27,6 +27,9 @@ def display_lives(win, num_of_lives):
 		x_pos += heart.get_width() + 3
 
 class Extra_life:
+
+	extra_lives_list = []
+
 	def __init__(self):
 		self.x = global_config.window_width + heart.get_width()
 		free_zone_y = coins_module.find_free_zone_y()

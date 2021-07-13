@@ -216,8 +216,11 @@ if __name__ == '__main__':
 		num_of_coins_inexchange_for_life = 50
 		if coins_module.Coin.num_coins_collected%num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
 			extra_life = display_module.Extra_life()
+			if len(display_module.Extra_life.extra_lives_list) == 0:
+				display_module.Extra_life.extra_lives_list.append(extra_life)
+
 		elif coins_module.Coin.num_coins_collected > num_of_coins_inexchange_for_life:
-			try:
+			for extra_life in display_module.Extra_life.extra_lives_list:
 				extra_life.draw(win)
 				player = player_module.player
 				if extra_life.x < (player.x + player.img.get_width()) and (extra_life.x + extra_life.img.get_width()) > player.x:	# Check x range
@@ -225,9 +228,8 @@ if __name__ == '__main__':
 						bool = extra_life.check_collision()
 						if bool:
 							num_of_lives += 1
+							display_module.Extra_life.extra_lives_list.remove(extra_life)
 							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
-			except:
-				pass
 		
 		draw_control_screen_actual(win)
 
@@ -262,6 +264,8 @@ if __name__ == '__main__':
 				num_of_lives = 0
 		
 		if num_of_lives == 0 or fuel_available <= 0:
+
+			pygame.event.set_blocked(pygame.USEREVENT+1)
 
 			lost_music_count += 1
 			if lost_music_count == 1:
