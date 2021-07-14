@@ -7,15 +7,15 @@ import random
 from pygame.mixer import pause
 
 import global_config
-from module import coins_module
-from module import event_module
-from module import foreground_module
-from module import interface_module
-from module import music_module
-from module import player_module
+from level_1.module import coins_module
+from level_1.module import event_module
+from level_1.module import foreground_module
+from level_1.module import interface_module
+from level_1.module import music_module
+from level_1.module import player_module
 
 # LIVES
-heart = pygame.image.load(os.path.join('Utils/Pics/Display/', 'life.png'))
+heart = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/', 'life.png'))
 
 def display_lives(win, num_of_lives):
 	"""
@@ -34,7 +34,7 @@ class Extra_life:
 		self.x = global_config.window_width + heart.get_width()
 		free_zone_y = coins_module.find_free_zone_y()
 		self.y = random.randint(0,free_zone_y)	
-		self.img = pygame.image.load(os.path.join('Utils/Pics/Display/', 'extra_life.png'))
+		self.img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/', 'extra_life.png'))
 	
 	def draw(self,win):
 		if self.x > -1*self.img.get_width():
@@ -58,16 +58,16 @@ class Extra_life:
 		return False
 
 # MINIMAP
-line = pygame.image.load(os.path.join('Utils/Pics/Display/','line.png'))
+line = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','line.png'))
 line = pygame.transform.scale(line, (line.get_width()//2, line.get_height()//5))
 
-icon_big = pygame.image.load(os.path.join('Utils/Pics/Display/','player_location.png'))
+icon_big = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','player_location.png'))
 player_icon = pygame.transform.scale(icon_big, (icon_big.get_width()//5, icon_big.get_height()//5)) 
 
-start = pygame.image.load(os.path.join('Utils/Pics/Display/','start.png'))
+start = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','start.png'))
 start = pygame.transform.scale(start, (start.get_width()//10, start.get_height()//10))
 
-finish = pygame.image.load(os.path.join('Utils/Pics/Display/','finish.png'))
+finish = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','finish.png'))
 finish = pygame.transform.scale(finish, (finish.get_width()//10, finish.get_height()//10))
 
 line_pos_x = 1140
@@ -95,9 +95,9 @@ def draw_minimap(win,progress):
 
 class Countdown:
 	num_of_imgs = 3
-	imgs_big = [pygame.image.load(os.path.join('Utils/Pics/Countdown/',str(x) + '.png')) for x in range(num_of_imgs, 0, -1)]
+	imgs_big = [pygame.image.load(os.path.join(r'level_1/Utils/Pics/Countdown/',str(x) + '.png')) for x in range(num_of_imgs, 0, -1)]
 	imgs = [pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2)) for img in imgs_big]
-	imgs.append(pygame.image.load(os.path.join('Utils/Pics/Countdown/','go.png')))
+	imgs.append(pygame.image.load(os.path.join(r'level_1/Utils/Pics/Countdown/','go.png')))
 	num_of_imgs = 4
 
 	def __init__(self):
@@ -125,7 +125,7 @@ class Fuel:
 		self.x = global_config.window_width
 		free_zone_y = coins_module.find_free_zone_y()
 		self.y = random.randint(0,free_zone_y)	
-		self.img = pygame.image.load(os.path.join('Utils/Pics/Display/','fuel2.png'))
+		self.img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','fuel2.png'))
 
 		fuel_bar.failed_to_collect = False
 
@@ -178,7 +178,7 @@ def draw_fuel(win):
 one_time_permission = True
 
 class Fuel_bar:
-	img = pygame.image.load(os.path.join('Utils/Pics/Display/', 'fuel2.png'))
+	img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/', 'fuel2.png'))
 	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
 
 	bar_pos      = (50, 145)
@@ -246,7 +246,7 @@ class Pause_button:
 		self.centroid_x = 0
 		self.centroid_y = 0
 
-		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Display', 'pause.png'))
+		self.img_original = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display', 'pause.png'))
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
@@ -260,7 +260,7 @@ class Play_button:
 		self.centroid_x = 0
 		self.centroid_y = 0
 
-		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Display', 'play.png'))		
+		self.img_original = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display', 'play.png'))		
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
@@ -321,7 +321,7 @@ class Pause_play_button:
 
 pause_play_button = Pause_play_button()
 
-map_img_big = pygame.image.load(os.path.join('Utils/Pics/Display', 'map.png'))
+map_img_big = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display', 'map.png'))
 map_img = pygame.transform.scale(map_img_big, (map_img_big.get_width()//5, map_img_big.get_height()//5))
 	
 # map_x = global_config.window_width

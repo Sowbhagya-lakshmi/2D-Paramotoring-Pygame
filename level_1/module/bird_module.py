@@ -3,11 +3,11 @@ import os
 import pygame
 import random
 
-from module import background_module
-from module import foreground_module
-from module import music_module
-from module import obstacles_module
-from module import player_module
+from level_1.module import background_module
+from level_1.module import foreground_module
+from level_1.module import music_module
+from level_1.module import obstacles_module
+from level_1.module import player_module
 
 class Bird():
 	"""
@@ -17,7 +17,7 @@ class Bird():
 	num_of_imgs = 6
 	list_of_lists = []
 
-	path = 'Utils/Pics/Bird/'
+	path = r'level_1/Utils/Pics/Bird/'
 	colour_list = os.listdir(path)
 	num_of_colours = len(colour_list)	
 	

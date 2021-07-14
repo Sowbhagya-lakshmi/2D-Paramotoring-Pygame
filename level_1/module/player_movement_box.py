@@ -1,6 +1,6 @@
 import pygame
 import global_config
-from module import player_module
+from level_1.module import player_module
 
 
 

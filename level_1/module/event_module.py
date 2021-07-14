@@ -2,10 +2,10 @@ import pygame
 import sys
 import time
 
-from module import bird_module
-from module import coins_module
-from module import obstacles_module
-from mp import process_object
+from level_1.module import bird_module
+from level_1.module import coins_module
+from level_1.module import obstacles_module
+from level_1.mp import process_object
 
 right_click = False
 
