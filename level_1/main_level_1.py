@@ -163,6 +163,7 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
+	interface_module.display_winscreen()
 
 
 # MAIN ALGORITHM
@@ -311,7 +312,7 @@ def main():
 			try:
 				process_object.terminate()
 			except: pass
-			interface_module.display_endscreen()
+			interface_module.display_winscreen()
 			break
 			
 
