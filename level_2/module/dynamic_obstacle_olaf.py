@@ -39,7 +39,7 @@ class Olaf():
 
 	def draw(self, win):
 		# Determining index of bird image to be drawn
-		self.frames_per_image = 7					# each bird image is drawn for 7 consecutive frames
+		self.frames_per_image = 3				# each bird image is drawn for 7 consecutive frames
 		if self.run_count >= self.frames_per_image*self.num_of_imgs:
 			self.run_count = 0
 		self.index = self.run_count//self.frames_per_image

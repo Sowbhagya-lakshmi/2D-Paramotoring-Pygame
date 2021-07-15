@@ -199,6 +199,7 @@ def main():
 	change_img_pixel_format()
 
 	clock = pygame.time.Clock()
+	pygame.event.clear()
 	event_module.setting_up_events()
 	cursor = interface_module.Cursor()
 	pygame.mouse.set_visible(False)
@@ -308,7 +309,10 @@ def main():
 		display_module.pause_play_button.check_status(cursor, win)
 
 		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
-			pygame.event.set_blocked([pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4])
+			pygame.event.set_blocked([pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4, pygame.USEREVENT+5, pygame.USEREVENT+6])
+
+			# val = pygame.event.get_blocked(pygame.USEREVENT+1)		
+			# print(val)	
 
 		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
 			collected_map = won()
