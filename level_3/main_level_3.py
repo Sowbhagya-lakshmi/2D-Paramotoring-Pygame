@@ -1,10 +1,6 @@
 import os
-import queue
 import pygame
-import random
 import time
-import multiprocessing
-import sys
 
 
 import global_config
@@ -62,6 +58,11 @@ def create_game_window():
 	game_window = pygame.display.set_mode((global_config.window_width, global_config.window_height), pygame.RESIZABLE)
 	pygame.display.set_caption('Game Window')
 	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
+
 	# Copy of game window which will be later resized according to the resolution, and blit onto the original game window.
 	win = game_window.copy()
 
