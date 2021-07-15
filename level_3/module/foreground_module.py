@@ -4,7 +4,7 @@ import pygame
 import global_config
 
 # Ground
-ground = pygame.image.load(os.path.join('Utils/Pics/Foreground','ground.png'))
+ground = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Foreground','ground.png'))
 ground_x = 0
 ground_y = global_config.window_height-ground.get_height() + 40
 ground_width = ground.get_width() 	# To prevent glitches in background movement...WIP

@@ -3,10 +3,10 @@ import pygame
 import random
 
 import global_config
-from module import background_module
-from module import effects_module
-from module import foreground_module
-from module import player_module
+from level_3.module import background_module
+from level_3.module import effects_module
+from level_3.module import foreground_module
+from level_3.module import player_module
 
 class House:
 	"""
@@ -15,7 +15,7 @@ class House:
 	"""
 	# Loading images 
 	num_of_imgs = 10
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "house"+ str(x) + '.png')) for x in range(num_of_imgs)]
+	imgs = [pygame.image.load(os.path.join(r'level_3/Utils/Pics/Obstacles/', "house"+ str(x) + '.png')) for x in range(num_of_imgs)]
 
 	obstacles = []
 	collision_obstacles = []
@@ -46,7 +46,7 @@ class Tree:
 	"""
 	# Loading images 
 	num_of_imgs = 4
-	imgs = [pygame.image.load(os.path.join('Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')) for x in range(num_of_imgs)]
+	imgs = [pygame.image.load(os.path.join(r'level_3/Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')) for x in range(num_of_imgs)]
 	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.1), int(img.get_height()*1.1))) for img in imgs]		# scaling factor - 1.3 
 
 	obstacles = []

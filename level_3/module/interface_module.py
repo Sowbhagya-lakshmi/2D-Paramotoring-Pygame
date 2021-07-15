@@ -3,9 +3,9 @@ import sys
 import os
 
 import global_config
-from module import music_module
-from module import interface_screens_module
-from module import coins_module
+from level_3.module import music_module
+from level_3.module import interface_screens_module
+from level_3.module import coins_module
 
 
 # Global variables
@@ -18,38 +18,38 @@ value = 0
 mute_button, unmute_button = None, None
 
 #Loading Button and Screen Images
-screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
-screen_end =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_End.png'))
+screen_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Para Escapade.png'))
+screen_end =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_End.png'))
 
-button_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Home.png'))
+button_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Button_Home.png'))
 button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
 button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_width()*0.8),int(button_home.get_height()*0.8)))
 
-button_restart =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Restart.png'))
+button_restart =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Restart.png'))
 button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
-button_restart_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Restart_click.png'))
+button_restart_click =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Restart_click.png'))
 
-button_about =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_About.png'))
+button_about =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_About.png'))
 button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.1),int(button_about.get_height()*1.1)))
-button_about_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_About_click.png'))
+button_about_click =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_About_click.png'))
 
-button_highscore =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_HighScore.png'))
-button_score =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Score.png'))
+button_highscore =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_HighScore.png'))
+button_score =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Score.png'))
 
-button_inverted =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_inverted.png'))
+button_inverted =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_inverted.png'))
 button_inverted_enlarge = pygame.transform.scale(button_inverted, (int(button_inverted.get_width()*1.1),int(button_inverted.get_height()*1.1)))
 
-button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions.png'))
+button_instructions =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.1),int(button_instructions.get_height()*1.1)))
-button_instructions_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions_click.png'))
+button_instructions_click =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Instructions_click.png'))
 
-button_play =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Play.png'))
+button_play =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Play.png'))
 button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_width()*1.1),int(button_play.get_height()*1.1)))
-button_play_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Play_click.png'))
+button_play_click =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Play_click.png'))
 
-button_resume =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume.png'))
+button_resume =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
-button_resume_click =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume_click.png'))
+button_resume_click =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Resume_click.png'))
 
 
 def check_home(screen):
@@ -120,7 +120,7 @@ class Cursor:
 	Define a custom cursor for the game instead of the system's cursor. Placing an image of a cursor at the mouse coordinates.
 	"""
 	def __init__(self):
-		self.img = pygame.image.load(os.path.join('Utils/Pics/Interface', 'cursor.png')).convert_alpha()
+		self.img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface', 'cursor.png')).convert_alpha()
 		self.x, self.y  = pygame.mouse.get_pos()
 
 	def draw(self,win):
@@ -220,7 +220,7 @@ class Mute_button:
 		self.centroid_x = 0
 		self.centroid_y = 0
 
-		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'mute.png')).convert_alpha()
+		self.img_original = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface', 'mute.png')).convert_alpha()
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
@@ -234,7 +234,7 @@ class Unmute_button:
 		self.centroid_x = 0
 		self.centroid_y = 0
 
-		self.img_original = pygame.image.load(os.path.join('Utils/Pics/Interface', 'unmute.png')).convert_alpha()		
+		self.img_original = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface', 'unmute.png')).convert_alpha()		
 		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
 
@@ -273,7 +273,7 @@ def display_homescreen():
 	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	while True:	
@@ -376,7 +376,7 @@ def display_endscreen():
 	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0

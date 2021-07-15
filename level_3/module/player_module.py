@@ -2,7 +2,7 @@ import os
 import pygame
 
 import global_config
-from module import foreground_module
+from level_3.module import foreground_module
 
 class Player:
 	"""
@@ -11,12 +11,12 @@ class Player:
     player's images onto the screen hence creating the animation effect.
 	"""
 
-	path = 'Utils/Pics/Player/'
+	path = r'level_3/Utils/Pics/Player/'
 	img_name_lst = os.listdir(path)
 	num_of_player_imgs = len(img_name_lst)
 
 	# Loading player images
-	imgs_big = [pygame.image.load('Utils/Pics/Player/'+img) for img in img_name_lst]
+	imgs_big = [pygame.image.load(r'level_3/Utils/Pics/Player/'+img) for img in img_name_lst]
 	imgs = [pygame.transform.scale(img, (int(img.get_width()/4), int(img.get_height()/4))) for img in imgs_big ] 
 
 	def __init__(self):
@@ -41,12 +41,12 @@ class Propeller:
 	Descibes the propeller. Has a draw method which blits the propeller image to the screen.
 	"""
 
-	path = 'Utils/Pics/Propeller/'
+	path = r'level_3/Utils/Pics/Propeller/'
 	img_name_lst = os.listdir(path)
 	num_of_propeller_imgs = len(img_name_lst)
 
 	# Loading propeller images
-	org_propeller_imgs = [pygame.image.load('Utils/Pics/Propeller/'+img) for img in img_name_lst]
+	org_propeller_imgs = [pygame.image.load(r'level_3/Utils/Pics/Propeller/'+img) for img in img_name_lst]
 	propeller_imgs = [pygame.transform.scale(img, (int(img.get_width()/4), int(img.get_height()/4))) for img in org_propeller_imgs ]
 	frames_per_propeller_img = 2
 

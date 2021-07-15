@@ -1,5 +1,6 @@
 from level_1 import main_level_1
 from level_2 import main_level_2
+from level_3 import main_level_3
 
 if __name__ == '__main__':
     main_level_1.main()

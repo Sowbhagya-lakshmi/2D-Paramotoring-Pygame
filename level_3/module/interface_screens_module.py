@@ -4,13 +4,13 @@ import os
 import time
 import multiprocessing
 from multiprocessing import Queue
-from module.gesture_control import main_avm
-from module import player_module
+from level_3.module.gesture_control import main_avm
+from level_3.module import player_module
 from mp import queue_shared, process_object
 
 
 import global_config
-from module import music_module , interface_module
+from level_3.module import music_module , interface_module
 
 
 win = None
@@ -20,43 +20,43 @@ right_click = False
 value = 0
 
 #Loading Button and Screen Images
-screen_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Para Escapade.png'))
-screen_playbutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_PlayButton.png'))
-screen_pausebutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_PauseButton.png'))
-screen_aboutbutton_interface =  pygame.image.load(os.path.join('Utils/Pics/Interface','Screen_AboutButton.png'))
+screen_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Para Escapade.png'))
+screen_playbutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_PlayButton.png'))
+screen_pausebutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_PauseButton.png'))
+screen_aboutbutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_AboutButton.png'))
 
-screen_instruction1 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen1.png'))
-screen_instruction2 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen2.png'))
-screen_instruction3 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen3.png'))
-screen_instruction4 =  pygame.image.load(os.path.join('Utils/Pics/Interface/Instructions','Instructions_screen4.png'))
+screen_instruction1 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen1.png'))
+screen_instruction2 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen2.png'))
+screen_instruction3 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen3.png'))
+screen_instruction4 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen4.png'))
 
-button_instructions =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Instructions.png'))
+button_instructions =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_small = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*0.8),int(button_instructions.get_height()*0.8)))
 
-button_skip =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Skip.png'))
+button_skip =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Skip.png'))
 button_skip_enlarge = pygame.transform.scale(button_skip, (int(button_skip.get_width()*1.1),int(button_skip.get_height()*1.1)))
 
-button_restart =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Restart.png'))
+button_restart =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Restart.png'))
 button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
 
-button_resume =  pygame.image.load(os.path.join('Utils/Pics/Interface/Buttons','Button_Resume.png'))
+button_resume =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
-button_home =  pygame.image.load(os.path.join('Utils/Pics/Interface','Button_Home.png'))
+button_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Button_Home.png'))
 button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
 button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_width()*0.8),int(button_home.get_height()*0.8)))
 
-button_mode_gesture =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_HandGesture.png'))
+button_mode_gesture =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/ModeOfGame','Mode_HandGesture.png'))
 button_mode_gesture_enlarge = pygame.transform.scale(button_mode_gesture, (int(button_mode_gesture.get_width()*1.1),int(button_mode_gesture.get_height()*1.1)))
 
-button_mode_mouse =  pygame.image.load(os.path.join('Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
+button_mode_mouse =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
 
-index_finger_not_detected = pygame.image.load(os.path.join('Utils/Pics/Interface','pop-up.png'))
-fail_msg_big = pygame.image.load(os.path.join('Utils/Pics/Interface','oh_no.png'))
+index_finger_not_detected = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','pop-up.png'))
+fail_msg_big = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','oh_no.png'))
 fail_msg = pygame.transform.scale(fail_msg_big, (fail_msg_big.get_width()//2, fail_msg_big.get_height()//2))
 
-success_msg_big = pygame.image.load(os.path.join('Utils/Pics/Interface','we_made_it.png'))
+success_msg_big = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','we_made_it.png'))
 success_msg = pygame.transform.scale(success_msg_big, (success_msg_big.get_width()//2, success_msg_big.get_height()//2))
 
 
@@ -170,7 +170,7 @@ class Cursor:
 	Define a custom cursor for the game instead of the system's cursor. Placing an image of a cursor at the mouse coordinates.
 	"""
 	def __init__(self):
-		self.img = pygame.image.load(os.path.join('Utils/Pics/Interface', 'cursor.png')).convert_alpha()
+		self.img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface', 'cursor.png')).convert_alpha()
 		self.x, self.y  = pygame.mouse.get_pos()
 
 	def draw(self):
@@ -231,7 +231,7 @@ def display_playbutton():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 	i=0
 	
@@ -321,7 +321,7 @@ def display_pausebutton():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i = 0
@@ -399,7 +399,7 @@ def display_instructions():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
@@ -550,7 +550,7 @@ def display_aboutbutton():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\InterfaceBG.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i = 0

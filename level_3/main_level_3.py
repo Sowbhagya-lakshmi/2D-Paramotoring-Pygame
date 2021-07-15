@@ -8,31 +8,31 @@ import sys
 
 
 import global_config
-from module import background_module
-from module import dragon_module
-from module import ghost_module
-from module import shark_module
-from module import coins_module
-from module import display_module
-from module import effects_module
-# from module import ending_module
-from module import event_module
-from module import foreground_module
-from module import interface_module
+from level_3.module import background_module
+from level_3.module import dragon_module
+from level_3.module import ghost_module
+from level_3.module import shark_module
+from level_3.module import coins_module
+from level_3.module import display_module
+from level_3.module import effects_module
+# from level_3.module import ending_module
+from level_3.module import event_module
+from level_3.module import foreground_module
+from level_3.module import interface_module
 
-# from module import interface_screens_module
-from module import music_module
-from module import obstacles_module
-from module import player_module
+# from level_3.module import interface_screens_module
+from level_3.module import music_module
+from level_3.module import obstacles_module
+from level_3.module import player_module
 
 from mp import process_object
-from module.interface_screens_module import check_index
-from module.interface_screens_module import display_no_hand_info
-from module.interface_screens_module import display_fail_msg
-from module.interface_screens_module import display_success_msg
+from level_3.module.interface_screens_module import check_index
+from level_3.module.interface_screens_module import display_no_hand_info
+from level_3.module.interface_screens_module import display_fail_msg
+from level_3.module.interface_screens_module import display_success_msg
 
 from mp import queue_shared
-from module.player_movement_box import draw_control_screen_actual, draw_player_position
+from level_3.module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 
 # Global variables
@@ -174,8 +174,14 @@ def won():
 	return collected_map
 
 # MAIN ALGORITHM
-if __name__ == 'main_level_3':
-	#freeze_support()
+def main():
+	global frame_count
+	global num_of_lives
+	global bool_val
+	global lost_music_count
+	global won_bool
+	global cursor
+	global collected_map
 
 	pygame.init()
 
@@ -193,7 +199,7 @@ if __name__ == 'main_level_3':
 	pygame.mouse.set_visible(False)
 	
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join('Utils\Music\BGmusic_Level1.wav'))
+	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\BGmusic_Level1.wav'))
 	if volume_button_on_status:
 		pygame.mixer.music.play(-1)
 

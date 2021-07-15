@@ -2,11 +2,11 @@ import pygame
 import sys
 import time
 
-from module import dragon_module
-from module import ghost_module
-from module import shark_module
-from module import coins_module
-from module import obstacles_module
+from level_3.module import dragon_module
+from level_3.module import ghost_module
+from level_3.module import shark_module
+from level_3.module import coins_module
+from level_3.module import obstacles_module
 from mp import process_object
 
 

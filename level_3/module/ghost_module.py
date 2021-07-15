@@ -3,10 +3,10 @@ import os
 import pygame
 import random
 
-from module import background_module
-from module import foreground_module
-from module import player_module
-from module import music_module
+from level_3.module import background_module
+from level_3.module import foreground_module
+from level_3.module import player_module
+from level_3.module import music_module
 
 class Ghost():
 	"""
@@ -16,7 +16,7 @@ class Ghost():
 	num_of_imgs = 6
 	list_of_lists = []
 
-	path = 'Utils/Pics/Ghost/'
+	path = r'level_3/Utils/Pics/Ghost/'
 	colour_list = os.listdir(path)
 	num_of_colours = len(colour_list)	
 	
