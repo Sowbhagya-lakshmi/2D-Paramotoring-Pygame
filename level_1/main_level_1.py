@@ -163,7 +163,7 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	interface_module.display_winscreen()
+	# interface_module.display_winscreen()
 
 
 # MAIN ALGORITHM
@@ -313,8 +313,12 @@ def main():
 			try:
 				process_object.terminate()
 			except: pass
-			interface_module.display_winscreen()
-			break
+			return_bool = interface_module.display_winscreen()
+			if return_bool:
+				print('return bool = True')
+				break
+
+	pygame.quit()	
 			
 
 			

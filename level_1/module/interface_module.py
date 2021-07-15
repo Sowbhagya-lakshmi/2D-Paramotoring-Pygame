@@ -432,9 +432,11 @@ def display_winscreen():
 	Creates a screen to display the buttons at the end after winning the game
 	"""
 
-	global win, cursor
+	global win, cursor, right_click
 	global mute_button, unmute_button
 	
+	break_bool = False
+
 	global_config.speed = 60		# fps
 	
 	coin = coins_module.Coin.num_coins_collected
@@ -491,14 +493,17 @@ def display_winscreen():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 		if 320 <= mouse[0] <= 480 and 470 <= mouse[1] <= 520 :
-			if right_click == 0:
+			if right_click == 0:				
 				win.blit(button_next_enlarge, (310,470))
+			elif right_click:
+				break_bool = True
+				return break_bool
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
+			# break
 		else:
-			pop_sound_play = False
-							
+			pop_sound_play = False							
 
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
