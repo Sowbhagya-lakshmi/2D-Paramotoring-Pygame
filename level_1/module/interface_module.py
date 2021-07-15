@@ -387,27 +387,27 @@ def display_endscreen():
 		win.fill((255,255,255))
 
 		win.blit(screen_end,(0,0))
-		win.blit(button_score, (320,300))
-		win.blit(button_highscore, (320,400))
+		win.blit(button_score, (320,320))
+		win.blit(button_highscore, (320,450))
 
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
 
-		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
+		if 320 <= mouse[0] <= 480 and 320 <= mouse[1] <= 370 :
 			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,300))
+				win.blit(button_inverted_enlarge, (310,320))
 				font_size = 40
 				font = pygame.font.Font('freesansbold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
-				win.blit(text, (380, 310))
+				win.blit(text, (380, 330))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-		if 320 <= mouse[0] <= 480 and 400 <= mouse[1] <= 450 :
+		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,400))
+				win.blit(button_inverted_enlarge, (310,450))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
@@ -492,7 +492,7 @@ def display_winscreen():
 			pop_sound_play = True
 		if 320 <= mouse[0] <= 480 and 470 <= mouse[1] <= 520 :
 			if right_click == 0:
-				win.blit(button_next_enlarge, (310,370))
+				win.blit(button_next_enlarge, (310,470))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
