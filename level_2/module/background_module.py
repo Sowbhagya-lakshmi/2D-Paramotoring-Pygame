@@ -21,3 +21,24 @@ def draw_bg(win):
 		bg_x = bg.get_width()
 	if bg_width < bg.get_width() * -1:
 		bg_width = bg.get_width()
+		
+	# Background Image
+snow = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Background','bg2.png'))
+bg_y = 0
+bg_height = snow.get_height()  
+snow_speed = 2	# Background shifts by 2 pixels in each game loop
+
+def draw_snow(win):
+	global bg_y, bg_height
+	win.blit(snow, (0, bg_y))
+	win.blit(snow, (0,bg_height))
+
+	# Background movement
+	bg_y += snow_speed
+	bg_height += snow_speed
+	
+	# For repetition of background movement
+	if bg_y > snow.get_height()*1:
+		bg_y = snow.get_height()*-1
+	if bg_height > snow.get_height() * 1:
+		bg_height =snow.get_height()*-1
