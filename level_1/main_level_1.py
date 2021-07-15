@@ -307,6 +307,7 @@ def main():
 
 		# Dummy exit
 		if collected_map:
+			pygame.mixer.music.fadeout(4000)	# Fades out the background music
 			time.sleep(4)
 			print('Game Over')
 			try:
