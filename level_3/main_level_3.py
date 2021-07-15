@@ -25,13 +25,13 @@ from level_3.module import music_module
 from level_3.module import obstacles_module
 from level_3.module import player_module
 
-from mp import process_object
+from level_3.mp import process_object
 from level_3.module.interface_screens_module import check_index
 from level_3.module.interface_screens_module import display_no_hand_info
 from level_3.module.interface_screens_module import display_fail_msg
 from level_3.module.interface_screens_module import display_success_msg
 
-from mp import queue_shared
+from level_3.mp import queue_shared
 from level_3.module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 

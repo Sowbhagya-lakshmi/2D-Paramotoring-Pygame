@@ -7,7 +7,7 @@ from level_3.module import ghost_module
 from level_3.module import shark_module
 from level_3.module import coins_module
 from level_3.module import obstacles_module
-from mp import process_object
+from level_3.mp import process_object
 
 
 
