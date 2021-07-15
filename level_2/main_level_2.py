@@ -185,7 +185,8 @@ def main():
 	pygame.init()
 
 	# Home screen interface window
-	volume_button_on_status = interface_module.display_homescreen()
+	# volume_button_on_status = interface_module.display_homescreen()
+	volume_button_on_status = True	# wip
 
 	# Game window
 	create_game_window()
@@ -323,8 +324,13 @@ def main():
 			try:
 				process_object.terminate()
 			except: pass
-			interface_module.display_endscreen()
+
+			# return_bool = interface_module.display_winscreen()
+			# if return_bool:
+			# 	break
 			break
+
+	pygame.quit()	
 			
 
 			
