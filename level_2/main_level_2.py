@@ -24,6 +24,8 @@ from level_2.module import obstacles_module
 from level_2.module import player_module
 from level_2.module import dynamic_obstacle_olaf
 from level_2.module import dynamic_obstacle_santa
+from level_2.module import dynamic_obstacle_giftbox
+
 from level_2.mp import process_object
 from level_2.module.interface_screens_module import check_index
 from level_2.module.interface_screens_module import display_no_hand_info
@@ -78,6 +80,7 @@ def change_img_pixel_format():
 	the display Surface. Necessary for blitting images to the screen faster.
 	"""
 	background_module.bg = background_module.bg.convert()
+	background_module.snow = background_module.snow.convert()
 
 	foreground_module.ground = foreground_module.ground.convert_alpha()
 	
@@ -98,6 +101,7 @@ def change_img_pixel_format():
 	display_module.start = display_module.start.convert_alpha()
 	display_module.finish = display_module.finish.convert_alpha()
 	
+	dynamic_obstacle_giftbox.Gift.imgs_list = [img.convert_alpha() for img in dynamic_obstacle_giftbox.Gift.imgs_list]
 	dynamic_obstacle_santa.Santa.imgs_list = [img.convert_alpha() for img in dynamic_obstacle_santa.Santa.imgs_list]
 	dynamic_obstacle_olaf.Olaf.imgs_list = [img.convert_alpha() for img in dynamic_obstacle_olaf.Olaf.imgs_list]
 	bird_module.Bird.list_of_lists = [[img.convert_alpha() for img in lst] for lst in bird_module.Bird.list_of_lists]
@@ -109,6 +113,7 @@ def draw_all_objects():
 	global fuel_available
 
 	background_module.draw_bg(win)
+	background_module.draw_snow(win)
 	obstacles_module.draw_obstacles(win)
 	coins_module.draw_coins(win)
 	foreground_module.draw_fg(win)
@@ -129,6 +134,7 @@ def draw_all_objects():
 		
 
 	bird_module.draw_bird(win)
+	dynamic_obstacle_giftbox.draw_gift(win)
 	dynamic_obstacle_olaf.draw_olaf(win)
 	dynamic_obstacle_santa.draw_santa(win)
 	display_module.display_lives(win, num_of_lives)
@@ -148,6 +154,7 @@ def lost():
 
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
+	background_module.snow_speed = 0
 	i=0
 	while i<10:
 		display_fail_msg(win)
@@ -173,6 +180,7 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
+	background_module.snow_speed = 0
 	collected_map = display_module.display_map(win)
 
 	return collected_map
@@ -279,9 +287,10 @@ def main():
 		collision_with_bird = bird_module.collision_with_bird()
 		collision_with_olaf = dynamic_obstacle_olaf.collision_with_olaf()
 		collision_with_santa = dynamic_obstacle_santa.collision_with_santa()
+		collision_with_gift = dynamic_obstacle_giftbox.collision_with_gift()
 
 
-		if collision_with_obstacle or collision_with_bird or collision_with_olaf or collision_with_santa:		# Dummy exit
+		if collision_with_obstacle or collision_with_bird or collision_with_olaf or collision_with_santa or collision_with_gift:		# Dummy exit
 			if volume_button_on_status:
 				music_module.sound_collided.play()
 			num_of_lives -= 1
