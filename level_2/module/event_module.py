@@ -1,7 +1,6 @@
 import pygame
 import sys
 import time
-
 from level_2.module import bird_module
 from level_2.module import dynamic_obstacle_olaf
 from level_2.module import dynamic_obstacle_santa
@@ -16,7 +15,7 @@ right_click = False
 
 def setting_up_events():
 	# Generate coin once in every 1 seconds
-	pygame.time.set_timer(pygame.USEREVENT+1, 800)
+	pygame.time.set_timer(pygame.USEREVENT+1, 700)
 	# Generate tree obstacles once in every 8 seconds
 	pygame.time.set_timer(pygame.USEREVENT+2, 6000)
 	# Generate rock and bush obstacles once in every 20 seconds

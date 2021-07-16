@@ -8,11 +8,11 @@ class Coin_spark_effects():
 	"""
 	Describes a visual effect when the player collects a coin. Draw method which draws the effect onto the screen.
 	"""
-	path = r'level_2/Utils/Pics/Coins/Effects/'
+	path = r'level_2/Utils/Pics/Stars/Effects/'
 	list_of_imgs = os.listdir(path)	# ist of all images in the path
 	num_of_imgs = len(list_of_imgs)
 
-	imgs_big = [pygame.image.load(r'level_2/Utils/Pics/Coins/Effects/'+img) for img in list_of_imgs]
+	imgs_big = [pygame.image.load(r'level_2/Utils/Pics/Stars/Effects/'+img) for img in list_of_imgs]
 	imgs = [pygame.transform.scale(img, (int(img.get_width()/6), int(img.get_height()/6))) for img in imgs_big]
 
 	coin_effects_list = []       # contains spark objects
