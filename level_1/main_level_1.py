@@ -316,8 +316,8 @@ def main():
 			time.sleep(4)
 			print('Game Over')
 			try:
-				# process_object.terminate()
-				pass
+				process_object.terminate()
+				# pass
 			except: pass
 			return_bool = interface_module.display_winscreen()
 			if return_bool:
