@@ -172,9 +172,9 @@ class Fuel_bar:
 	img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/', 'fuel2.png'))
 	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
 
-	bar_pos      = (50, 145)
+	bar_pos      = (50, 135)
 	bar_size     = (120, 20)
-	border_color = (0,0,0)
+	border_color = (200,200,200)
 	red = 255
 	green = 255
 	bar_color = (red, green, 0)
@@ -188,7 +188,7 @@ class Fuel_bar:
 			self.fuel_available = self.max_fuel
 		else:
 			self.fuel_available = fuel_available
-		win.blit(self.img_icon, (10, 140))
+		win.blit(self.img_icon, (10, 130))
 
 		if bool:
 			# self.red += 255/self.max_fuel

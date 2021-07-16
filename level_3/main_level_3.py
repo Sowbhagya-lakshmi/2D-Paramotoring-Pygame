@@ -81,7 +81,7 @@ def change_img_pixel_format():
 	player_module.Player.imgs = [img.convert_alpha() for img in player_module.player.imgs]
 	player_module.Propeller.propeller_imgs = [img.convert_alpha() for img in player_module.Propeller.propeller_imgs]
 
-	coins_module.Coin.resized_imgs = [img.convert_alpha() for img in coins_module.Coin.resized_imgs]
+	coins_module.Coin.list_of_lists = [[img.convert_alpha() for img in lst] for lst in coins_module.Coin.list_of_lists]
 	coins_module.coin_board = coins_module.coin_board.convert_alpha()
 
 	obstacles_module.House.resized_imgs = [img.convert_alpha() for img in obstacles_module.House.imgs]
@@ -183,6 +183,7 @@ def main():
 	global won_bool
 	global cursor
 	global collected_map
+	global start_fuel
 
 	pygame.init()
 

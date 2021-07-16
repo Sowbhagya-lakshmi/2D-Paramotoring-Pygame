@@ -14,9 +14,24 @@ class Coin:
 	Describes coin object. Draw method draws the coin, and animates it.
 	"""
 	# Loading coin images
-	num_of_imgs = 6
-	imgs = [pygame.image.load(os.path.join(r'level_3/Utils/Pics/Coins/', "coin"+ str(x) + '.png')) for x in range(1, num_of_imgs+1)]
-	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//50), int(img.get_height()//50))) for img in imgs]
+	num_of_imgs = 8
+	list_of_lists = []
+
+	path = r'level_3/Utils/Pics/Coins/'
+	colour_list = os.listdir(path)
+	num_of_colours = len(colour_list)
+
+	for colour in colour_list:
+		if colour == 'Effects': continue
+		imgs = []
+		for x in range(num_of_imgs):
+			img = pygame.image.load(os.path.join(path, colour +"/"+ str(x) + '.png'))
+			resized_img = pygame.transform.scale(img, (int(img.get_width()*1.5), int(img.get_height()*1.5)))
+			imgs.append(resized_img)
+		list_of_lists.append(imgs)
+
+	# imgs = [pygame.image.load(os.path.join(r'level_3/Utils/Pics/Coins/', str(x) + '.png')) for x in range(num_of_imgs)]
+	# resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.5), int(img.get_height()*1.5))) for img in imgs]
 
 	del imgs
 	coins_list = []
@@ -26,6 +41,8 @@ class Coin:
 		self.x = x
 		self.y = y
 		self.run_count = 0
+		self.colour_num = random.randrange(0, len(self.list_of_lists))
+		# print('self.num_of_colours-1: ',self.num_of_colours-1)
 
 	def draw(self, win):	
 		self.frames_per_image = 3			# each coin image is drawn for 7 consecutive frames
@@ -35,7 +52,8 @@ class Coin:
 		self.run_count += 1
 
 		# coin image
-		self.img = self.resized_imgs[self.index]
+		# print(self.colour_num)
+		self.img = self.list_of_lists[self.colour_num][self.index]
 
 		# Coins to rotate about it's central y axis
 		self.centroid_x = self.img.get_width()//2
@@ -44,7 +62,7 @@ class Coin:
 
 # Coin collection board
 coin_board1 = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display','coin_display.png'))
-coin_board = pygame.transform.scale(coin_board1, (int(coin_board1.get_width()//1.5), int(coin_board1.get_height()//1.5)))
+coin_board = pygame.transform.scale(coin_board1, (int(coin_board1.get_width()/1.7), int(coin_board1.get_height()/1.7)))
 
 def find_free_zone_y():
 	"""
@@ -80,7 +98,7 @@ def update_coins_position():
 	Updates the x coordinates of coins. If coin goes offscreen, remove it from the list.
 	"""
 	for coin in Coin.coins_list:
-		coin_width = coin.resized_imgs[0].get_width()
+		coin_width = coin.list_of_lists[0][0].get_width()
 		if coin.x < -1*coin_width: # If coin goes offscreen, removing it from coins list 
 			Coin.coins_list.remove(coin)
 		else:
@@ -110,9 +128,9 @@ def display_num_coins_collected(win):
 	"""
 	To display the number of coins collected.
 	"""
-	win.blit(coin_board, (10,10))
+	win.blit(coin_board, (10,5))
 	font_size = 40
 	font = pygame.font.Font('freesansbold.ttf', font_size)
 	text_x_pos, text_y_pos = 80, 20
-	text = font.render(str(Coin.num_coins_collected), True, (255,255,255))
+	text = font.render(str(Coin.num_coins_collected), True, (0,0,0))
 	win.blit(text, (text_x_pos, text_y_pos))

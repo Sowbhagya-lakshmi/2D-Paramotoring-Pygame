@@ -15,7 +15,7 @@ right_click = False
 
 def setting_up_events():
 	# Generate coin once in every 1 seconds
-	pygame.time.set_timer(pygame.USEREVENT+1, 1250)
+	pygame.time.set_timer(pygame.USEREVENT+1, 700)
 	# Generate house obstacles once in every 8 seconds
 	pygame.time.set_timer(pygame.USEREVENT+2, 6000)
 	# Generate tree once in every 20 seconds
