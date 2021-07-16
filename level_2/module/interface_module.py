@@ -68,7 +68,7 @@ def check_home(screen):
 		if right_click:
 			value = 3
 	if 500 <= mouse[1] <= 550 and 570 <= mouse[0] <= 730:
-		if right_click:
+		if right_click: pass
 			
 	clock = pygame.time.Clock()		
 	clock.tick(global_config.speed)		

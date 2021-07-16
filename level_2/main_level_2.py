@@ -80,7 +80,7 @@ def change_img_pixel_format():
 	the display Surface. Necessary for blitting images to the screen faster.
 	"""
 	background_module.bg = background_module.bg.convert()
-	background_module.snow = background_module.snow.convert()
+	background_module.snow = background_module.snow.convert_alpha()
 
 	foreground_module.ground = foreground_module.ground.convert_alpha()
 	
