@@ -168,6 +168,7 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
+	interface_module.display_winscreen()
 	# interface_module.display_winscreen()
 
 
