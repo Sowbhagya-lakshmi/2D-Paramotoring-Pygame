@@ -2,10 +2,10 @@ import os
 import pygame
 import random
 
-from module import background_module
-from module import foreground_module
-from module import player_module
-from module import music_module
+from level_2.module import background_module
+from level_2.module import foreground_module
+from level_2.module import player_module
+from level_2.module import music_module
 
 
 class Gift():
@@ -15,7 +15,7 @@ class Gift():
 	# Loading bird images
 	num_of_imgs = 24
 
-	path = 'Utils/Pics/Santa/gift/'
+	path = r'level_2/Utils/Pics/Santa/gift/'
 	
 	imgs_list = []
 	for x in range(num_of_imgs):

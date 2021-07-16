@@ -27,11 +27,11 @@ button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_w
 
 button_restart =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Restart.png'))
 button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
-button_restart_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Restart_click.png'))
+# button_restart_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Restart_click.png'))
 
 button_about =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_About.png'))
 button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.1),int(button_about.get_height()*1.1)))
-button_about_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_About_click.png'))
+# button_about_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_About_click.png'))
 
 button_highscore =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_HighScore.png'))
 button_score =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Score.png'))
@@ -44,15 +44,15 @@ button_inverted_enlarge = pygame.transform.scale(button_inverted, (int(button_in
 
 button_instructions =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.1),int(button_instructions.get_height()*1.1)))
-button_instructions_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Instructions_click.png'))
+# button_instructions_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Instructions_click.png'))
 
 button_play =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Play.png'))
 button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_width()*1.1),int(button_play.get_height()*1.1)))
-button_play_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Play_click.png'))
+# button_play_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Play_click.png'))
 
 button_resume =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
-button_resume_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume_click.png'))
+# button_resume_click =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume_click.png'))
 
 
 def check_home(screen):
@@ -68,27 +68,27 @@ def check_home(screen):
 		
 	if 370 <= mouse[1] <= 420 and 320 <= mouse[0] <=480:
 		if right_click:
-			while i<20:
-				screen.blit(button_play_click, (320,470))
-				i +=1
+			# while i<20:
+			# 	screen.blit(button_play_click, (320,470))
+			# 	i +=1
 			value = 1 
 	elif 470 <= mouse[1] <= 520 and 320 <= mouse[0] <= 480:
 		if right_click:
-			while i<20:
-				screen.blit(button_resume_click, (320,470))
-				i +=1
+			# while i<20:
+			# 	screen.blit(button_resume_click, (320,470))
+			# 	i +=1
 			value = 1
 	elif 500 <= mouse[1] <= 550 and 70 <= mouse[0] <= 230:
 		if right_click:
-			while i<20:
-				screen.blit(button_instructions_click, (320,400))
-				i +=1
+			# while i<20:
+			# 	screen.blit(button_instructions_click, (320,400))
+			# 	i +=1
 			value = 3
 	if 500 <= mouse[1] <= 550 and 570 <= mouse[0] <= 730:
 		if right_click:
-			while i<20:
-				screen.blit(button_about_click, (320,500))
-				i +=1
+			# while i<20:
+			# 	screen.blit(button_about_click, (320,500))
+			# 	i +=1
 			value = 4
 	clock = pygame.time.Clock()		
 	clock.tick(global_config.speed)		
