@@ -5,6 +5,7 @@ import time
 from level_2.module import bird_module
 from level_2.module import dynamic_obstacle_olaf
 from level_2.module import dynamic_obstacle_santa
+from level_2.module import dynamic_obstacle_giftbox
 from level_2.module import coins_module
 from level_2.module import obstacles_module
 from level_2.mp import process_object
@@ -23,9 +24,11 @@ def setting_up_events():
 	# Generate bird obstacle once in every 8 seconds
 	pygame.time.set_timer(pygame.USEREVENT+4, 8000)
 	#generate reindeer obstacles
-	pygame.time.set_timer(pygame.USEREVENT+5, 13000)
-	#generate reindeer obstacles
-	pygame.time.set_timer(pygame.USEREVENT+6, 18000)
+	pygame.time.set_timer(pygame.USEREVENT+5, 20000)
+	#generate santa obstacles
+	pygame.time.set_timer(pygame.USEREVENT+6, 28000)
+	#generate giftbox obstacles
+	pygame.time.set_timer(pygame.USEREVENT+7, 40000)
 
 	pygame.event.set_blocked(None)
 	pygame.event.set_allowed([pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,pygame.QUIT, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4,  pygame.USEREVENT+5, pygame.USEREVENT+6])
@@ -65,4 +68,7 @@ def event_loop():
 			dynamic_obstacle_olaf.create_olaf()
 		if event.type == pygame.USEREVENT+6:
 			dynamic_obstacle_santa.create_santa()
+		if event.type == pygame.USEREVENT+7:
+			dynamic_obstacle_giftbox.create_gift()
+		
 
