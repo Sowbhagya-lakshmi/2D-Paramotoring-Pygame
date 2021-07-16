@@ -100,12 +100,19 @@ class Countdown:
 	imgs.append(pygame.image.load(os.path.join(r'level_1/Utils/Pics/Countdown/','go.png')))
 	num_of_imgs = 4
 
+	level_num_img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','title.png'))
+	level_name_img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','title_name.png'))
+
 	def __init__(self):
 		self.x, self.y = global_config.window_width//2, global_config.window_height//2
 		self.run_count = 0
 		self.frames_per_image = global_config.speed
 
 	def draw(self, win):
+
+		win.blit(self.level_num_img, (global_config.window_width//2 - self.level_num_img.get_width()//2,30))
+		win.blit(self.level_name_img, (global_config.window_width//2 - self.level_name_img.get_width()//2,130))
+
 		if self.run_count < self.frames_per_image*self.num_of_imgs :		
 			self.index = self.run_count//self.frames_per_image
 			self.img = self.imgs[self.index]
@@ -114,6 +121,8 @@ class Countdown:
 			return True
 		else:
 			return False
+
+		
 
 countdown = Countdown()
 
