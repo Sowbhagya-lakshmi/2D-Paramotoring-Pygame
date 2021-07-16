@@ -205,8 +205,8 @@ class Mute_button:
 		self.centroid_y = 0
 
 		self.img_original = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface', 'mute.png')).convert_alpha()
-		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
-		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
+		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/1.5), int(self.img_original.get_height()/1.5)))
+		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/1.3), int(self.img_original.get_height()/1.3)))
 
 		self.img = self.img_small
 	
@@ -219,8 +219,8 @@ class Unmute_button:
 		self.centroid_y = 0
 
 		self.img_original = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface', 'unmute.png')).convert_alpha()		
-		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()), int(self.img_original.get_height())))
-		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()*1.1), int(self.img_original.get_height()*1.1)))
+		self.img_small = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/1.5), int(self.img_original.get_height()/1.5)))
+		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/1.3), int(self.img_original.get_height()/1.3)))
 
 		self.img = self.img_small
 	   
