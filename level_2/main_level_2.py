@@ -18,7 +18,7 @@ from level_2.module import event_module
 from level_2.module import foreground_module
 from level_2.module import interface_module
 
-# from level_2.module import interface_screens_module
+from level_2.module import interface_screens_module
 from level_2.module import music_module
 from level_2.module import obstacles_module
 from level_2.module import player_module
@@ -154,11 +154,7 @@ def lost():
 
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	background_module.snow_speed = 0
-	i=0
-	while i<10:
-		display_fail_msg(win)
-		i=i+1
+	display_fail_msg(win)
 
 	if player_module.player.y > foreground_module.ground_y:
 
@@ -180,12 +176,7 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	background_module.snow_speed = 0
-	collected_map = display_module.display_map(win)
-	interface_module.display_winscreen()
-
-	return collected_map
-
+	
 # MAIN ALGORITHM
 def main():
 	global frame_count
@@ -195,12 +186,15 @@ def main():
 	global won_bool
 	global cursor
 	global collected_map	
+	global start_fuel
 
 	pygame.init()
 
 	# Home screen interface window
 	# volume_button_on_status = interface_module.display_homescreen()
 	volume_button_on_status = True	# wip
+
+	interface_screens_module.display_playbutton()
 
 	# Game window
 	create_game_window()
@@ -228,10 +222,9 @@ def main():
 		if frame_count < 4*global_config.speed:
 			display_module.countdown.draw(win)
 		elif frame_count == 4*global_config.speed:
-			pygame.event.set_allowed(pygame.USEREVENT+1)
 			start_fuel = True
 		
-		event_module.event_loop()
+		event_module.event_loop(frame_count)
 
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
@@ -246,27 +239,26 @@ def main():
 		num_of_coins_inexchange_for_life = 50
 		if coins_module.Coin.num_coins_collected%num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
 			extra_life = display_module.Extra_life()
+			if len(display_module.Extra_life.extra_lives_list) == 0:
+				display_module.Extra_life.extra_lives_list.append(extra_life)
+
 		elif coins_module.Coin.num_coins_collected > num_of_coins_inexchange_for_life:
-			try:
+			for extra_life in display_module.Extra_life.extra_lives_list:
 				extra_life.draw(win)
 				player = player_module.player
 				if extra_life.x < (player.x + player.img.get_width()) and (extra_life.x + extra_life.img.get_width()) > player.x:	# Check x range
 					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
 						bool = extra_life.check_collision()
 						if bool:
-							# num = random.randint(1,1000)
-							# print('collected life', num)
-							del extra_life
 							num_of_lives += 1
+							display_module.Extra_life.extra_lives_list.remove(extra_life)
 							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
-			except:
-				pass
 		
-		draw_control_screen_actual(win)
+		
+		if process_object.is_alive():
+			draw_control_screen_actual(win)
+			draw_player_position(win)		     # draws black screen
 
-		
-		#print("success")
-		draw_player_position(win)		     # draws black screen
 		try:
 			bool_val = check_index(queue_shared)
 			if bool_val:
@@ -319,13 +311,10 @@ def main():
 		display_module.pause_play_button.check_status(cursor, win)
 
 		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
-			pygame.event.set_blocked([pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4, pygame.USEREVENT+5, pygame.USEREVENT+6])
-
-			# val = pygame.event.get_blocked(pygame.USEREVENT+1)		
-			# print(val)	
+			collected_map = display_module.display_map(win)
 
 		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
-			collected_map = won()
+			won()
 			won_bool = True
 
 		# Resize and blit the copy of game window onto main game window
@@ -336,16 +325,15 @@ def main():
 
 		# Dummy exit
 		if collected_map:
-			# time.sleep(2)
+			time.sleep(2)
 			print('Game Over')
 			try:
 				process_object.terminate()
 			except: pass
 
-			# return_bool = interface_module.display_winscreen()
-			# if return_bool:
-			# 	break
-			break
+			return_bool = interface_module.display_winscreen()
+			if return_bool:
+				break
 
 	pygame.quit()	
 			

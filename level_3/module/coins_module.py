@@ -131,6 +131,6 @@ def display_num_coins_collected(win):
 	win.blit(coin_board, (10,5))
 	font_size = 40
 	font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
-	text_x_pos, text_y_pos = 80, 20
+	text_x_pos, text_y_pos = 80, 10
 	text = font.render(str(Coin.num_coins_collected), True, (0,0,0))
 	win.blit(text, (text_x_pos, text_y_pos))

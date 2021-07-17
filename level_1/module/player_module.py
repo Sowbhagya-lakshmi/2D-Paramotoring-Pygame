@@ -78,10 +78,10 @@ def draw_player(win, player_won=False):
 		if player.x < global_config.window_width - player.img.get_width():
 			player.x = player.x + 3
 		player.y = my
-	elif my < foreground_module.ground_y :
+	elif my < foreground_module.ground_y - 25:
 		player.x, player.y = 250, my
 	else:
-		player.x, player.y = 250, foreground_module.ground_y
+		player.x, player.y = 250, foreground_module.ground_y -25
 
 	propeller.draw(win)
 	player.draw(win)
