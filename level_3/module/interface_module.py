@@ -6,6 +6,7 @@ import global_config
 from level_3.module import music_module
 from level_3.module import interface_screens_module
 from level_3.module import coins_module
+from level_3 import main_level_3
 
 
 # Global variables
@@ -20,6 +21,7 @@ mute_button, unmute_button = None, None
 #Loading Button and Screen Images
 screen_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Para Escapade.png'))
 screen_end =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_End.png'))
+screen_win =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_Winscreen.png'))
 
 button_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Button_Home.png'))
 button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
@@ -47,7 +49,7 @@ button_resume =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/B
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
 
-def check_home(screen):
+def check_home():
 	"""
 	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
 	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
@@ -75,28 +77,24 @@ def check_home(screen):
 	pygame.display.update()
 	return value
 
-"""
+
 def check_end():
-	
-	Checks the button that is clicked from the end screen and returns the corrseponding values.
-	
+	"""
+	Checks the button that is clicked from the end screen and returns the corrseponding value
+	"""
 	global value, right_click
 	i=0
 	value = 0
 	mouse = pygame.mouse.get_pos()
 		
-	if 200 <= mouse[1] <= 250 and 320 <= mouse[0] <= 480:
+	if 320 <= mouse[1] <= 480 and 480 <= mouse[0] <=530:
 		if right_click:
 			value = 1 
-	elif 500 <= mouse[1] <= 570 and 365 <= mouse[0] <= 435:
-		if right_click:
-			value = 2
 
 	clock = pygame.time.Clock()		
 	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return value
-"""
 
 class Cursor:
 	"""
@@ -257,21 +255,24 @@ def display_endscreen():
 	pygame.mixer.music.play(-1)
 
 	i=0
-	while i<10000:
-
+	while i<20000:
+		val = check_end()
+		if val == 1:
+			main_level_3.main()
 
 		win.fill((255,255,255))
 
 		win.blit(screen_end,(0,0))
-		win.blit(button_score, (320,300))
-		#win.blit(button_highscore, (320,400))
-
+		win.blit(button_score, (320,280))
+		win.blit(button_highscore, (320,380))
+		win.blit(button_resume,(320,480))
 		event_loop()
+
 
 		mouse = pygame.mouse.get_pos()
 
 
-		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
+		if 320 <= mouse[0] <= 480 and 280 <= mouse[1] <= 330 :
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,300))
 				font_size = 40
@@ -281,7 +282,19 @@ def display_endscreen():
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-
+		if 320 <= mouse[0] <= 480 and 380 <= mouse[1] <= 430 :
+			if right_click == 0:
+				win.blit(button_inverted_enlarge, (310,380))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
+		
+		if 320 <= mouse[0] <= 480 and 480 <= mouse[1] <= 530 :
+			if right_click == 0:
+				win.blit(button_resume_enlarge, (310,480))
+			if pop_sound_play == False:
+				music_module.sound_button_enlarge.play()
+			pop_sound_play = True
 		else:
 			pop_sound_play = False
 							
@@ -331,12 +344,12 @@ def display_winscreen():
 	pygame.mixer.music.play(-1)
 
 	i=0
-	while i<10000:
+	while i<20000:
 
 
 		win.fill((255,255,255))
 
-		win.blit(screen_end,(0,0))
+		win.blit(screen_win,(0,0))
 		win.blit(button_score, (320,270))
 		win.blit(button_highscore, (320,370))
 		win.blit(button_restart, (320,470))
