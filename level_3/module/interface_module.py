@@ -20,6 +20,7 @@ mute_button, unmute_button = None, None
 #Loading Button and Screen Images
 screen_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Para Escapade.png'))
 screen_end =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_End.png'))
+screen_win =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_Winscreen.png'))
 
 button_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Button_Home.png'))
 button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
@@ -336,7 +337,7 @@ def display_winscreen():
 
 		win.fill((255,255,255))
 
-		win.blit(screen_end,(0,0))
+		win.blit(screen_win,(0,0))
 		win.blit(button_score, (320,270))
 		win.blit(button_highscore, (320,370))
 		win.blit(button_restart, (320,470))
