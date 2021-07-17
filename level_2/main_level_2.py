@@ -195,6 +195,7 @@ def main():
 	global won_bool
 	global cursor
 	global collected_map	
+	global start_fuel
 
 	pygame.init()
 

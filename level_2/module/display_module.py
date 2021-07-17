@@ -307,7 +307,7 @@ class Pause_play_button:
 		button.centroid_x = self.x - button.img.get_width()//2
 		button.centroid_y = self.y - button.img.get_height()//2
 
-		win.blit(button.img, (button.centroid_x, button.centroid_y))
+		# win.blit(button.img, (button.centroid_x, button.centroid_y))
 
 pause_play_button = Pause_play_button()
 

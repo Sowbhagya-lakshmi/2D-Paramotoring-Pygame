@@ -328,6 +328,11 @@ def display_winscreen():
 	win = pygame.display.set_mode((width, height))	
 	pygame.display.set_caption('End Screen')
 
+	win.blit(screen_win,(0,0))
+	win.blit(button_score, (320,270))
+	win.blit(button_highscore, (320,370))
+	win.blit(button_restart, (320,470))
+
 	# Creating objects of classes
 	cursor = Cursor()
 
@@ -345,9 +350,6 @@ def display_winscreen():
 
 	i=0
 	while i<20000:
-
-
-		win.fill((255,255,255))
 
 		win.blit(screen_win,(0,0))
 		win.blit(button_score, (320,270))

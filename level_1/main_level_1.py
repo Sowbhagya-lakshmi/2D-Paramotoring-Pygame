@@ -181,6 +181,7 @@ def main():
 	global won_bool
 	global cursor
 	global collected_map	
+	global start_fuel
 
 	pygame.init()
 
@@ -313,7 +314,7 @@ def main():
 
 		# Dummy exit
 		if collected_map:
-			pygame.mixer.music.fadeout(4000)	# Fades out the background music
+			pygame.mixer.music.fadeout(2000)	# Fades out the background music
 			time.sleep(2)
 			print('Game Over')
 			try:
@@ -322,7 +323,6 @@ def main():
 			except: pass
 			return_bool = interface_module.display_winscreen()
 			if return_bool:
-				print('return bool = True')
 				break
 
 	pygame.quit()	
