@@ -8,7 +8,9 @@ The game consists of two modes for controlling the player - Mouse Control, Hand 
 
 ***
 
-## Install the dependencies and run the main file
+### **TO RUN THIS CODE**
+
+### Install the dependencies and run the main file
 
 * Install Python 3.8.x (any version)
 
