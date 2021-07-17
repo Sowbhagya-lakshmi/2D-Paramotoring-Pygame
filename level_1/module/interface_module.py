@@ -382,7 +382,7 @@ def display_endscreen():
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,320))
 				font_size = 40
-				font = pygame.font.Font('freesansbold.ttf', font_size)
+				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
 				win.blit(text, (380, 330))
 			if pop_sound_play == False:
@@ -463,7 +463,7 @@ def display_winscreen():
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,270))
 				font_size = 40
-				font = pygame.font.Font('freesansbold.ttf', font_size)
+				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
 				win.blit(text, (380, 280))
 			if pop_sound_play == False:
