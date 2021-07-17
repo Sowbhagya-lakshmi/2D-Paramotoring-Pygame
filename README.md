@@ -37,7 +37,7 @@ The game consists of two modes for controlling the player - Mouse Control, Hand 
 
 **2. Hand-gesture Control**
 
-To use hand gesture, keep only the index finder up and all others down. Move the index finger up and down as it is desired.  
+To use hand gesture, keep only the index finder up and all others down. Move the index finger up and down as desired to control the movement of the player.  
 
 ***
 ## LICENSE
