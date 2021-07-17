@@ -182,6 +182,7 @@ def won():
 	background_module.background_speed = 0
 	background_module.snow_speed = 0
 	collected_map = display_module.display_map(win)
+	interface_module.display_winscreen()
 
 	return collected_map
 
