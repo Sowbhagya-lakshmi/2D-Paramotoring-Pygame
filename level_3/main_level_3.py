@@ -173,7 +173,7 @@ def won():
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 	collected_map = display_module.display_map(win)
-
+	interface_module.display_winscreen()
 	return collected_map
 
 # MAIN ALGORITHM
