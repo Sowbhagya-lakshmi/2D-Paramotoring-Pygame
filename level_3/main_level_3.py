@@ -282,7 +282,7 @@ def main():
 				num_of_lives = 0
 
 		collision_with_ghost = ghost_module.collision_with_ghost()
-		if collision_with_obstacle or collision_with_ghost:		# Dummy exit
+		if collision_with_ghost:		# Dummy exit
 			if volume_button_on_status:
 				music_module.sound_collided.play()
 			num_of_lives -= 1
@@ -290,7 +290,7 @@ def main():
 				num_of_lives = 0
 
 		collision_with_shark = shark_module.collision_with_shark()
-		if collision_with_obstacle or collision_with_shark:		# Dummy exit
+		if collision_with_shark:		# Dummy exit
 			if volume_button_on_status:
 				music_module.sound_collided.play()
 			num_of_lives -= 1
