@@ -238,11 +238,10 @@ def main():
 							display_module.Extra_life.extra_lives_list.remove(extra_life)
 							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
 		
-		draw_control_screen_actual(win)
+		if process_object.is_alive():
+			draw_control_screen_actual(win)
+			draw_player_position(win)		     # draws black screen
 
-		
-		#print("success")
-		draw_player_position(win)		     # draws black screen
 		try:
 			bool_val = check_index(queue_shared)
 			if bool_val:

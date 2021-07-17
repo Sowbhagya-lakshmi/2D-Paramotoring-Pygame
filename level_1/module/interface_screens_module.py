@@ -215,7 +215,6 @@ def display_playbutton():
 
 		if mode == 1:	
 			process_object.start()	
-			print('Starting img processing process')
 			break
 		elif mode == 2:
 			break		
