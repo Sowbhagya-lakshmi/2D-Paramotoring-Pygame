@@ -239,21 +239,21 @@ def main():
 		num_of_coins_inexchange_for_life = 50
 		if coins_module.Coin.num_coins_collected%num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
 			extra_life = display_module.Extra_life()
+			if len(display_module.Extra_life.extra_lives_list) == 0:
+				display_module.Extra_life.extra_lives_list.append(extra_life)
+
 		elif coins_module.Coin.num_coins_collected > num_of_coins_inexchange_for_life:
-			try:
+			for extra_life in display_module.Extra_life.extra_lives_list:
 				extra_life.draw(win)
 				player = player_module.player
 				if extra_life.x < (player.x + player.img.get_width()) and (extra_life.x + extra_life.img.get_width()) > player.x:	# Check x range
 					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
 						bool = extra_life.check_collision()
 						if bool:
-							# num = random.randint(1,1000)
-							# print('collected life', num)
-							del extra_life
 							num_of_lives += 1
+							display_module.Extra_life.extra_lives_list.remove(extra_life)
 							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
-			except:
-				pass
+		
 		
 		if process_object.is_alive():
 			draw_control_screen_actual(win)

@@ -29,12 +29,13 @@ def display_lives(win, num_of_lives):
 class Extra_life:
 
 	extra_lives_list = []
-
+	img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/', 'extra_life.png'))
+	
 	def __init__(self):
 		self.x = global_config.window_width + heart.get_width()
 		free_zone_y = coins_module.find_free_zone_y()
 		self.y = random.randint(0,free_zone_y)	
-		self.img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/', 'extra_life.png'))
+		
 	
 	def draw(self,win):
 		if self.x > -1*self.img.get_width():

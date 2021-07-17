@@ -27,11 +27,15 @@ def display_lives(win, num_of_lives):
 		x_pos += heart.get_width() + 3
 
 class Extra_life:
+
+	extra_lives_list = []
+	img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/', 'extra_life.png'))
+	
 	def __init__(self):
 		self.x = global_config.window_width + heart.get_width()
 		free_zone_y = coins_module.find_free_zone_y()
 		self.y = random.randint(0,free_zone_y)	
-		self.img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/', 'extra_life.png'))
+		
 	
 	def draw(self,win):
 		if self.x > -1*self.img.get_width():
@@ -100,7 +104,6 @@ class Countdown:
 	level_num_img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/','title.png'))
 	level_name_img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/','title_name.png'))
 
-
 	def __init__(self):
 		self.x, self.y = global_config.window_width//2, global_config.window_height//2
 		self.run_count = 0
@@ -108,8 +111,8 @@ class Countdown:
 
 	def draw(self, win):
 
-		win.blit(self.level_num_img, (global_config.window_width//2 - self.level_num_img.get_width()//2,10))
-		win.blit(self.level_name_img, (global_config.window_width//2 - self.level_name_img.get_width()//2,110))
+		win.blit(self.level_num_img, (global_config.window_width//2 - self.level_num_img.get_width()//2,30))
+		win.blit(self.level_name_img, (global_config.window_width//2 - self.level_name_img.get_width()//2,130))
 
 		if self.run_count < self.frames_per_image*self.num_of_imgs :		
 			self.index = self.run_count//self.frames_per_image
@@ -119,6 +122,8 @@ class Countdown:
 			return True
 		else:
 			return False
+
+		
 
 countdown = Countdown()
 
@@ -132,6 +137,8 @@ class Fuel:
 		self.y = random.randint(0,free_zone_y)	
 		self.img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/','fuel2.png'))
 
+		fuel_bar.failed_to_collect = False
+
 	def draw(self, win):
 		# print('drawing')
 		for fuel in self.fuel_list:
@@ -142,6 +149,7 @@ class Fuel:
 				fuel.x -= foreground_module.foreground_speed
 			else:
 				self.fuel_list.remove(fuel)
+				fuel_bar.failed_to_collect = True
 
 		self.fuel_collection()
 
@@ -158,6 +166,7 @@ class Fuel:
 			collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
 			collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
 			if collision_point_with_player or collision_point_with_propeller:
+				# fuel_bar.bool_check = True
 				return True
 		return False
 
@@ -176,27 +185,34 @@ def draw_fuel(win):
 		for fuel in Fuel.fuel_list:
 			fuel.draw(win)	
 
+one_time_permission = True
+
 class Fuel_bar:
 	img = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/', 'fuel2.png'))
 	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
 
-	bar_pos      = (50, 135)
+	bar_pos      = (50, 145)
 	bar_size     = (120, 20)
-	border_color = (200,200,200)
+	border_color = (0,0,0)
 	red = 255
 	green = 255
 	bar_color = (red, green, 0)
 	max_fuel = global_config.speed * 60  # 60 seconds
 	fuel_available = max_fuel
 
-	bool_check = True
+	def __init__(self):
+
+		self.bool_check = True
+		self.failed_to_collect = False
 
 	def draw_fuel_bar(self, win, fuel_available, bool):
+		global one_time_permission
+
 		if self.bar_color == (255,255, 0):
 			self.fuel_available = self.max_fuel
 		else:
 			self.fuel_available = fuel_available
-		win.blit(self.img_icon, (10, 130))
+		win.blit(self.img_icon, (10, 140))
 
 		if bool:
 			# self.red += 255/self.max_fuel
@@ -211,9 +227,14 @@ class Fuel_bar:
 		progress = self.fuel_available/self.max_fuel
 		# print(progress)
 
+		if self.failed_to_collect and progress <= 0.25 and one_time_permission:
+			one_time_permission = False
+			fuel = Fuel()
+			Fuel.fuel_list.append(fuel)
+			self.failed_to_collect == False
+
 		if self.bool_check:
-			if progress <= 0.25:
-				# print('inside')
+			if progress <= 0.5:
 				self.bool_check = False
 				fuel = Fuel()
 				Fuel.fuel_list.append(fuel)
@@ -288,7 +309,7 @@ class Pause_play_button:
 		else:
 			self.button.img = self.button.img_small		
 
-		self.draw(self.button, win)		
+		# self.draw(self.button, win)		
 		self.functionality(self.button)
 
 		return self.button
@@ -306,7 +327,7 @@ class Pause_play_button:
 		button.centroid_x = self.x - button.img.get_width()//2
 		button.centroid_y = self.y - button.img.get_height()//2
 
-		# win.blit(button.img, (button.centroid_x, button.centroid_y))
+		win.blit(button.img, (button.centroid_x, button.centroid_y))
 
 pause_play_button = Pause_play_button()
 
