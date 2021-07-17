@@ -523,13 +523,10 @@ def check_index(queue_shared):
 def display_no_hand_info(win):
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 40
 	win.blit(index_finger_not_detected,(pos_x,pos_y))
-	#pygame.display.update()
-
 
 def display_fail_msg(win):
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10
 	win.blit(fail_msg,(pos_x,pos_y))
-
 
 def display_success_msg(win):
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10 #player_module.player.x - success_msg.get_width() , player_module.player.y 

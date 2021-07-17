@@ -53,12 +53,14 @@ button_mode_gesture_enlarge = pygame.transform.scale(button_mode_gesture, (int(b
 button_mode_mouse =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/ModeOfGame','Mode_Mouse.png'))
 button_mode_mouse_enlarge = pygame.transform.scale(button_mode_mouse, (int(button_mode_mouse.get_width()*1.1),int(button_mode_mouse.get_height()*1.1)))
 
-index_finger_not_detected = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','pop-up.png'))
+index_finger_not_detected1 = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','pop-up.png'))
+index_finger_not_detected = pygame.transform.scale(index_finger_not_detected1, (index_finger_not_detected1.get_width()//2, index_finger_not_detected1.get_height()//2))
+
 fail_msg_big = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','oh_no.png'))
-fail_msg = pygame.transform.scale(fail_msg_big, (fail_msg_big.get_width()//2, fail_msg_big.get_height()//2))
+fail_msg = pygame.transform.scale(fail_msg_big, (fail_msg_big.get_width()//3, fail_msg_big.get_height()//3))
 
 success_msg_big = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','we_made_it.png'))
-success_msg = pygame.transform.scale(success_msg_big, (success_msg_big.get_width()//2, success_msg_big.get_height()//2))
+success_msg = pygame.transform.scale(success_msg_big, (success_msg_big.get_width()//3, success_msg_big.get_height()//3))
 
 
 def check_mode_playbutton( ):
@@ -511,7 +513,6 @@ def display_aboutbutton():
 	pygame.mouse.set_visible(False)
 
 def check_index(queue_shared):
-	#queue.get()
 	if queue_shared.empty():
 		return False
 	else:
@@ -520,18 +521,15 @@ def check_index(queue_shared):
 		
 		
 def display_no_hand_info(win):
-	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y 
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 40
 	win.blit(index_finger_not_detected,(pos_x,pos_y))
-	#pygame.display.update()
-
 
 def display_fail_msg(win):
-	pos_x, pos_y = player_module.player.x - fail_msg.get_width() , player_module.player.y 
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10
 	win.blit(fail_msg,(pos_x,pos_y))
 
-
 def display_success_msg(win):
-	pos_x, pos_y = player_module.player.x - success_msg.get_width() , player_module.player.y 
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10 #player_module.player.x - success_msg.get_width() , player_module.player.y 
 	win.blit(success_msg,(pos_x,pos_y))
 
 
