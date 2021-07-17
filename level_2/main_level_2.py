@@ -154,11 +154,7 @@ def lost():
 
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	background_module.snow_speed = 0
-	i=0
-	while i<10:
-		display_fail_msg(win)
-		i=i+1
+	display_fail_msg(win)
 
 	if player_module.player.y > foreground_module.ground_y:
 
@@ -180,7 +176,6 @@ def won():
 		i=i+1
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	background_module.snow_speed = 0
 	
 # MAIN ALGORITHM
 def main():
