@@ -2,27 +2,20 @@ import pygame
 import sys
 import time
 
+import global_config
 from level_1.module import bird_module
 from level_1.module import coins_module
 from level_1.module import obstacles_module
 from level_1.mp import process_object
 
 right_click = False
+total_number_of_frames = global_config.speed*global_config.game_duration
 
 def setting_up_events():
-	# Generate coin once in every 1 seconds
-	pygame.time.set_timer(pygame.USEREVENT+1, 700)
-	# Generate tree obstacles once in every 8 seconds
-	pygame.time.set_timer(pygame.USEREVENT+2, 6000)
-	# Generate rock and bush obstacles once in every 10 seconds
-	pygame.time.set_timer(pygame.USEREVENT+3, 10000)
-	# Generate bird obstacle once in every 8 seconds
-	pygame.time.set_timer(pygame.USEREVENT+4, 8000)
-
 	pygame.event.set_blocked(None)
-	pygame.event.set_allowed([pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,pygame.QUIT, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4])
+	pygame.event.set_allowed([pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,pygame.QUIT])
 
-def event_loop():
+def event_loop(frame_count):
 	global right_click
 
 	right_click =  False
@@ -44,14 +37,28 @@ def event_loop():
 		elif event.type == pygame.MOUSEBUTTONDOWN:
 			if event.button == 1:
 				right_click = True
+			
+	if frame_count > 4*global_config.speed and frame_count < (total_number_of_frames - 8*global_config.speed):
+		custom_event_loop(frame_count)
+		
+def custom_event_loop(frame_count):
+	"""
+	Generates coins, trees, bushes, rocks and birds
+	"""
+	# Generate coin once in every 0.5 seconds
+	if (frame_count/global_config.speed)%0.5 == 0:
+		coins_module.create_coin()
 
-		if event.type == pygame.USEREVENT+1:
-			coins_module.create_coin()
-		if event.type == pygame.USEREVENT+2:
-			obstacles_module.create_tree_obstacle()
-		if event.type == pygame.USEREVENT+3:
-			obstacles_module.create_rock_n_bush()
-		if event.type == pygame.USEREVENT+4:
-			bird_module.create_bird()
+	# Generate tree obstacles once in every 6 seconds
+	if (frame_count/global_config.speed)%6 == 0:
+		obstacles_module.create_tree_obstacle()
+
+	# Generate rock and bush obstacles once in every 10 seconds
+	if (frame_count/global_config.speed)%10 == 0:
+		obstacles_module.create_rock_n_bush()
+
+	# Generate bird obstacle once in every 8 seconds
+	if (frame_count/global_config.speed)%8 == 0:
+		bird_module.create_bird()
 
 

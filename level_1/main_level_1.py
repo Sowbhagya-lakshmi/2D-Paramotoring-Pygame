@@ -212,10 +212,9 @@ def main():
 		if frame_count < 4*global_config.speed:
 			display_module.countdown.draw(win)
 		elif frame_count == 4*global_config.speed:
-			pygame.event.set_allowed(pygame.USEREVENT+1)
 			start_fuel = True
 		
-		event_module.event_loop()
+		event_module.event_loop(frame_count)
 
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
@@ -279,8 +278,6 @@ def main():
 		
 		if num_of_lives == 0 or fuel_available <= 0:
 
-			pygame.event.set_blocked(pygame.USEREVENT+1)
-
 			lost_music_count += 1
 			if lost_music_count == 1:
 
@@ -299,7 +296,6 @@ def main():
 		display_module.pause_play_button.check_status(cursor, win)
 
 		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
-			pygame.event.set_blocked([pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4])
 			collected_map = display_module.display_map(win)
 
 		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
