@@ -50,7 +50,7 @@ button_resume =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/B
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
 
-def check_home(screen):
+def check_home():
 	"""
 	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
 	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
@@ -73,26 +73,6 @@ def check_home(screen):
 	if 500 <= mouse[1] <= 550 and 570 <= mouse[0] <= 730:
 		if right_click:
 			value = 4
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
-	pygame.display.update()
-	return value
-
-
-def check_win():
-	"""
-	Checks the button that is clicked from the end screen and returns the corrseponding values.
-	"""
-	global value, right_click
-	i=0
-	value = 0
-	mouse = pygame.mouse.get_pos()
-		
-	if 320 <= mouse[0] <= 480 and 470 <= mouse[1] <= 520 :
-		if right_click:
-			value = 1 
-
-
 	clock = pygame.time.Clock()		
 	clock.tick(global_config.speed)		
 	pygame.display.update()
@@ -261,7 +241,7 @@ def display_homescreen():
 	pygame.mixer.music.play(-1)
 
 	while True:	
-		value = check_home(win)
+		value = check_home()
 		if value == 1: 
 			interface_screens_module.display_playbutton()
 			break 	# breaks interface loop
@@ -382,7 +362,7 @@ def display_endscreen():
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,320))
 				font_size = 40
-				font = pygame.font.Font('freesansbold.ttf', font_size)
+				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
 				win.blit(text, (380, 330))
 			if pop_sound_play == False:
@@ -463,7 +443,7 @@ def display_winscreen():
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,270))
 				font_size = 40
-				font = pygame.font.Font('freesansbold.ttf', font_size)
+				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
 				win.blit(text, (380, 280))
 			if pop_sound_play == False:

@@ -15,6 +15,8 @@ from level_3.module import effects_module
 from level_3.module import event_module
 from level_3.module import foreground_module
 from level_3.module import interface_module
+from level_1.module.interface_module import display_homescreen
+
 
 # from level_3.module import interface_screens_module
 from level_3.module import music_module
@@ -171,7 +173,7 @@ def won():
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 	collected_map = display_module.display_map(win)
-
+	interface_module.display_winscreen()
 	return collected_map
 
 # MAIN ALGORITHM
@@ -188,7 +190,7 @@ def main():
 	pygame.init()
 
 	# Home screen interface window
-	volume_button_on_status = interface_module.display_homescreen()
+	volume_button_on_status = display_homescreen()
 
 	# Game window
 	create_game_window()
@@ -337,7 +339,7 @@ def main():
 			try:
 				process_object.terminate()
 			except: pass
-			interface_module.display_endscreen()
+			interface_module.display_winscreen()
 			break
 			
 
