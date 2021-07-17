@@ -18,7 +18,7 @@ from level_3.module import interface_module
 from level_1.module.interface_module import display_homescreen
 
 
-# from level_3.module import interface_screens_module
+from level_3.module import interface_screens_module
 from level_3.module import music_module
 from level_3.module import obstacles_module
 from level_3.module import player_module
@@ -173,7 +173,7 @@ def won():
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 	collected_map = display_module.display_map(win)
-	interface_module.display_winscreen()
+	# interface_module.display_winscreen()
 	return collected_map
 
 # MAIN ALGORITHM
@@ -190,7 +190,10 @@ def main():
 	pygame.init()
 
 	# Home screen interface window
-	volume_button_on_status = display_homescreen()
+	# volume_button_on_status = display_homescreen()
+	volume_button_on_status = True
+
+	interface_screens_module.display_playbutton()
 
 	# Game window
 	create_game_window()
@@ -339,8 +342,11 @@ def main():
 			try:
 				process_object.terminate()
 			except: pass
-			interface_module.display_winscreen()
-			break
-			
 
+			return_bool = interface_module.display_winscreen()
+			if return_bool:
+				print('return bool = True')
+				break
+			
+	pygame.quit()	
 			

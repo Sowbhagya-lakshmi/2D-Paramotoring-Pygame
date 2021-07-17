@@ -18,7 +18,7 @@ from level_2.module import event_module
 from level_2.module import foreground_module
 from level_2.module import interface_module
 
-# from level_2.module import interface_screens_module
+from level_2.module import interface_screens_module
 from level_2.module import music_module
 from level_2.module import obstacles_module
 from level_2.module import player_module
@@ -182,7 +182,7 @@ def won():
 	background_module.background_speed = 0
 	background_module.snow_speed = 0
 	collected_map = display_module.display_map(win)
-	interface_module.display_winscreen()
+	# interface_module.display_winscreen()
 
 	return collected_map
 
@@ -201,6 +201,8 @@ def main():
 	# Home screen interface window
 	# volume_button_on_status = interface_module.display_homescreen()
 	volume_button_on_status = True	# wip
+
+	interface_screens_module.display_playbutton()
 
 	# Game window
 	create_game_window()
@@ -336,16 +338,15 @@ def main():
 
 		# Dummy exit
 		if collected_map:
-			# time.sleep(2)
+			time.sleep(2)
 			print('Game Over')
 			try:
 				process_object.terminate()
 			except: pass
 
-			# return_bool = interface_module.display_winscreen()
-			# if return_bool:
-			# 	break
-			break
+			return_bool = interface_module.display_winscreen()
+			if return_bool:
+				break
 
 	pygame.quit()	
 			
