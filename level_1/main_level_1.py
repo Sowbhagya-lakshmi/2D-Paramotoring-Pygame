@@ -162,15 +162,9 @@ def won():
 	"""
 	If the player wins the game
 	"""
-	i=0
-	while i<10:
-		display_success_msg(win)
-		i=i+1
+	display_success_msg(win)
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	#interface_module.display_winscreen()
-	# interface_module.display_winscreen()
-
 
 # MAIN ALGORITHM
 def main():
@@ -295,7 +289,7 @@ def main():
 
 		display_module.pause_play_button.check_status(cursor, win)
 
-		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
+		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 10 seconds
 			collected_map = display_module.display_map(win)
 
 		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds

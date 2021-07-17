@@ -51,8 +51,8 @@ def custom_event_loop(frame_count):
 	"""
 	Generates coins, trees, bushes, rocks and birds
 	"""
-	# Event 1 - Generate coin once in every 0.5 seconds
-	if (frame_count/global_config.speed)%0.5 == 0:
+	# Event 1 - Generate coin once in every 0.75 seconds
+	if (frame_count/global_config.speed)%0.75 == 0:
 		coins_module.create_coin()
 
 	# Event 2 - Generate tree obstacles once in every 6 seconds
