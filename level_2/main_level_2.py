@@ -181,11 +181,7 @@ def won():
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 	background_module.snow_speed = 0
-	collected_map = display_module.display_map(win)
-	# interface_module.display_winscreen()
-
-	return collected_map
-
+	
 # MAIN ALGORITHM
 def main():
 	global frame_count
@@ -231,10 +227,9 @@ def main():
 		if frame_count < 4*global_config.speed:
 			display_module.countdown.draw(win)
 		elif frame_count == 4*global_config.speed:
-			pygame.event.set_allowed(pygame.USEREVENT+1)
 			start_fuel = True
 		
-		event_module.event_loop()
+		event_module.event_loop(frame_count)
 
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
@@ -322,13 +317,10 @@ def main():
 		display_module.pause_play_button.check_status(cursor, win)
 
 		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
-			pygame.event.set_blocked([pygame.USEREVENT+1, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4, pygame.USEREVENT+5, pygame.USEREVENT+6])
-
-			# val = pygame.event.get_blocked(pygame.USEREVENT+1)		
-			# print(val)	
+			collected_map = display_module.display_map(win)
 
 		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
-			collected_map = won()
+			won()
 			won_bool = True
 
 		# Resize and blit the copy of game window onto main game window

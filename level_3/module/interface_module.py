@@ -333,6 +333,8 @@ def display_winscreen():
 	win.blit(button_highscore, (320,370))
 	win.blit(button_restart, (320,470))
 
+	pygame.display.update()
+
 	# Creating objects of classes
 	cursor = Cursor()
 
