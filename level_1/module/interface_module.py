@@ -366,8 +366,7 @@ def display_endscreen():
 	i=0
 	while i<20000:
 		value = check_home()
-		if value == 1:
-			break
+
 		win.fill((255,255,255))
 
 		win.blit(screen_end,(0,0))
@@ -376,6 +375,8 @@ def display_endscreen():
 		win.blit(button_quit,(320,480))
 
 		event_loop()
+		if value == 1:
+			pygame.quit()
 
 		mouse = pygame.mouse.get_pos()
 
