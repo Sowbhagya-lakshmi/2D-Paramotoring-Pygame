@@ -245,7 +245,7 @@ def display_playbutton():
 		elif mode == 2:
 			break		
 		elif mode == 3: 
-			interface_module.display_homescreen()
+			display_playbutton()
 			break 	# breaks interface loop
 		
 		elif mode == 4:
@@ -329,7 +329,7 @@ def display_pausebutton():
 
 		pause_mode = check_mode_pausebutton( )
 		if pause_mode == 3: 
-			interface_module.display_homescreen()
+			display_playbutton()
 			break 	# breaks interface loop
 		elif pause_mode == 1:
 			display_playbutton()
@@ -477,7 +477,7 @@ def display_instructions():
 
 												skip_mode4 = check_mode_instructions()
 												if skip_mode4==1:
-													interface_module.display_homescreen()
+													display_playbutton()
 													break
 
 											else:
@@ -558,7 +558,7 @@ def display_aboutbutton():
 
 		about_mode = check_mode_aboutbutton()
 		if about_mode == 1:
-			interface_module.display_homescreen()
+			display_playbutton()
 			break 	# breaks interface loop
 
 
