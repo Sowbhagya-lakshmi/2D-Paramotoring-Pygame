@@ -88,6 +88,11 @@ def change_img_pixel_format():
 	display_module.line = display_module.line.convert_alpha()
 	display_module.start = display_module.start.convert_alpha()
 	display_module.finish = display_module.finish.convert_alpha()
+
+	for fuel in display_module.Fuel.fuel_list:
+		fuel.img = fuel.img.convert_alpha()
+	for extra_life in display_module.Extra_life.extra_lives_list:
+		extra_life.img = extra_life.img.convert_alpha()
 	
 	dragon_module.Dragon.list_of_lists = [[img.convert_alpha() for img in lst] for lst in dragon_module.Dragon.list_of_lists]
 	ghost_module.Ghost.list_of_lists = [[img.convert_alpha() for img in lst] for lst in ghost_module.Ghost.list_of_lists]
@@ -145,7 +150,6 @@ def lost():
 		try:
 			process_object.terminate()
 		except: pass
-		time.sleep(1)
 		interface_module.display_endscreen()
 		return True
 	return False
@@ -188,6 +192,8 @@ def main(volume_button_on_status):
 	if volume_button_on_status:
 		pygame.mixer.music.play(-1)
 
+	total_num_of_frames = global_config.speed*global_config.game_duration
+
 	# GAME LOOP
 	while run:
 		frame_count += 1
@@ -223,19 +229,23 @@ def main(volume_button_on_status):
 					display_module.Extra_life.extra_lives_list.remove(extra_life)
 					coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
 		
+		# Display black reference screen only if hand gesture mode is selected
 		if process_object.is_alive():
 			draw_control_screen_actual(win)
-			draw_player_position(win)		     # draws black screen
+			draw_player_position(win)
 		
 		try:
+			# Check if index finger is detected
 			bool_val = check_index(queue_shared)
 			if bool_val and num_of_lives > 0:
 				display_pop_up = True
 				start_loop = 0
 			
+			# If not detected display pop up
 			if display_pop_up:
 				start_loop += 1
 				display_no_hand_info(win)
+
 				# Display the no hand info for 0.5 seconds
 				if start_loop >= global_config.speed//2:
 					display_pop_up = False
@@ -270,7 +280,8 @@ def main(volume_button_on_status):
 			if num_of_lives <= 0:
 				num_of_lives = 0
 
-		if num_of_lives == 0:
+		# Player loses if he runs out of lives or fuel
+		if num_of_lives == 0 or fuel_available <= 0:
 
 			lost_music_count += 1
 			if lost_music_count == 1:
@@ -280,9 +291,9 @@ def main(volume_button_on_status):
 
 									# If all 3 lives are gone
 			game_end = lost()
-			#music_module.sound_aftercollided.play()
-			player_module.propeller.frames_per_propeller_img += 0.01
+			player_module.propeller.frames_per_propeller_img += 0.01	# propeller slows down
 
+			# If the player has fallen to the ground
 			if game_end:
 				break
 
@@ -299,10 +310,10 @@ def main(volume_button_on_status):
 		clock.tick(global_config.speed)
 		pygame.display.update()
 
-		# Dummy exit
+		# Exit
 		if collected_map:
+			pygame.mixer.music.fadeout(2000)	# Fades out the background music
 			time.sleep(2)
-			print('Game Over')
 			try:
 				process_object.terminate()
 			except: pass

@@ -1,17 +1,10 @@
-import multiprocessing
 import os
-from sys import base_prefix
 import pygame
 import random
 
-from pygame.mixer import pause
-
 import global_config
 from level_2.module import coins_module
-from level_2.module import event_module
 from level_2.module import foreground_module
-from level_2.module import interface_module
-from level_2.module import music_module
 from level_2.module import player_module
 
 # LIVES
@@ -61,7 +54,7 @@ class Extra_life:
 				if collision_point_with_player or collision_point_with_propeller:
 					return True
 		return False
-		
+
 def create_extra_life():
 	extra_life = Extra_life()
 	if len(Extra_life.extra_lives_list) == 0:
