@@ -2,8 +2,6 @@ import pygame
 import sys
 import os
 
-from multiprocessing import Queue
-
 import global_config
 from level_1.module import music_module , interface_module
 from level_1.module import player_module
@@ -68,7 +66,6 @@ def check_mode_playbutton( ):
 
 	"""
 	global right_click
-	i=0
 	mouse = pygame.mouse.get_pos()
 
 	play_mode = None
@@ -89,7 +86,7 @@ def check_mode_playbutton( ):
 		play_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
+	clock.tick(global_config.fps)		
 	pygame.display.update()
 	return play_mode
 
@@ -99,7 +96,6 @@ def check_mode_aboutbutton( ):
 	Checks if the home button is clicked from the about button and returns  1 if skip button is clicked
 	"""
 	global right_click
-	i=0
 	mouse = pygame.mouse.get_pos()
 
 	about_mode = None
@@ -107,12 +103,11 @@ def check_mode_aboutbutton( ):
 	if 365 <= mouse[0] <= 435 and 520 <= mouse[1] <= 570:
 			if right_click: 
 				about_mode = 1
-	
 	else:
 		about_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
+	clock.tick(global_config.fps)		
 	pygame.display.update()
 	return about_mode
 
@@ -121,7 +116,6 @@ def check_mode_instructions( ):
 	Checks if the skip button is clicked from the about button and returns  1 if skip button is clicked
 	"""
 	global right_click
-	i=0
 	mouse = pygame.mouse.get_pos()
 
 	skip_mode = None
@@ -129,12 +123,11 @@ def check_mode_instructions( ):
 	if 640 <= mouse[0] <= 780 and 520 <= mouse[1] <= 570:
 			if right_click: 
 				skip_mode = 1
-	
 	else:
 		skip_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
+	clock.tick(global_config.fps)		
 	pygame.display.update()
 	return skip_mode
 
@@ -185,7 +178,7 @@ def display_playbutton():
 	"""
 	global win, cursor
 	
-	global_config.speed = 60		# fps
+	global_config.fps = 60		# fps
 	
 	# Home screen interface
 	width, height = 500,450
@@ -194,17 +187,14 @@ def display_playbutton():
 
 	cursor = Cursor()
 
-	clock = pygame.time.Clock()
-
 	# Hide the original cursor
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
-	i=0
 	
 	while True:
 
@@ -218,12 +208,10 @@ def display_playbutton():
 		elif mode == 3: 
 			interface_module.display_homescreen()
 			break 	# breaks interface loop
-		
 		elif mode == 4:
 			display_instructions()
 			break
 
-		win.fill((255,0,0))
 		win.blit(screen_playbutton_interface,(0,0))
 		win.blit(button_mode_gesture, (50,150))
 		win.blit(button_mode_mouse,(330,150))
@@ -262,9 +250,7 @@ def display_playbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		i=i+1
 		cursor.draw()
-
 		pygame.display.update()
 
 	pygame.mouse.set_visible(False)
@@ -276,9 +262,7 @@ def display_instructions():
 
 	global win, cursor
 	
-	global_config.speed = 60		# fps
-	
-	
+	global_config.fps = 60		# fps
 	
 	# Home screen interface
 	width, height = 800,600
@@ -296,13 +280,11 @@ def display_instructions():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
 	while i<10000 and break_loop_val:
-
-		win.fill((255,255,255))
 
 		win.blit(screen_instruction1,(0,0))
 		win.blit(button_skip,(620,515))
@@ -401,7 +383,7 @@ def display_instructions():
 
 														f=f+1
 
-														clock.tick(global_config.speed)
+														clock.tick(global_config.fps)
 														pygame.display.update()
 											else:
 												pop_sound_play=False
@@ -410,7 +392,7 @@ def display_instructions():
 
 											e=e+1	
 
-											clock.tick(global_config.speed)	
+											clock.tick(global_config.fps)	
 											pygame.display.update()
 
 								else:
@@ -420,7 +402,7 @@ def display_instructions():
 
 								d=d+1	
 
-								clock.tick(global_config.speed)	
+								clock.tick(global_config.fps)	
 								pygame.display.update()
 
 					else:
@@ -430,7 +412,7 @@ def display_instructions():
 
 					c=c+1	
 
-					clock.tick(global_config.speed)	
+					clock.tick(global_config.fps)	
 					pygame.display.update()
 
 		else:
@@ -440,11 +422,9 @@ def display_instructions():
 
 		i = i+1
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
 
-		
-	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
 
@@ -454,10 +434,8 @@ def display_aboutbutton():
 	"""
 	global win, cursor
 	
-	global_config.speed = 60		# fps
-	
-	
-	
+	global_config.fps = 60		# fps
+		
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
@@ -473,7 +451,7 @@ def display_aboutbutton():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i = 0
@@ -484,10 +462,8 @@ def display_aboutbutton():
 			interface_module.display_homescreen()
 			break 	# breaks interface loop
 
-
 		mouse = pygame.mouse.get_pos()
 
-		win.fill((255,0,0))
 		win.blit(screen_aboutbutton_interface,(0,0))
 		win.blit(button_home_small,(365,520))
 
@@ -508,24 +484,34 @@ def display_aboutbutton():
 	pygame.mouse.set_visible(False)
 
 def check_index(queue_shared):
-	#queue.get()
+	"""
+	Checks if index finger is recognised
+	"""
 	if queue_shared.empty():
 		return False
 	else:
 		queue_shared.get()
 		return True
 
-
 def display_no_hand_info(win):
+	"""
+	Displays a pop up if index finger is not visible
+	"""
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 40
 	win.blit(index_finger_not_detected,(pos_x,pos_y))
 
 def display_fail_msg(win):
+	"""
+	Displays a msg if lost the game
+	"""
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10
 	win.blit(fail_msg,(pos_x,pos_y))
 
 def display_success_msg(win):
-	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10 #player_module.player.x - success_msg.get_width() , player_module.player.y 
+	"""
+	Displays a msg if won the game
+	"""
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10  
 	win.blit(success_msg,(pos_x,pos_y))
 
 

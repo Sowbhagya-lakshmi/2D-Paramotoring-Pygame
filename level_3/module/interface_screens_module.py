@@ -86,7 +86,7 @@ def check_mode_playbutton( ):
 		play_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
+	clock.tick(global_config.fps)		
 	pygame.display.update()
 	return play_mode
 
@@ -109,7 +109,7 @@ def check_mode_instructions( ):
 		skip_mode = None
 		
 	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
+	clock.tick(global_config.fps)		
 	pygame.display.update()
 	return skip_mode
 
@@ -162,7 +162,7 @@ def display_playbutton():
 	"""
 	global win, cursor
 	
-	global_config.speed = 60		# fps
+	global_config.fps = 60		# fps
 	
 	# Home screen interface
 	width, height = 500,450
@@ -254,7 +254,7 @@ def display_instructions():
 
 	global win, cursor
 	
-	global_config.speed = 60		# fps
+	global_config.fps = 60		# fps
 	
 	
 	
@@ -377,7 +377,7 @@ def display_instructions():
 
 														f=f+1
 
-														clock.tick(global_config.speed)
+														clock.tick(global_config.fps)
 														pygame.display.update()
 
 
@@ -388,7 +388,7 @@ def display_instructions():
 
 											e=e+1	
 
-											clock.tick(global_config.speed)	
+											clock.tick(global_config.fps)	
 											pygame.display.update()
 
 								else:
@@ -398,7 +398,7 @@ def display_instructions():
 
 								d=d+1	
 
-								clock.tick(global_config.speed)	
+								clock.tick(global_config.fps)	
 								pygame.display.update()
 
 					else:
@@ -408,7 +408,7 @@ def display_instructions():
 
 					c=c+1	
 
-					clock.tick(global_config.speed)	
+					clock.tick(global_config.fps)	
 					pygame.display.update()
 
 		else:
@@ -418,7 +418,7 @@ def display_instructions():
 
 		i = i+1
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
 
 		

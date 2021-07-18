@@ -5,8 +5,8 @@ import pygame
 # Background Image
 bg = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Background','bg.png'))
 bg_x = 0
-bg_width = bg.get_width() - 3 
-background_speed = 2	# Background shifts by 2 pixels in each game loop
+bg_width = bg.get_width() - 3 	# Consequent background images overlap by 3 pixels
+background_speed = 2			# Background shifts by 2 pixels in each game loop
 
 def draw_bg(win):
 	global bg_x, bg_width

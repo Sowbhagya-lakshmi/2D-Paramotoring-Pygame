@@ -18,8 +18,8 @@ class Tree:
 	num_of_imgs = 11
 	imgs = [pygame.image.load(os.path.join(r'level_1/Utils/Pics/Obstacles/', "tree"+ str(x) + '.png')) for x in range(num_of_imgs)]
 
-	obstacles = []
-	collision_obstacles = []
+	obstacles = []				# For blitting purpose
+	collision_obstacles = []	# For checking collision (separate lists as we don't want object to abruptly disappear from screen if collision happens)
 
 	def __init__(self, x, num):
 		self.num = num
@@ -48,7 +48,6 @@ class Rock_n_Bush:
 	# Loading images 
 	num_of_imgs = 4
 	imgs = [pygame.image.load(os.path.join(r'level_1/Utils/Pics/Obstacles/', "obstacle"+ str(x) + '.png')) for x in range(num_of_imgs)]
-	# resized_imgs = [pygame.transform.scale(img, (int(img.get_width()*1.3), int(img.get_height()*1.3))) for img in imgs]		# scaling factor - 1.3 
 
 	obstacles = []
 	collision_obstacles = []
@@ -122,13 +121,13 @@ def collision_with_obstacle():
 	"""
 	player = player_module.player
 	propeller = player_module.propeller
-	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 	
 	for element in obstacle_classes:
 		for obstacle in element.collision_obstacles:
 			if obstacle.x < (player.x + player.img.get_width()) and (obstacle.x + obstacle.img.get_width()) > player.x:	# Check x range
 				if obstacle.y < (player.y + player.img.get_height()) and (obstacle.y + obstacle.img.get_height()) > player.y:	# Check y range
+					player_mask = pygame.mask.from_surface(player.img)
+					propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 					obstacle_mask = pygame.mask.from_surface(obstacle.img)
 					offset = obstacle.x - player.x, obstacle.y - player.y
 

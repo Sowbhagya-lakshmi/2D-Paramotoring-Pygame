@@ -4,7 +4,9 @@ import global_config
 from level_1.module import player_module
 
 def draw_control_screen_actual(win):
-
+    """
+    Draws the black refernce screen onto the window
+    """
     color = (0,0,0)
     x = global_config.window_width - 0.2*global_config.window_width
     y = 0
@@ -20,6 +22,9 @@ def draw_control_screen_actual(win):
     pygame.draw.line(win, color1, start_pos, end_pos, width=3)    
 
 def draw_player_position(win):
+    """
+    Draws the reference player position
+    """
     x_pos, y_pos = player_module.player.x, player_module.player.y
     player_x = 0.2*x_pos + 0.80*global_config.window_width
     player_y = 0.2*y_pos + 16
