@@ -8,9 +8,8 @@ import global_config
 ground = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Foreground','ground.png'))
 
 ground_x = 0
-ground_y = global_config.window_height-ground.get_height() + 40
-
-ground_width = ground.get_width() 	# To prevent glitches in background movement...WIP
+ground_y = global_config.window_height-ground.get_height()  + 20
+ground_width = ground.get_width() - 5	# To prevent glitches in background movement...WIP
 foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
 
 def draw_fg(win):
@@ -24,8 +23,8 @@ def draw_fg(win):
 	ground_width -= foreground_speed
 	
 	# For repetition of ground movement
-	if ground_x < (ground.get_width()) * -1:
-		ground_x = (ground.get_width())
-	if ground_width < (ground.get_width()) * -1:
-		ground_width = (ground.get_width())
+	if ground_x < (ground.get_width()-5) * -1:
+		ground_x = (ground.get_width()-5)
+	if ground_width < (ground.get_width()-5) * -1:
+		ground_width = (ground.get_width()-5)
 	

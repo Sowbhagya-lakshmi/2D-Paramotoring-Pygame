@@ -110,7 +110,6 @@ class Countdown:
 		self.x, self.y = global_config.window_width//2, global_config.window_height//2
 		self.run_count = 0
 		self.frames_per_image = global_config.fps
-
 	def draw(self, win):
 
 		win.blit(self.level_num_img, (global_config.window_width//2 - self.level_num_img.get_width()//2,30))
