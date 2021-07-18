@@ -22,7 +22,6 @@ value = 0
 #Loading Button and Screen Images
 screen_home =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface','Para Escapade.png'))
 screen_playbutton_interface =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface','Screen_PlayButton.png'))
-screen_pausebutton_interface =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface','Screen_PauseButton.png'))
 screen_aboutbutton_interface =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface','Screen_AboutButton.png'))
 
 screen_instruction1 =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Instructions','Instructions_screen1.png'))

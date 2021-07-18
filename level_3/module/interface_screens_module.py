@@ -21,7 +21,6 @@ value = 0
 
 #Loading Button and Screen Images
 screen_playbutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_PlayButton.png'))
-screen_pausebutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_PauseButton.png'))
 
 screen_instruction1 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen1.png'))
 screen_instruction2 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen2.png'))

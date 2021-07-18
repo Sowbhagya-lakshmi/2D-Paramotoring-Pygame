@@ -303,8 +303,6 @@ def main(volume_button_on_status):
 			if game_end:
 				break
 
-		display_module.pause_play_button.check_status(cursor, win)
-
 		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 5 seconds
 			collected_map = display_module.display_map(win)
 
