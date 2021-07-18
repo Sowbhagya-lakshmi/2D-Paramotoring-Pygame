@@ -306,11 +306,11 @@ def display_winscreen():
 
 		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,300))
+				win.blit(button_inverted_enlarge, (310,450))
 				font_size = 40
 				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
-				win.blit(text, (380, 460))
+				win.blit(text, (370, 450))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
