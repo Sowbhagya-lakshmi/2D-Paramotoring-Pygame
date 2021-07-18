@@ -317,7 +317,7 @@ def display_instructions():
 												skip_mode4 = check_mode_instructions()
 												if skip_mode4==1:
 													f=0
-													while f<10000 and break_loop_val:
+													while f<10000:
 														win.blit(screen_instruction5,(0,0))
 														win.blit(button_skip,(620,515))
 
@@ -332,7 +332,7 @@ def display_instructions():
 
 														skip_mode5 = check_mode_instructions()
 														if skip_mode5==1:
-															interface_module.display_homescreen()
+															display_playbutton()
 															break_loop_val = False
 															break
 														
