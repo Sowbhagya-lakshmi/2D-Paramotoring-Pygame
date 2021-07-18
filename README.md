@@ -1,6 +1,6 @@
 # PARA-ESACPADE : 2D-Paramotoring Pygame
 
-![](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/game-integration/Images_wiki/ICON.png)
+![ICON](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/main/Images_wiki/ICON.png)
 
 Para-Escapade is a 2D game developed using Pygame depicting the adventurous journey of a paramotorer. The protagonist of the game flies to reach her destination despite all the obstacles in her way.
 
@@ -35,10 +35,13 @@ The game consists of two modes for controlling the player - Mouse Control, Hand 
 
 **1. Mouse Control**
 
+![Mouse-control](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/main/Images_wiki/mouse_control.gif)
+
 **2. Hand-gesture Control**
 
 To use hand gesture, keep only the index finder up and all others down. Move the index finger up and down as desired to control the movement of the player.  
 
+![Gesture-Control](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/main/Images_wiki/gesture_control.gif)
 ***
 
 For detailed information of the game, visit [https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/wiki](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/wiki)
