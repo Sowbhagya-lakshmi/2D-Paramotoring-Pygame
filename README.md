@@ -42,6 +42,9 @@ To use hand gesture, keep only the index finder up and all others down. Move the
 ***
 
 For detailed information of the game, visit [https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/wiki](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/wiki)
+
+***
+
 ## LICENSE
 
 Mit License
