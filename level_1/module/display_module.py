@@ -138,7 +138,7 @@ class Fuel:
 		self.x = global_config.window_width
 		free_zone_y = coins_module.find_free_zone_y()
 		self.y = random.randint(0,free_zone_y)	
-		self.img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','fuel2.png'))
+		self.img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','fuel.png'))
 
 		fuel_bar.failed_to_collect = False
 
@@ -185,7 +185,7 @@ def draw_fuel(win):
 one_time_permission = True
 
 class Fuel_bar:
-	img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/', 'fuel2.png'))
+	img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/', 'fuel.png'))
 	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
 
 	bar_pos      = (50, 145)
@@ -244,8 +244,7 @@ class Fuel_bar:
 fuel_bar = Fuel_bar()
 
 # MAP
-map_img_big = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display', 'map.png'))
-map_img = pygame.transform.scale(map_img_big, (map_img_big.get_width()//5, map_img_big.get_height()//5))
+map_img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display', 'map.png'))
 	
 map_x = 1300 + 5*global_config.fps*foreground_module.foreground_speed
 map_y = random.randint(150, foreground_module.ground_y)
