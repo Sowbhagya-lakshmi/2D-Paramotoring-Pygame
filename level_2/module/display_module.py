@@ -70,11 +70,8 @@ line = pygame.transform.scale(line, (line.get_width()//2, line.get_height()//5))
 icon_big = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Display/','player_location.png'))
 player_icon = pygame.transform.scale(icon_big, (icon_big.get_width()//5, icon_big.get_height()//5)) 
 
-start = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Display/','start.png'))
-start = pygame.transform.scale(start, (start.get_width()//10, start.get_height()//10))
-
-finish = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Display/','finish.png'))
-finish = pygame.transform.scale(finish, (finish.get_width()//10, finish.get_height()//10))
+start = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','start.png'))
+finish = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','finish.png'))
 
 line_pos_x = 1140
 line_pos_y = 770
@@ -244,8 +241,7 @@ class Fuel_bar:
 fuel_bar = Fuel_bar()
 
 # MAP
-map_img_big = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Display', 'map.png'))
-map_img = pygame.transform.scale(map_img_big, (map_img_big.get_width()//5, map_img_big.get_height()//5))
+map_img = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display', 'map.png'))
 	
 map_x = 1300 + 5*global_config.fps*foreground_module.foreground_speed
 map_y = random.randint(150, foreground_module.ground_y)

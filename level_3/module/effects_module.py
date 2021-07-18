@@ -39,11 +39,11 @@ class Hit_effects:
 	"""
 	Describes a visual effect when the player hits an obstacle like a tree, rock, or bush. Draw method which draws the effect onto the screen.
 	"""
-	path = r'level_3/Utils/Pics/Obstacles/Effects/'
+	path = r'level_1/Utils/Pics/Obstacles/Effects/'
 	list_of_imgs = os.listdir(path)
 	num_of_imgs = len(list_of_imgs)
 
-	imgs = [pygame.image.load(r'level_3/Utils/Pics/Obstacles/Effects/'+img) for img in list_of_imgs]
+	imgs = [pygame.image.load(r'level_1/Utils/Pics/Obstacles/Effects/'+img) for img in list_of_imgs]
 	imgs = [pygame.transform.scale(img, (img.get_width()*2, img.get_height()*2)) for img in imgs]
 
 	hit_effects_list = []   
