@@ -314,10 +314,9 @@ def main(volume_button_on_status):
 				process_object.terminate()
 			except: pass
 
-			return_bool = interface_module.display_winscreen()
-			if return_bool:
-				print('return bool = True')
+			restart_bool = interface_module.display_winscreen()
+			if restart_bool:
 				break
 			
 	pygame.quit()	
-			
+	return restart_bool
