@@ -71,10 +71,7 @@ icon_big = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','player
 player_icon = pygame.transform.scale(icon_big, (icon_big.get_width()//5, icon_big.get_height()//5)) 
 
 start = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','start.png'))
-start = pygame.transform.scale(start, (start.get_width()//10, start.get_height()//10))
-
 finish = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Display/','finish.png'))
-finish = pygame.transform.scale(finish, (finish.get_width()//10, finish.get_height()//10))
 
 line_pos_x = 1140
 line_pos_y = 770
