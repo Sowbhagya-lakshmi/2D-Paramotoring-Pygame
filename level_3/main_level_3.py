@@ -2,53 +2,45 @@ import os
 import pygame
 import time
 
-
 import global_config
 from level_3.module import background_module
-from level_3.module import dragon_module
-from level_3.module import ghost_module
-from level_3.module import shark_module
 from level_3.module import coins_module
 from level_3.module import display_module
+from level_3.module import dragon_module
 from level_3.module import effects_module
-# from level_3.module import ending_module
 from level_3.module import event_module
 from level_3.module import foreground_module
+from level_3.module import ghost_module
 from level_3.module import interface_module
-from level_1.module.interface_module import display_homescreen
-
-
 from level_3.module import interface_screens_module
 from level_3.module import music_module
 from level_3.module import obstacles_module
 from level_3.module import player_module
+from level_3.module import shark_module
 
 from level_3.mp import process_object
+from level_3.mp import queue_shared
+from level_3.module.player_movement_box import draw_control_screen_actual, draw_player_position
+
 from level_3.module.interface_screens_module import check_index
 from level_3.module.interface_screens_module import display_no_hand_info
 from level_3.module.interface_screens_module import display_fail_msg
 from level_3.module.interface_screens_module import display_success_msg
 
-from level_3.mp import queue_shared
-from level_3.module.player_movement_box import draw_control_screen_actual, draw_player_position
-
-
 # Global variables
-run = True
 
 frame_count = 0
 num_of_lives = 3
 fuel_count = 0
-ending_count = 0
+lost_music_count = 0
 
-won_bool = False
 fuel_available = global_config.speed*60
-start_fuel = False
 
+run = True
+won_bool = False
+start_fuel = False
 display_pop_up = False
 collected_map = False
-
-lost_music_count = 0
 
 win = None
 game_window = None
@@ -126,7 +118,6 @@ def draw_all_objects():
 	else:
 		player_module.draw_player(win)
 		
-
 	dragon_module.draw_dragon(win)
 	ghost_module.draw_ghost(win)
 	shark_module.draw_shark(win)
@@ -147,13 +138,10 @@ def lost():
 
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
-	i=0
-	while i<10:
-		display_fail_msg(win)
-		i=i+1
+
+	display_fail_msg(win)
 
 	if player_module.player.y > foreground_module.ground_y:
-
 		try:
 			process_object.terminate()
 		except: pass
@@ -164,28 +152,24 @@ def lost():
 
 def won():
 	"""
-	If the player 
+	If the player successfully completes the level
 	"""
 	display_success_msg(win)
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 
 # MAIN ALGORITHM
-def main():
-	global frame_count
-	global num_of_lives
+def main(volume_button_on_status):
 	global bool_val
-	global lost_music_count
-	global won_bool
-	global cursor
 	global collected_map
+	global cursor
+	global frame_count
+	global lost_music_count
+	global num_of_lives
 	global start_fuel
-
+	global won_bool
+	
 	pygame.init()
-
-	# Home screen interface window
-	# volume_button_on_status = display_homescreen()
-	volume_button_on_status = True
 
 	interface_screens_module.display_playbutton()
 

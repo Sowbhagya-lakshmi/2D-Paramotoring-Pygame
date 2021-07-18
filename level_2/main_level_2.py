@@ -35,7 +35,6 @@ from level_2.module.interface_screens_module import display_success_msg
 from level_2.mp import queue_shared
 from level_2.module.player_movement_box import draw_control_screen_actual, draw_player_position
 
-
 # Global variables
 run = True
 
@@ -178,21 +177,17 @@ def won():
 	background_module.background_speed = 0
 	
 # MAIN ALGORITHM
-def main():
-	global frame_count
-	global num_of_lives
+def main(volume_button_on_status):
 	global bool_val
-	global lost_music_count
-	global won_bool
+	global collected_map
 	global cursor
-	global collected_map	
+	global frame_count
+	global lost_music_count
+	global num_of_lives
 	global start_fuel
+	global won_bool
 
 	pygame.init()
-
-	# Home screen interface window
-	# volume_button_on_status = interface_module.display_homescreen()
-	volume_button_on_status = True	# wip
 
 	interface_screens_module.display_playbutton()
 

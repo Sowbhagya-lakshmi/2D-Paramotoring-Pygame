@@ -168,14 +168,16 @@ def won():
 
 # MAIN ALGORITHM
 def main():
-	global frame_count
-	global num_of_lives
 	global bool_val
-	global lost_music_count
-	global won_bool
+	global collected_map
 	global cursor
-	global collected_map	
+	global frame_count
+	global lost_music_count
+	global num_of_lives
 	global start_fuel
+	global volume_button_on_status
+	global won_bool
+	
 
 	pygame.init()
 
@@ -315,6 +317,8 @@ def main():
 				break
 
 	pygame.quit()	
+
+	return volume_button_on_status
 			
 
 			
