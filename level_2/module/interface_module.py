@@ -61,10 +61,9 @@ def check_end():
 	Checks if quit button is clicked in the end screen and returns the corresponding values
 	"""
 	global value, right_click
-	i=0
-	value = 0
+
 	mouse = pygame.mouse.get_pos()
-		
+	value = -1
 	if 320 <= mouse[1] <= 480 and 450 <= mouse[0] <=500:
 		if right_click:
 			value = 1 
@@ -260,6 +259,8 @@ def display_endscreen():
 		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
 				win.blit(button_quit_enlarge, (310,450))
+			if right_click == 1:
+				sys.exit()
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
