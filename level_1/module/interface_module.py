@@ -6,7 +6,6 @@ import global_config
 from level_1.module import music_module
 from level_1.module import interface_screens_module
 from level_1.module import coins_module
-# from level_1.module import HighScore
 
 
 # Global variables
@@ -53,7 +52,6 @@ button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_w
 button_resume =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
-#highscore = HighScore.checkit()
 
 def check_home():
 	"""
@@ -85,7 +83,7 @@ def check_home():
 
 def check_end():
 	"""
-	Checks if quit button is pressed or not
+	Checks if quit button is pressed or not in the end screen and returns 1 if clicked
 	"""
 	global value, right_click
 	i=0
@@ -110,7 +108,8 @@ class Cursor:
 	def draw(self,win):
 		self.x, self.y  = pygame.mouse.get_pos()
 		win.blit(self.img, (self.x, self.y))
-	
+
+
 def event_loop():
 	global right_click
 
@@ -141,6 +140,7 @@ def cursor_over_button(cursor, button):
 	collision = cursor_mask.overlap(button_mask, offset)    # returns bool
 
 	return collision
+
 
 class Volume_control:
 	"""
@@ -196,7 +196,8 @@ class Volume_control:
 		button.centroid_y = Volume_control.y - button.img.get_height()//2
 
 		win.blit(button.img, (button.centroid_x, button.centroid_y))
-		
+
+
 class Mute_button:
 	"""
 	Defines the mute button
@@ -210,7 +211,8 @@ class Mute_button:
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/1.3), int(self.img_original.get_height()/1.3)))
 
 		self.img = self.img_small
-	
+
+
 class Unmute_button:
 	"""
 	Defines the unmute button
@@ -331,6 +333,7 @@ def display_homescreen():
 	pygame.mouse.set_visible(True)
 
 	return not(volume_control.button_flag)
+
 
 def display_endscreen():
 	
@@ -476,7 +479,7 @@ def display_winscreen():
 				font_size = 40
 				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
-				win.blit(text, (380, 300))
+				win.blit(text, (380, 305))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True

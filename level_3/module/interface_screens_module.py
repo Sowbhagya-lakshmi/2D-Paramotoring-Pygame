@@ -20,16 +20,14 @@ right_click = False
 value = 0
 
 #Loading Button and Screen Images
-screen_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Para Escapade.png'))
 screen_playbutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_PlayButton.png'))
 screen_pausebutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_PauseButton.png'))
-screen_aboutbutton_interface =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_AboutButton.png'))
 
 screen_instruction1 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen1.png'))
 screen_instruction2 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen2.png'))
 screen_instruction3 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen3.png'))
-screen_instruction5 =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Instructions','Instructions_screen5.png'))
-screen_instruction4 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen4.png'))
+screen_instruction4 =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Instructions','Instructions_screen4.png'))
+screen_instruction5 =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Instructions','Instructions_screen5.png'))
 
 button_instructions =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_small = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*0.8),int(button_instructions.get_height()*0.8)))
@@ -96,27 +94,6 @@ def check_mode_playbutton( ):
 	pygame.display.update()
 	return play_mode
 
-def check_mode_aboutbutton( ):
-	"""
-	Checks if the home button is clicked from the about button and returns  1 if skip button is clicked
-	"""
-	global right_click
-	i=0
-	mouse = pygame.mouse.get_pos()
-
-	about_mode = None
-	
-	if 365 <= mouse[0] <= 435 and 520 <= mouse[1] <= 570:
-			if right_click: 
-				about_mode = 1
-	
-	else:
-		about_mode = None
-		
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
-	pygame.display.update()
-	return about_mode
 
 def check_mode_instructions( ):
 	"""
@@ -453,64 +430,6 @@ def display_instructions():
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
 
-def display_aboutbutton():
-	"""
-	Creates a screen a when we click About button
-	"""
-	global win, cursor
-	
-	global_config.speed = 60		# fps
-	
-	
-	
-	# Home screen interface
-	width, height = 800,600
-	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('About Button Interface')
-
-	cursor = Cursor()
-
-	clock = pygame.time.Clock()
-
-	# Hide the original cursor
-	pygame.mouse.set_visible(False)
-
-	pop_sound_play = False
-
-	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
-	pygame.mixer.music.play(-1)
-
-	i = 0
-	while True:
-
-		about_mode = check_mode_aboutbutton()
-		if about_mode == 1:
-			display_playbutton()
-			break 	# breaks interface loop
-
-
-		mouse = pygame.mouse.get_pos()
-
-		win.fill((255,0,0))
-		win.blit(screen_aboutbutton_interface,(0,0))
-		win.blit(button_home_small,(365,520))
-
-		event_loop()
-
-		if 365 <= mouse[0] <= 435 and 523 <= mouse[1] <= 587 :
-			if right_click == 0:
-				win.blit(button_home_enlarge, (365,515))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
-			
-		i=i+1
-		cursor.draw()
-
-		pygame.display.update()
-
-	pygame.mouse.set_visible(False)
 
 def check_index(queue_shared):
 	if queue_shared.empty():
@@ -524,9 +443,11 @@ def display_no_hand_info(win):
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 40
 	win.blit(index_finger_not_detected,(pos_x,pos_y))
 
+
 def display_fail_msg(win):
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10
 	win.blit(fail_msg,(pos_x,pos_y))
+
 
 def display_success_msg(win):
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10 #player_module.player.x - success_msg.get_width() , player_module.player.y 

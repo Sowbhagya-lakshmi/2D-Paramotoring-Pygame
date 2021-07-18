@@ -20,10 +20,7 @@ right_click = False
 value = 0
 
 #Loading Button and Screen Images
-screen_home =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface','Para Escapade.png'))
 screen_playbutton_interface =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface','Screen_PlayButton.png'))
-screen_pausebutton_interface =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface','Screen_PauseButton.png'))
-screen_aboutbutton_interface =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface','Screen_AboutButton.png'))
 
 screen_instruction1 =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Instructions','Instructions_screen1.png'))
 screen_instruction2 =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Instructions','Instructions_screen2.png'))
@@ -36,9 +33,6 @@ button_instructions_small = pygame.transform.scale(button_instructions, (int(but
 
 button_skip =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_Skip.png'))
 button_skip_enlarge = pygame.transform.scale(button_skip, (int(button_skip.get_width()*1.1),int(button_skip.get_height()*1.1)))
-
-button_restart =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_Restart.png'))
-button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
 
 button_resume =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
@@ -96,27 +90,6 @@ def check_mode_playbutton( ):
 	pygame.display.update()
 	return play_mode
 
-def check_mode_aboutbutton( ):
-	"""
-	Checks if the home button is clicked from the about button and returns  1 if skip button is clicked
-	"""
-	global right_click
-	i=0
-	mouse = pygame.mouse.get_pos()
-
-	about_mode = None
-	
-	if 365 <= mouse[0] <= 435 and 520 <= mouse[1] <= 570:
-			if right_click: 
-				about_mode = 1
-	
-	else:
-		about_mode = None
-		
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
-	pygame.display.update()
-	return about_mode
 
 def check_mode_instructions( ):
 	"""
@@ -140,6 +113,7 @@ def check_mode_instructions( ):
 	pygame.display.update()
 	return skip_mode
 
+
 class Cursor:
 	"""
 	Define a custom cursor for the game instead of the system's cursor. Placing an image of a cursor at the mouse coordinates.
@@ -151,7 +125,8 @@ class Cursor:
 	def draw(self):
 		self.x, self.y  = pygame.mouse.get_pos()
 		win.blit(self.img, (self.x, self.y))
-	
+
+
 def event_loop():
 	global right_click
 
@@ -451,64 +426,6 @@ def display_instructions():
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
 
-def display_aboutbutton():
-	"""
-	Creates a screen a when we click About button
-	"""
-	global win, cursor
-	
-	global_config.speed = 60		# fps
-	
-	
-	
-	# Home screen interface
-	width, height = 800,600
-	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('About Button Interface')
-
-	cursor = Cursor()
-
-	clock = pygame.time.Clock()
-
-	# Hide the original cursor
-	pygame.mouse.set_visible(False)
-
-	pop_sound_play = False
-
-	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_2\Utils\Music\InterfaceBG.wav'))
-	pygame.mixer.music.play(-1)
-
-	i = 0
-	while True:
-
-		about_mode = check_mode_aboutbutton()
-		if about_mode == 1:
-			interface_module.display_homescreen()
-			break 	# breaks interface loop
-
-
-		mouse = pygame.mouse.get_pos()
-
-		win.fill((255,0,0))
-		win.blit(screen_aboutbutton_interface,(0,0))
-		win.blit(button_home_small,(365,520))
-
-		event_loop()
-
-		if 365 <= mouse[0] <= 435 and 523 <= mouse[1] <= 587 :
-			if right_click == 0:
-				win.blit(button_home_enlarge, (365,515))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
-			
-		i=i+1
-		cursor.draw()
-
-		pygame.display.update()
-
-	pygame.mouse.set_visible(False)
 
 def check_index(queue_shared):
 	#queue.get()

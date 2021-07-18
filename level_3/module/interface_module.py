@@ -19,7 +19,6 @@ value = 0
 mute_button, unmute_button = None, None
 
 #Loading Button and Screen Images
-screen_home =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Para Escapade.png'))
 screen_end =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_End.png'))
 screen_win =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface','Screen_Winscreen.png'))
 
@@ -33,9 +32,6 @@ button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_rest
 button_quit =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Quit.png'))
 button_quit_enlarge = pygame.transform.scale(button_quit, (int(button_quit.get_width()*1.1),int(button_quit.get_height()*1.1)))
 
-button_about =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_About.png'))
-button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.1),int(button_about.get_height()*1.1)))
-
 button_highscore =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_HighScore.png'))
 button_score =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Score.png'))
 
@@ -45,23 +41,20 @@ button_inverted_enlarge = pygame.transform.scale(button_inverted, (int(button_in
 button_instructions =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.1),int(button_instructions.get_height()*1.1)))
 
-button_play =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Play.png'))
-button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_width()*1.1),int(button_play.get_height()*1.1)))
-
 button_resume =  pygame.image.load(os.path.join(r'level_3/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
 
 def check_end():
 	"""
-	Checks the button that is clicked from the end screen and returns the corrseponding value
+	Checks if quit button is clicked in the end screen and returns the value 1
 	"""
 	global value, right_click
 	i=0
 	value = 0
 	mouse = pygame.mouse.get_pos()
 		
-	if 320 <= mouse[1] <= 480 and 480 <= mouse[0] <=530:
+	if 320 <= mouse[1] <= 480 and 450 <= mouse[0] <=500:
 		if right_click:
 			value = 1 
 
@@ -69,6 +62,7 @@ def check_end():
 	clock.tick(global_config.speed)		
 	pygame.display.update()
 	return value
+
 
 class Cursor:
 	"""
@@ -81,7 +75,8 @@ class Cursor:
 	def draw(self,win):
 		self.x, self.y  = pygame.mouse.get_pos()
 		win.blit(self.img, (self.x, self.y))
-	
+
+
 def event_loop():
 	global right_click
 
@@ -111,6 +106,7 @@ def cursor_over_button(cursor, button):
 	collision = cursor_mask.overlap(button_mask, offset)    # returns bool
 
 	return collision
+
 
 class Volume_control:
 	"""
@@ -166,7 +162,8 @@ class Volume_control:
 		button.centroid_y = Volume_control.y - button.img.get_height()//2
 
 		win.blit(button.img, (button.centroid_x, button.centroid_y))
-		
+
+
 class Mute_button:
 	"""
 	Defines the mute button
@@ -180,7 +177,8 @@ class Mute_button:
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/1.3), int(self.img_original.get_height()/1.3)))
 
 		self.img = self.img_small
-	
+
+
 class Unmute_button:
 	"""
 	Defines the unmute button
@@ -194,12 +192,12 @@ class Unmute_button:
 		self.img_big = pygame.transform.scale(self.img_original,(int(self.img_original.get_width()/1.3), int(self.img_original.get_height()/1.3)))
 
 		self.img = self.img_small
-	   
+   
 
 def display_endscreen():
 	
 	"""
-	Creates a screen to display the buttons at the end of the game
+	Creates a screen to display the buttons at the end of the game after losing
 	"""
 
 	global win, cursor
@@ -208,6 +206,7 @@ def display_endscreen():
 	global_config.speed = 60		# fps
 	
 	coin = coins_module.Coin.num_coins_collected
+
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
@@ -215,7 +214,6 @@ def display_endscreen():
 
 	# Creating objects of classes
 	cursor = Cursor()
-
 	clock = pygame.time.Clock()
 
 	# Hide the original cursor
@@ -266,8 +264,7 @@ def display_endscreen():
 			pop_sound_play = False
 							
 
-		cursor.draw(win)   # should be at last, to avoid overlapping
-
+		cursor.draw(win)  
 		clock.tick(global_config.speed)
 		pygame.display.update()
 
@@ -275,6 +272,7 @@ def display_endscreen():
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
+
 
 def display_winscreen():
 	
@@ -290,6 +288,7 @@ def display_winscreen():
 	global_config.speed = 60		# fps
 	
 	coin = coins_module.Coin.num_coins_collected
+
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
@@ -330,11 +329,11 @@ def display_winscreen():
 
 		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,270))
+				win.blit(button_inverted_enlarge, (310,300))
 				font_size = 40
 				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
-				win.blit(text, (380, 280))
+				win.blit(text, (380, 310))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
@@ -348,7 +347,7 @@ def display_winscreen():
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-			# break
+			
 		else:
 			pop_sound_play = False							
 
