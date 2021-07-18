@@ -6,6 +6,7 @@ Para-Escapade is a 2D game developed using Pygame depicting the adventurous jour
 
 The game consists of two modes for controlling the player - Mouse Control, Hand Gesture Control.
 
+![Intro-Demo](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/main/Images_wiki/intro.gif)
 ***
 
 ### **TO RUN THIS CODE**
