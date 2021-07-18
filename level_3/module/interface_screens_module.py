@@ -181,10 +181,9 @@ def display_playbutton():
 			display_instructions()
 			break
 
-		win.fill((255,0,0))
 		win.blit(screen_playbutton_interface,(0,0))
-		win.blit(button_mode_gesture, (50,150))
-		win.blit(button_mode_mouse,(330,150))
+		win.blit(button_mode_gesture, (110 - button_mode_gesture.get_width()//2, 210 - button_mode_gesture.get_height()//2))
+		win.blit(button_mode_mouse,(390 - button_mode_mouse.get_width()//2, 210 - button_mode_mouse.get_height()//2))
 		win.blit(button_instructions_small, (185,280))
 
 		event_loop()
@@ -193,14 +192,14 @@ def display_playbutton():
 		
 		if 50 <= mouse[0] <= 170 and 150 <= mouse[1] <= 310 :
 			if right_click == 0:
-				win.blit(button_mode_gesture_enlarge, (50,140))
+				win.blit(button_mode_gesture_enlarge, (110 - button_mode_gesture_enlarge.get_width()//2,210 - button_mode_gesture_enlarge.get_height()//2))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 
 		elif 330 <= mouse[0] <= 450 and 150 <= mouse[1] <= 310 :
 			if right_click == 0:
-				win.blit(button_mode_mouse_enlarge, (320,140))
+				win.blit(button_mode_mouse_enlarge, (390 - button_mode_mouse_enlarge.get_width()//2, 210 - button_mode_mouse_enlarge.get_height()//2))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
