@@ -442,9 +442,9 @@ def display_winscreen():
 				win.blit(text, (380, 305))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
+			pop_sound_play = True	
 
-		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
+		elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:				
 				win.blit(button_next_enlarge, (310,450))
 			elif right_click:
@@ -455,6 +455,7 @@ def display_winscreen():
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
+			
 		else:
 			pop_sound_play = False							
 
