@@ -8,7 +8,7 @@ import global_config
 ground = pygame.image.load(os.path.join(r'level_1/Utils/Pics/Foreground','ground.png'))
 ground_x = 0
 ground_y = global_config.window_height-ground.get_height() 
-ground_width = ground.get_width() - 10	# Treating the image to be shorter in width by 10 pixels to prevent glitches
+ground_width = ground.get_width() - 10	# Overlap consequent images by 10 pixels to prevent glitches
 foreground_speed = 6 	# Foreground shifts by 6 pixels in each game loop
 
 def draw_fg(win):

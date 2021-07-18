@@ -48,18 +48,12 @@ def check_win():
 	Checks if next button is clicked from the win screen and returns the value 1 if clicked.
 	"""
 	global value, right_click
-	i=0
 	value = 0
 	mouse = pygame.mouse.get_pos()
 		
 	if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 		if right_click:
 			value = 1 
-
-
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
 	return value
 
 def check_end():
@@ -74,10 +68,6 @@ def check_end():
 	if 320 <= mouse[1] <= 480 and 450 <= mouse[0] <=500:
 		if right_click:
 			value = 1 
-
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
 	return value
 
 class Cursor:
@@ -221,7 +211,6 @@ def display_endscreen():
 	win = pygame.display.set_mode((width, height))	
 	pygame.display.set_caption('End Screen')
 
-	# Creating objects of classes
 	cursor = Cursor()
 
 	clock = pygame.time.Clock()
@@ -230,10 +219,9 @@ def display_endscreen():
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
-	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_2\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_2\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
@@ -242,7 +230,6 @@ def display_endscreen():
 		val = check_end()
 		if val == 1:
 			pygame.quit()
-		win.fill((255,255,255))
 
 		win.blit(screen_end,(0,0))
 		win.blit(button_score, (320,300))
@@ -280,8 +267,6 @@ def display_endscreen():
 		clock.tick(global_config.fps)
 		pygame.display.update()
 
-		
-	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
 
@@ -305,9 +290,7 @@ def display_winscreen():
 	pygame.display.set_caption('End Screen')
 
 	pygame.display.update()
-	
 
-	# Creating objects of classes
 	cursor = Cursor()
 
 	clock = pygame.time.Clock()
@@ -316,10 +299,9 @@ def display_winscreen():
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
-	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
@@ -332,7 +314,6 @@ def display_winscreen():
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
-
 
 		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
@@ -354,7 +335,6 @@ def display_winscreen():
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-			# break
 		else:
 			pop_sound_play = False							
 
@@ -363,7 +343,5 @@ def display_winscreen():
 		clock.tick(global_config.fps)
 		pygame.display.update()
 
-		
-	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)

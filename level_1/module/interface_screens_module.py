@@ -85,9 +85,6 @@ def check_mode_playbutton( ):
 	else:
 		play_mode = None
 		
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
 	return play_mode
 
 
@@ -105,10 +102,7 @@ def check_mode_aboutbutton( ):
 				about_mode = 1
 	else:
 		about_mode = None
-		
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
+
 	return about_mode
 
 def check_mode_instructions( ):
@@ -126,9 +120,6 @@ def check_mode_instructions( ):
 	else:
 		skip_mode = None
 		
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
 	return skip_mode
 
 class Cursor:

@@ -15,31 +15,29 @@ from level_1.module import interface_module
 from level_1.module import music_module
 from level_1.module import obstacles_module
 from level_1.module import player_module
+
+from level_3.mp import process_object
+from level_3.mp import queue_shared
+from level_3.module.player_movement_box import draw_control_screen_actual, draw_player_position
+
 from level_1.module.interface_screens_module import check_index
 from level_1.module.interface_screens_module import display_fail_msg
 from level_1.module.interface_screens_module import display_no_hand_info
 from level_1.module.interface_screens_module import display_success_msg
-from level_1.module.player_movement_box import draw_control_screen_actual, draw_player_position
-from level_1.mp import process_object
-from level_1.mp import queue_shared
-
 
 # Global variables
-run = True
-
 frame_count = 0
 num_of_lives = 3
 fuel_count = 0
-ending_count = 0
+lost_music_count = 0
 
-won_bool = False
 fuel_available = global_config.fps*60
-start_fuel = False
 
+run = True
+won_bool = False
+start_fuel = False
 display_pop_up = False
 collected_map = False
-
-lost_music_count = 0
 
 win = None
 game_window = None
@@ -211,7 +209,6 @@ def main():
 		coins_module.display_num_coins_collected(win)
 
 		# Extra life
-
 		num_of_coins_inexchange_for_life = 50
 		if coins_module.Coin.num_coins_collected % num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
 			display_module.create_extra_life()
@@ -288,7 +285,7 @@ def main():
 		clock.tick(global_config.fps)
 		pygame.display.update()
 
-		# Dummy exit
+		# Exit
 		if collected_map:
 			pygame.mixer.music.fadeout(2000)	# Fades out the background music
 			time.sleep(2)
