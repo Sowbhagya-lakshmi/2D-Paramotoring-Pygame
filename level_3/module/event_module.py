@@ -60,11 +60,11 @@ def custom_event_loop(frame_count):
 		coins_module.create_coin()
 
 	# Event 2 - Generate house obstacles once in every 6 seconds
-	if (frame_count/global_config.fps) % 6 == 0:
+	if (frame_count/global_config.fps) % 5 == 0:
 		obstacles_module.create_house_obstacle()
 	
 	# Event 3 - Generate tree once in every 10 seconds
-	if (frame_count/global_config.fps) % 10 == 0:
+	if (frame_count/global_config.fps) % 9 == 0:
 		obstacles_module.create_tree()
 
 	# Event 4 - Generate dragon obstacle once in every 9.5 seconds
@@ -72,10 +72,10 @@ def custom_event_loop(frame_count):
 		dragon_module.create_dragon()
 
 	# Event 5 - Generate ghost obstacle once in every 16 seconds
-	if (frame_count/global_config.fps) % 16 == 0:
+	if (frame_count/global_config.fps) % 14 == 0:
 		ghost_module.create_ghost()
 
 	# Event 6 - Generate shark obstacle once in every 12.5 seconds
-	if (frame_count/global_config.fps) % 12.5 == 0:
+	if (frame_count/global_config.fps) % 11.5 == 0:
 		shark_module.create_shark()
 
