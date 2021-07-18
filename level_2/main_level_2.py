@@ -193,7 +193,7 @@ def main(volume_button_on_status):
 	pygame.mouse.set_visible(False)
 	
 	#Music Variable
-	pygame.mixer.music.load(os.path.join(r'level_2\Utils\Music\BGmusic_Level2.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\BGmusic_Level2.wav'))
 	if volume_button_on_status:
 		pygame.mixer.music.play(-1)
 
