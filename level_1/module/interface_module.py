@@ -78,6 +78,7 @@ def check_end():
 	Checks if quit button is pressed or not in the end screen and returns 1 if clicked
 	"""
 	global value, right_click
+	value = -1
 	mouse = pygame.mouse.get_pos()
 	if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 		if right_click:
@@ -352,7 +353,7 @@ def display_endscreen():
 	pygame.mixer.music.play(-1)
 
 	while True:
-		value = check_home()
+		value = check_end()
 
 		win.blit(screen_end,(0,0))
 		win.blit(button_score, (320,300))
@@ -363,6 +364,7 @@ def display_endscreen():
 			# Bring back the original cursor
 			pygame.mouse.set_visible(True)
 			pygame.quit()
+			sys.exit()
 
 		mouse = pygame.mouse.get_pos()
 

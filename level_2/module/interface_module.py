@@ -234,10 +234,11 @@ def display_endscreen():
 		val = check_end()
 		if val == 1:
 			pygame.quit()
+			sys.exit()
 
 		win.blit(screen_end,(0,0))
 		win.blit(button_score, (320,300))
-		win.blit(button_resume,(320,450))
+		win.blit(button_quit,(320,450))
 
 		event_loop()
 
