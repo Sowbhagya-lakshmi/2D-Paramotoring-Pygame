@@ -33,10 +33,6 @@ button_skip_enlarge = pygame.transform.scale(button_skip, (int(button_skip.get_w
 button_resume =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
-button_home =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface','Button_Home.png'))
-button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
-button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_width()*0.8),int(button_home.get_height()*0.8)))
-
 button_mode_gesture =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/ModeOfGame','Mode_HandGesture.png'))
 button_mode_gesture_enlarge = pygame.transform.scale(button_mode_gesture, (int(button_mode_gesture.get_width()*1.1),int(button_mode_gesture.get_height()*1.1)))
 
@@ -71,9 +67,6 @@ def check_mode_playbutton( ):
 	elif 320 <= mouse[0] <= 440 and 150 <= mouse[1] <= 310:
 		if right_click:
 			play_mode = 2
-	elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 435:
-		if right_click:
-			play_mode = 3
 	elif 185 <= mouse[0] <= 310 and 280 <= mouse[1] <= 320:
 		if right_click:
 			play_mode = 4
@@ -180,9 +173,6 @@ def display_playbutton():
 			break
 		elif mode == 2:
 			break		
-		elif mode == 3: 
-			interface_module.display_homescreen()
-			break 	# breaks interface loop
 		elif mode == 4:
 			display_instructions()
 			break
@@ -192,7 +182,6 @@ def display_playbutton():
 		win.blit(button_mode_gesture, (50,150))
 		win.blit(button_mode_mouse,(330,150))
 		win.blit(button_instructions_small, (185,280))
-		win.blit(button_home_small,(210,350))
 
 		event_loop()
 
@@ -219,12 +208,6 @@ def display_playbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 		
-		elif 215 <= mouse[0] <= 285 and 355 <= mouse[1] <= 425 :
-			if right_click == 0:
-				win.blit(button_home_enlarge, (205,340))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
 			
 		cursor.draw()
 
