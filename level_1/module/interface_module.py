@@ -6,6 +6,7 @@ import global_config
 from level_1.module import music_module
 from level_1.module import interface_screens_module
 from level_1.module import coins_module
+# from level_1.module import HighScore
 
 
 # Global variables
@@ -53,6 +54,7 @@ button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_w
 button_resume =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume.png'))
 button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
+#highscore = HighScore.checkit()
 
 def check_home():
 	"""
@@ -394,6 +396,10 @@ def display_endscreen():
 		if 320 <= mouse[0] <= 480 and 380 <= mouse[1] <= 430 :
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,380))
+				font_size = 40
+				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
+				# text = font.render(str(highscore), True, (255,255,255))
+				# win.blit(text, (380, 285))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
