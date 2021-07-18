@@ -75,7 +75,6 @@ def create_ghost():
 def draw_ghost(win):
 	for ghost in Ghost.ghosts_list:
 		ghost.draw(win)
-		# music_module.sound_ghost.play()
 	update_ghosts_position()
 	
 def update_ghosts_position():
@@ -98,13 +97,13 @@ def collision_with_ghost():
 	"""
 	player = player_module.player
 	propeller = player_module.propeller
-	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
 	if len(Ghost.collision_ghosts)!=0:
 		for ghost in Ghost.collision_ghosts:
 			if ghost.x < (player.x + player.img.get_width()) and (ghost.x + ghost.img.get_width()) > player.x:
 				if ghost.y < (player.y + player.img.get_height()) and (ghost.y + ghost.img.get_height()) > player.y:	# Checking for collision if near player
+					player_mask = pygame.mask.from_surface(player.img)
+					propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 					ghost_mask = pygame.mask.from_surface(ghost.img)
 					offset = int(ghost.x - player.x), int(ghost.y - player.y)
 					collision_point_with_player = player_mask.overlap(ghost_mask, offset)

@@ -1,8 +1,7 @@
 import math
 import os
-import random
-
 import pygame
+import random
 
 from level_3.module import background_module
 from level_3.module import foreground_module
@@ -78,7 +77,6 @@ def create_shark():
 def draw_shark(win):
 	for shark in Shark.sharks_list:
 		shark.draw(win)
-		# music_module.sound_shark.play()
 	update_sharks_position()
 	
 def update_sharks_position():

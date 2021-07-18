@@ -1,7 +1,6 @@
 import os
-import time
-
 import pygame
+import time
 
 import global_config
 from level_1.module import background_module
@@ -16,9 +15,9 @@ from level_1.module import music_module
 from level_1.module import obstacles_module
 from level_1.module import player_module
 
-from level_3.mp import process_object
-from level_3.mp import queue_shared
-from level_3.module.player_movement_box import draw_control_screen_actual, draw_player_position
+from level_1.mp import process_object
+from level_1.mp import queue_shared
+from level_1.module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 from level_1.module.interface_screens_module import check_index
 from level_1.module.interface_screens_module import display_fail_msg

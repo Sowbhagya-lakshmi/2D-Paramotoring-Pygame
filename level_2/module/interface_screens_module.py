@@ -410,13 +410,15 @@ def display_instructions():
 
 
 def check_index(queue_shared):
+	"""
+	Checks if index finger is recognised
+	"""
 	if queue_shared.empty():
 		return False
 	else:
 		queue_shared.get()
 		return True
-		
-		
+
 def display_no_hand_info(win):
 	"""
 	Displays a pop up if index finger is not visible
@@ -437,4 +439,3 @@ def display_success_msg(win):
 	"""
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10  
 	win.blit(success_msg,(pos_x,pos_y))
-
