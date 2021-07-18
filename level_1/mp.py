@@ -1,5 +1,6 @@
 
 import multiprocessing
+
 from level_1.module.gesture_control import main_avm
 
 queue_shared = multiprocessing.Queue()

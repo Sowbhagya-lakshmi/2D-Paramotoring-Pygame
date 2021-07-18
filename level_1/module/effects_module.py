@@ -1,4 +1,5 @@
 import os
+
 import pygame
 
 from level_1.module import foreground_module

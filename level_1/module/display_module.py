@@ -1,6 +1,8 @@
 import os
-import pygame
 import random
+from sys import base_prefix
+
+import pygame
 
 import global_config
 from level_1.module import coins_module

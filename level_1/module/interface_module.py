@@ -1,11 +1,13 @@
-import pygame
-import sys
 import os
+import sys
+
+
+import pygame
 
 import global_config
+from level_1.module import coins_module
 from level_1.module import music_module
 from level_1.module import interface_screens_module
-from level_1.module import coins_module
 
 
 # Global variables

@@ -1,6 +1,7 @@
-import pygame
 import sys
 import os
+
+import pygame
 
 import global_config
 from level_2.module import music_module

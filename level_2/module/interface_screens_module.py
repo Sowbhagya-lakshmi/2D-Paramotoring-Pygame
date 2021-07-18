@@ -1,13 +1,13 @@
-import pygame
 import sys
 import os
+import pygame
+
+import global_config
+from level_2.module import interface_module
+from level_2.module import music_module 
 
 from level_2.module import player_module
 from level_2.mp import process_object
-
-import global_config
-from level_2.module import music_module , interface_module
-
 
 win = None
 cursor = None

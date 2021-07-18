@@ -3,10 +3,10 @@ import sys
 import os
 
 import global_config
-from level_1.module import interface_module
-from level_1.module import music_module 
+from level_1.module import music_module , interface_module
 from level_1.module import player_module
-from level_1.mp import process_object
+from level_1.module.gesture_control import main_avm
+from level_1.mp import queue_shared, process_object
 
 
 win = None

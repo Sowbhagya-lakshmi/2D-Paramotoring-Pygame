@@ -1,12 +1,12 @@
 import math
 import os
-import pygame
 import random
+
+import pygame
 
 from level_3.module import background_module
 from level_3.module import foreground_module
 from level_3.module import player_module
-from level_3.module import music_module
 
 
 class Shark():

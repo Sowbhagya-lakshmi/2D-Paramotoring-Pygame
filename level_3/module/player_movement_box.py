@@ -1,8 +1,7 @@
 import pygame
+
 import global_config
 from level_3.module import player_module
-
-
 
 def draw_control_screen_actual(win):
 

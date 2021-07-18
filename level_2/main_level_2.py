@@ -1,6 +1,8 @@
 import os
-import pygame
+import sys
 import time
+
+import pygame
 
 import global_config
 from level_2.module import background_module
@@ -28,7 +30,6 @@ from level_2.module.interface_screens_module import check_index
 from level_2.module.interface_screens_module import display_no_hand_info
 from level_2.module.interface_screens_module import display_fail_msg
 from level_2.module.interface_screens_module import display_success_msg
-
 
 # Global variables
 frame_count = 0
