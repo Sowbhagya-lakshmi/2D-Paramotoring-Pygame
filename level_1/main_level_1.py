@@ -166,6 +166,7 @@ def won():
 	foreground_module.foreground_speed = 0
 	background_module.background_speed = 0
 
+
 # MAIN ALGORITHM
 def main():
 	global frame_count
