@@ -51,15 +51,11 @@ button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(b
 button_play =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Play.png'))
 button_play_enlarge = pygame.transform.scale(button_play, (int(button_play.get_width()*1.1),int(button_play.get_height()*1.1)))
 
-button_resume =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume.png'))
-button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
-
 
 def check_home():
 	"""
 	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
-	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
-	button is clicked, and 4 if About button is clicked
+	1 if Play button is clicked, 3 if Instructions button is clicked, and 4 if About button is clicked
 	"""
 	global value, right_click
 	value = 0
@@ -68,15 +64,12 @@ def check_home():
 	if 370 <= mouse[1] <= 420 and 320 <= mouse[0] <=480:
 		if right_click:
 			value = 1 
-	elif 470 <= mouse[1] <= 520 and 320 <= mouse[0] <= 480:
+	elif 450 <= mouse[1] <= 500 and 70 <= mouse[0] <= 230:
 		if right_click:
-			value = 1
-	elif 500 <= mouse[1] <= 550 and 70 <= mouse[0] <= 230:
+			value = 2
+	elif 450 <= mouse[1] <= 500 and 570 <= mouse[0] <= 730:
 		if right_click:
 			value = 3
-	elif 500 <= mouse[1] <= 550 and 570 <= mouse[0] <= 730:
-		if right_click:
-			value = 4
 
 	return value
 
@@ -102,6 +95,7 @@ class Cursor:
 	def draw(self,win):
 		self.x, self.y  = pygame.mouse.get_pos()
 		win.blit(self.img, (self.x, self.y))
+
 
 def event_loop():
 	global right_click
@@ -260,19 +254,18 @@ def display_homescreen():
 			interface_screens_module.display_playbutton()
 			break 	# breaks interface loop
 
-		elif value == 3:
+		elif value == 2:
 			interface_screens_module.display_instructions()
 			break
 
-		elif value == 4:
+		elif value == 3:
 			interface_screens_module.display_aboutbutton()
 			break
 
 		win.blit(screen_home,(0,0))
 		win.blit(button_play, (320,370))
-		win.blit(button_resume, (320,470))
-		win.blit(button_instructions, (70,500))
-		win.blit(button_about, (570,500))
+		win.blit(button_instructions, (70,450))
+		win.blit(button_about, (570,450))
 
 		event_loop()
 
@@ -285,23 +278,16 @@ def display_homescreen():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			  	
-		elif 320 <= mouse[0] <= 480 and 470 <= mouse[1] <= 520 :
+		elif 70 <= mouse[0] <= 230 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
-				win.blit(button_resume_enlarge, (310,465))
+				win.blit(button_instructions_enlarge, (60,445))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		elif 70 <= mouse[0] <= 230 and 500 <= mouse[1] <= 550 :
+		elif 570 <= mouse[0] <= 730 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
-				win.blit(button_instructions_enlarge, (60,495))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
-			
-		elif 570 <= mouse[0] <= 730 and 500 <= mouse[1] <= 550 :
-			if right_click == 0:
-				win.blit(button_about_enlarge, (560,495))
+				win.blit(button_about_enlarge, (560,445))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True

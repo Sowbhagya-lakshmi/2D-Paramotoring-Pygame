@@ -24,13 +24,9 @@ button_home =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface','B
 button_home_small = pygame.transform.scale(button_home, (int(button_home.get_width()*0.7),int(button_home.get_height()*0.7)))
 button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_width()*0.8),int(button_home.get_height()*0.8)))
 
-button_restart =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Restart.png'))
-button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
-
 button_quit =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Quit.png'))
 button_quit_enlarge = pygame.transform.scale(button_quit, (int(button_quit.get_width()*1.1),int(button_quit.get_height()*1.1)))
 
-button_highscore =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_HighScore.png'))
 button_score =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Score.png'))
 
 button_inverted =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_inverted.png'))
@@ -38,9 +34,6 @@ button_inverted_enlarge = pygame.transform.scale(button_inverted, (int(button_in
 
 button_instructions =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Instructions.png'))
 button_instructions_enlarge = pygame.transform.scale(button_instructions, (int(button_instructions.get_width()*1.1),int(button_instructions.get_height()*1.1)))
-
-button_resume =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Resume.png'))
-button_resume_enlarge = pygame.transform.scale(button_resume, (int(button_resume.get_width()*1.1),int(button_resume.get_height()*1.1)))
 
 
 def check_end():
@@ -281,8 +274,8 @@ def display_winscreen():
 	pygame.display.set_caption('End Screen')
 
 	win.blit(screen_win,(0,0))
-	win.blit(button_score, (320,300))
-	win.blit(button_restart, (320,450))
+	win.blit(button_score, (320,450))
+	
 
 	pygame.display.update()
 
@@ -304,31 +297,20 @@ def display_winscreen():
 	while i<20000:
 
 		win.blit(screen_win,(0,0))
-		win.blit(button_score, (320,300))
-		win.blit(button_restart, (320,450))
+		win.blit(button_score, (320,450))
 
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
 
-		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
+		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,300))
 				font_size = 40
 				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
-				win.blit(text, (380, 310))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
-
-		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
-			if right_click == 0:				
-				win.blit(button_restart_enlarge, (310,450))
-			elif right_click:
-				break_bool = True
-				return break_bool
+				win.blit(text, (380, 460))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
