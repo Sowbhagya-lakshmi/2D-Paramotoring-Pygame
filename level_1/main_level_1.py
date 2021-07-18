@@ -38,7 +38,7 @@ fuel_count = 0
 ending_count = 0
 
 won_bool = False
-fuel_available = global_config.speed*60
+fuel_available = global_config.fps*60
 start_fuel = False
 
 display_pop_up = False
@@ -194,7 +194,7 @@ def main():
 	if volume_button_on_status:
 		pygame.mixer.music.play(-1)
 
-	total_num_of_frames = global_config.speed*global_config.game_duration
+	total_num_of_frames = global_config.fps*global_config.game_duration
 
 	# GAME LOOP
 	while run:
@@ -202,7 +202,7 @@ def main():
 		
 		draw_all_objects()	
 
-		if frame_count == 4*global_config.speed:
+		if frame_count == 4*global_config.fps:
 			start_fuel = True
 		
 		event_module.event_loop(frame_count, win)
@@ -249,7 +249,7 @@ def main():
 				display_no_hand_info(win)
 
 				# Display the no hand info for 0.5 seconds
-				if start_loop >= global_config.speed//2:
+				if start_loop >= global_config.fps//2:
 					display_pop_up = False
 		except:
 			pass
@@ -280,17 +280,17 @@ def main():
 			if game_end:
 				break
 
-		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 10 seconds
+		if frame_count > total_num_of_frames - 10*global_config.fps:	#last 10 seconds
 			collected_map = display_module.display_map(win)
 
-		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
+		if frame_count > total_num_of_frames - 5*global_config.fps:	#last 5 seconds
 			won()
 			won_bool = True
 
 		# Resize and blit the copy of game window onto main game window
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
 
 		# Dummy exit

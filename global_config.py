@@ -1,4 +1,4 @@
-speed = 60		# fps
+fps = 60	
 game_duration = 120 # in sec
 
 window_width = 1550

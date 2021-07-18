@@ -59,7 +59,7 @@ def check_win():
 
 
 	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
+	clock.tick(global_config.fps)		
 	pygame.display.update()
 	return value
 
@@ -77,7 +77,7 @@ def check_end():
 			value = 1 
 
 	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
+	clock.tick(global_config.fps)		
 	pygame.display.update()
 	return value
 
@@ -214,7 +214,7 @@ def display_endscreen():
 	global win, cursor
 	global mute_button, unmute_button
 	
-	global_config.speed = 60		# fps
+	global_config.fps = 60		# fps
 	
 	coin = coins_module.Coin.num_coins_collected
 	# Home screen interface
@@ -278,7 +278,7 @@ def display_endscreen():
 
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
 
 		
@@ -297,7 +297,7 @@ def display_winscreen():
 	
 	break_bool = False
 
-	global_config.speed = 60		# fps
+	global_config.fps = 60		# fps
 	
 	coin = coins_module.Coin.num_coins_collected
 	# Home screen interface
@@ -361,7 +361,7 @@ def display_winscreen():
 
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
 
 		

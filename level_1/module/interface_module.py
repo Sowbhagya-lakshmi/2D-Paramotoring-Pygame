@@ -60,7 +60,6 @@ def check_home():
 	button is clicked, and 4 if About button is clicked
 	"""
 	global value, right_click
-	i=0
 	value = 0
 	mouse = pygame.mouse.get_pos()
 		
@@ -73,12 +72,10 @@ def check_home():
 	elif 500 <= mouse[1] <= 550 and 70 <= mouse[0] <= 230:
 		if right_click:
 			value = 3
-	if 500 <= mouse[1] <= 550 and 570 <= mouse[0] <= 730:
+	elif 500 <= mouse[1] <= 550 and 570 <= mouse[0] <= 730:
 		if right_click:
 			value = 4
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
-	pygame.display.update()
+
 	return value
 
 def check_end():
@@ -86,17 +83,12 @@ def check_end():
 	Checks if quit button is pressed or not in the end screen and returns 1 if clicked
 	"""
 	global value, right_click
-	i=0
-	value = 0
 	mouse = pygame.mouse.get_pos()
 	if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 		if right_click:
 			value = 1 
-
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.speed)		
-	pygame.display.update()
 	return value
+
 class Cursor:
 	"""
 	Define a custom cursor for the game instead of the system's cursor. Placing an image of a cursor at the mouse coordinates.
@@ -109,12 +101,10 @@ class Cursor:
 		self.x, self.y  = pygame.mouse.get_pos()
 		win.blit(self.img, (self.x, self.y))
 
-
 def event_loop():
 	global right_click
 
 	right_click = False 
-
 
 	for event in pygame.event.get():		
 		if event.type == pygame.QUIT:
@@ -237,8 +227,7 @@ def display_homescreen():
 	global win, cursor
 	global mute_button, unmute_button
 	
-	global_config.speed = 60		# fps
-	
+	global_config.fps = 60		# fps
 	
 	# Home screen interface
 	width, height = 800,600
@@ -260,7 +249,7 @@ def display_homescreen():
 	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	while True:	
@@ -276,8 +265,6 @@ def display_homescreen():
 		elif value == 4:
 			interface_screens_module.display_aboutbutton()
 			break
-
-		win.fill((255,255,255))
 
 		win.blit(screen_home,(0,0))
 		win.blit(button_play, (320,370))
@@ -324,10 +311,8 @@ def display_homescreen():
 
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
-
-		
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
@@ -344,7 +329,7 @@ def display_endscreen():
 	global win, cursor
 	global mute_button, unmute_button
 	
-	global_config.speed = 60		# fps
+	global_config.fps = 60		# fps
 	
 	coin = coins_module.Coin.num_coins_collected
 	# Home screen interface
@@ -366,17 +351,13 @@ def display_endscreen():
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
-	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
-	i=0
-	while i<20000:
+	while True:
 		value = check_home()
-
-		win.fill((255,255,255))
 
 		win.blit(screen_end,(0,0))
 		win.blit(button_score, (320,300))
@@ -384,10 +365,11 @@ def display_endscreen():
 
 		event_loop()
 		if value == 1:
+			# Bring back the original cursor
+			pygame.mouse.set_visible(True)
 			pygame.quit()
 
 		mouse = pygame.mouse.get_pos()
-
 
 		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
@@ -409,17 +391,10 @@ def display_endscreen():
 		else:
 			pop_sound_play = False
 							
-
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
-
-		
-	
-	# Bring back the original cursor
-	pygame.mouse.set_visible(True)
-
 
 def display_winscreen():
 	
@@ -432,7 +407,7 @@ def display_winscreen():
 	
 	break_bool = False
 
-	global_config.speed = 60		# fps
+	global_config.fps = 60		# fps
 	
 	coin = coins_module.Coin.num_coins_collected
 	# Home screen interface
@@ -455,14 +430,12 @@ def display_winscreen():
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
-	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
-	i=0
-	while i<10000:
+	while True:
 
 		win.blit(screen_win,(0,0))
 		win.blit(button_score, (320,300))
@@ -471,7 +444,6 @@ def display_winscreen():
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
-
 
 		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
@@ -489,20 +461,16 @@ def display_winscreen():
 				win.blit(button_next_enlarge, (310,450))
 			elif right_click:
 				break_bool = True
+				# Bring back the original cursor
+				pygame.mouse.set_visible(True)
 				return break_bool
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-			# break
 		else:
 			pop_sound_play = False							
 
 		cursor.draw(win)   # should be at last, to avoid overlapping
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
-
-		
-	
-	# Bring back the original cursor
-	pygame.mouse.set_visible(True)

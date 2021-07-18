@@ -80,7 +80,7 @@ def draw_minimap(win,progress):
 	"""
 	Minimap shows the position of the player relative to the full distance in a miniature size.
 	"""
-	max_progress = global_config.game_duration*global_config.speed
+	max_progress = global_config.game_duration*global_config.fps
 	current_progress = progress/max_progress        # Value btn 0 and 1
 
 	# Line
@@ -109,7 +109,7 @@ class Countdown:
 	def __init__(self):
 		self.x, self.y = global_config.window_width//2, global_config.window_height//2
 		self.run_count = 0
-		self.frames_per_image = global_config.speed
+		self.frames_per_image = global_config.fps
 
 	def draw(self, win):
 
@@ -199,7 +199,7 @@ class Fuel_bar:
 	red = 255
 	green = 255
 	bar_color = (red, green, 0)
-	max_fuel = global_config.speed * 60  # 60 seconds
+	max_fuel = global_config.fps * 60  # 60 seconds
 	fuel_available = max_fuel
 
 	def __init__(self):
@@ -254,7 +254,7 @@ map_img_big = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Display', 'map
 map_img = pygame.transform.scale(map_img_big, (map_img_big.get_width()//5, map_img_big.get_height()//5))
 	
 # map_x = global_config.window_width
-map_x = 1300 + 5*global_config.speed*foreground_module.foreground_speed
+map_x = 1300 + 5*global_config.fps*foreground_module.foreground_speed
 map_y = random.randint(150, foreground_module.ground_y)
 
 # Map

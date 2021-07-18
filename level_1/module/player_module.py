@@ -10,7 +10,6 @@ class Player:
 	It has info such as the x positon, y position, width, height and a draw method to draw the
     player's images onto the screen hence creating the animation effect.
 	"""
-	print('player here~~~~~~~~~~~~~~~~~~~~~~~~`')
 	path = r'level_1/Utils/Pics/Player/'
 	img_name_lst = os.listdir(path)
 	num_of_player_imgs = len(img_name_lst)

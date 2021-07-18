@@ -34,7 +34,7 @@ num_of_lives = 3
 fuel_count = 0
 lost_music_count = 0
 
-fuel_available = global_config.speed*60
+fuel_available = global_config.fps*60
 
 run = True
 won_bool = False
@@ -60,7 +60,7 @@ def create_game_window():
 	# Copy of game window which will be later resized according to the resolution, and blit onto the original game window.
 	win = game_window.copy()
 
-total_num_of_frames = global_config.speed*global_config.game_duration
+total_num_of_frames = global_config.fps*global_config.game_duration
 	
 
 def change_img_pixel_format():
@@ -192,7 +192,7 @@ def main(volume_button_on_status):
 	if volume_button_on_status:
 		pygame.mixer.music.play(-1)
 
-	total_num_of_frames = global_config.speed*global_config.game_duration
+	total_num_of_frames = global_config.fps*global_config.game_duration
 
 	# GAME LOOP
 	while run:
@@ -200,7 +200,7 @@ def main(volume_button_on_status):
 		
 		draw_all_objects()
 
-		if frame_count == 4*global_config.speed:
+		if frame_count == 4*global_config.fps:
 			start_fuel = True
 		
 		event_module.event_loop(frame_count, win)
@@ -247,7 +247,7 @@ def main(volume_button_on_status):
 				display_no_hand_info(win)
 
 				# Display the no hand info for 0.5 seconds
-				if start_loop >= global_config.speed//2:
+				if start_loop >= global_config.fps//2:
 					display_pop_up = False
 		except:
 			pass
@@ -297,17 +297,17 @@ def main(volume_button_on_status):
 			if game_end:
 				break
 
-		if frame_count > total_num_of_frames - 10*global_config.speed:	#last 10 seconds
+		if frame_count > total_num_of_frames - 10*global_config.fps:	#last 10 seconds
 			collected_map = display_module.display_map(win)
 
-		if frame_count > total_num_of_frames - 5*global_config.speed:	#last 5 seconds
+		if frame_count > total_num_of_frames - 5*global_config.fps:	#last 5 seconds
 			won()
 			won_bool = True
 
 		# Resize and blit the copy of game window onto main game window
 		game_window.blit(pygame.transform.scale(win, game_window.get_rect().size), (0,0))
 
-		clock.tick(global_config.speed)
+		clock.tick(global_config.fps)
 		pygame.display.update()
 
 		# Exit
