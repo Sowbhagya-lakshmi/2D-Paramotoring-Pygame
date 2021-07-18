@@ -30,7 +30,7 @@ class House:
 		self.img = pygame.transform.scale(self.org_img, ((int(self.org_img.get_width()//self.random_size), int(self.org_img.get_height()//self.random_size))))
 		
 		self.x = x
-		self.y = foreground_module.ground_y - self.img.get_height() + 220 # push the image slightly down
+		self.y = foreground_module.ground_y - self.img.get_height() + 100  # push the image slightly down
 	
 		# Width and height of obstacle
 		self.width = self.img.get_width()
@@ -60,7 +60,7 @@ class Tree:
 		self.img = pygame.transform.scale(self.img_original, (int(self.img_original.get_width()*random_num), int(self.img_original.get_height()*random_num)))
 		
 		self.x = x
-		self.y = foreground_module.ground_y - self.img.get_height() + 250 # push the image slightly down
+		self.y = foreground_module.ground_y - self.img.get_height() + 100 # push the image slightly down
 
 		# Width and height of obstacle
 		self.width = self.img.get_width()
