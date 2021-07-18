@@ -3,7 +3,6 @@ import time
 import autopy
 import cv2
 import numpy as np
-import time
 
 import level_2.module.hand_tracking_module as htm
 

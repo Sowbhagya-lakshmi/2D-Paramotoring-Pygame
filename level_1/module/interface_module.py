@@ -78,6 +78,7 @@ def check_end():
 	Checks if quit button is pressed or not in the end screen and returns 1 if clicked
 	"""
 	global value, right_click
+	value = -1
 	mouse = pygame.mouse.get_pos()
 	if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 		if right_click:
@@ -228,7 +229,11 @@ def display_homescreen():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('Home Screen')
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 
 	# Creating objects of classes
 	mute_button = Mute_button()
@@ -323,8 +328,11 @@ def display_endscreen():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('End Screen')
-
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 	
 	win.blit(screen_end,(0,0))
 	win.blit(button_score, (320,300))
@@ -345,7 +353,7 @@ def display_endscreen():
 	pygame.mixer.music.play(-1)
 
 	while True:
-		value = check_home()
+		value = check_end()
 
 		win.blit(screen_end,(0,0))
 		win.blit(button_score, (320,300))
@@ -356,6 +364,7 @@ def display_endscreen():
 			# Bring back the original cursor
 			pygame.mouse.set_visible(True)
 			pygame.quit()
+			sys.exit()
 
 		mouse = pygame.mouse.get_pos()
 
@@ -401,7 +410,11 @@ def display_winscreen():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('End Screen')
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 
 	win.blit(screen_win,(0,0))
 	win.blit(button_score, (320,300))
