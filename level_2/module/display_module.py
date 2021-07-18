@@ -23,7 +23,7 @@ def display_lives(win, num_of_lives):
 	"""
 	x_pos = 20
 	for _ in range(num_of_lives):
-		win.blit(heart, (x_pos,75))
+		win.blit(heart, (x_pos,105))
 		x_pos += heart.get_width() + 3
 
 class Extra_life:
@@ -191,7 +191,7 @@ class Fuel_bar:
 	img = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Display/', 'fuel2.png'))
 	img_icon = pygame.transform.scale(img, (img.get_width()//2, img.get_height()//2))
 
-	bar_pos      = (50, 145)
+	bar_pos      = (50, 170)
 	bar_size     = (120, 20)
 	border_color = (0,0,0)
 	red = 255
@@ -212,7 +212,7 @@ class Fuel_bar:
 			self.fuel_available = self.max_fuel
 		else:
 			self.fuel_available = fuel_available
-		win.blit(self.img_icon, (10, 140))
+		win.blit(self.img_icon, (10, 165))
 
 		if bool:
 			# self.red += 255/self.max_fuel
