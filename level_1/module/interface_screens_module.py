@@ -174,7 +174,11 @@ def display_playbutton():
 	# Home screen interface
 	width, height = 500,450
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('Play Button Interface')
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 
 	cursor = Cursor()
 
@@ -258,7 +262,12 @@ def display_instructions():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('Instructions Interface')
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
+
 	cursor = Cursor()
 
 	break_loop_val = True
@@ -430,7 +439,11 @@ def display_aboutbutton():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('About Button Interface')
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 
 	cursor = Cursor()
 

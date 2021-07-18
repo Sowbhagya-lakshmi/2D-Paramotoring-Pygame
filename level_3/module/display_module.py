@@ -117,7 +117,7 @@ class Countdown:
 		if self.run_count < self.frames_per_image*self.num_of_imgs :		
 			self.index = self.run_count//self.frames_per_image
 			self.img = self.imgs[self.index]
-			win.blit(self.img, (self.x - self.img.get_width()//2,self.y- self.img.get_height()//2))
+			win.blit(self.img, (self.x - self.img.get_width()//2,self.y- self.img.get_height()//2 + 50))
 			self.run_count += 1 
 			return True
 		else:

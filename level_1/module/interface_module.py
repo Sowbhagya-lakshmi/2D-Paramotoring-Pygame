@@ -228,7 +228,11 @@ def display_homescreen():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('Home Screen')
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 
 	# Creating objects of classes
 	mute_button = Mute_button()
@@ -323,8 +327,11 @@ def display_endscreen():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('End Screen')
-
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 	
 	win.blit(screen_end,(0,0))
 	win.blit(button_score, (320,300))
@@ -401,7 +408,11 @@ def display_winscreen():
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
-	pygame.display.set_caption('End Screen')
+	
+	# Title and icon
+	pygame.display.set_caption('Para Escapade')
+	icon =  pygame.image.load(r'level_1\Utils\Pics\Display\icon.png')   # loading into code
+	pygame.display.set_icon(icon)   # to display
 
 	win.blit(screen_win,(0,0))
 	win.blit(button_score, (320,300))
