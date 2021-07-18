@@ -1,11 +1,9 @@
 import os
 import pygame
-import random
 
 from level_2.module import background_module
 from level_2.module import foreground_module
 from level_2.module import player_module
-from level_2.module import music_module
 
 
 class Santa():
@@ -28,7 +26,6 @@ class Santa():
 		self.x = x
 		self.y = y
 		self.run_count = 0
-		#self.colour_num = colour_num
 
 		self.olaf_list = [pygame.transform.scale(img, (int(img.get_width()*0.5), int(img.get_height()*0.5))) for img in self.imgs_list]
 
@@ -52,7 +49,6 @@ def create_santa():
 	"""
 	Creates a bird in the free space. 
 	"""
-	#y_coordnate = random.uniform(100,380)
 	new_santa = Santa(background_module.bg.get_width(), 450)
 	Santa.santas_list.append(new_santa)
 	Santa.collision_santa.append(new_santa)	#	To check collision
@@ -60,7 +56,6 @@ def create_santa():
 def draw_santa(win):
 	for olaf in Santa.santas_list:
 		olaf.draw(win)
-		# music_module.sound_bird.play()
 	update_santa_position()
 	
 def update_santa_position():

@@ -5,7 +5,6 @@ import random
 from level_2.module import background_module
 from level_2.module import foreground_module
 from level_2.module import player_module
-from level_2.module import music_module
 
 
 class Olaf():
@@ -28,7 +27,6 @@ class Olaf():
 		self.x = x
 		self.y = y
 		self.run_count = 0
-		#self.colour_num = colour_num
 
 		num_list = [1,0.7,0.75,0.65,0.85,0.95,0.8,0.9]
 		random_num = random.choice(num_list)
@@ -62,7 +60,6 @@ def create_olaf():
 def draw_olaf(win):
 	for olaf in Olaf.olafs_list:
 		olaf.draw(win)
-		# music_module.sound_bird.play()
 	update_olaf_position()
 	
 def update_olaf_position():

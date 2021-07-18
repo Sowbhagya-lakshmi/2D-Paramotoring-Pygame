@@ -1,11 +1,9 @@
 import os
 import pygame
-import random
 
 from level_2.module import background_module
 from level_2.module import foreground_module
 from level_2.module import player_module
-from level_2.module import music_module
 
 
 class Gift():
@@ -28,7 +26,6 @@ class Gift():
 		self.x = x
 		self.y = y
 		self.run_count = 0
-		#self.colour_num = colour_num
 
 		self.gift_list = [pygame.transform.scale(img, (int(img.get_width()*1), int(img.get_height()*1))) for img in self.imgs_list]
 
@@ -60,7 +57,6 @@ def create_gift():
 def draw_gift(win):
 	for olaf in Gift.gifts_list:
 		olaf.draw(win)
-		# music_module.sound_bird.play()
 	update_gift_position()
 	
 def update_gift_position():

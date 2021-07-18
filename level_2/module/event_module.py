@@ -45,9 +45,11 @@ def event_loop(frame_count, win):
 			if event.button == 1:
 				right_click = True
 		
+	# Spawn objects after countdown and 8 seconds before level completion
 	if frame_count > 4*global_config.fps and frame_count < (total_number_of_frames - 8*global_config.fps):
 		custom_event_loop(frame_count)
 	
+	# Countdown
 	if frame_count < 4*global_config.fps:
 			display_module.countdown.draw(win)
 

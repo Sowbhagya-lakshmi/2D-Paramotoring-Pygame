@@ -125,8 +125,6 @@ class Countdown:
 		else:
 			return False
 
-		
-
 countdown = Countdown()
 
 class Fuel:
@@ -142,12 +140,9 @@ class Fuel:
 		fuel_bar.failed_to_collect = False
 
 	def draw(self, win):
-		# print('drawing')
 		for fuel in self.fuel_list:
 			if fuel.x > -1*fuel.img.get_width():
-				# print('blitting')
 				win.blit(fuel.img, (fuel.x, fuel.y))
-				# print(fuel.x, fuel.y)
 				fuel.x -= foreground_module.foreground_speed
 			else:
 				self.fuel_list.remove(fuel)
@@ -168,7 +163,6 @@ class Fuel:
 			collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
 			collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
 			if collision_point_with_player or collision_point_with_propeller:
-				# fuel_bar.bool_check = True
 				return True
 		return False
 
@@ -180,8 +174,6 @@ class Fuel:
 				self.fuel_list.remove(fuel)
 				del fuel_bar
 				fuel_bar = Fuel_bar()
-				# fuel_bar.fuel_available = fuel_bar.max_fuel
-
 
 def draw_fuel(win):
 		for fuel in Fuel.fuel_list:
@@ -199,7 +191,7 @@ class Fuel_bar:
 	red = 255
 	green = 255
 	bar_color = (red, green, 0)
-	max_fuel = global_config.fps * 60  # 60 seconds
+	max_fuel = global_config.fps * 60  # with 1 full fuel tank, player can go 60 seconds
 	fuel_available = max_fuel
 
 	def __init__(self):
@@ -217,7 +209,6 @@ class Fuel_bar:
 		win.blit(self.img_icon, (10, 165))
 
 		if bool:
-			# self.red += 255/self.max_fuel
 			self.green -= 255/self.max_fuel
 
 			if self.red >= 255:
@@ -227,7 +218,6 @@ class Fuel_bar:
 
 		self.bar_color = (int(self.red), int(self.green), 0)
 		progress = self.fuel_available/self.max_fuel
-		# print(progress)
 
 		if self.failed_to_collect and progress <= 0.25 and one_time_permission:
 			one_time_permission = False
@@ -250,14 +240,12 @@ class Fuel_bar:
 
 fuel_bar = Fuel_bar()
 
+# MAP
 map_img_big = pygame.image.load(os.path.join(r'level_2/Utils/Pics/Display', 'map.png'))
 map_img = pygame.transform.scale(map_img_big, (map_img_big.get_width()//5, map_img_big.get_height()//5))
 	
-# map_x = global_config.window_width
 map_x = 1300 + 5*global_config.fps*foreground_module.foreground_speed
 map_y = random.randint(150, foreground_module.ground_y)
-
-# Map
 
 def check_collision_with_map():
 	player = player_module.player

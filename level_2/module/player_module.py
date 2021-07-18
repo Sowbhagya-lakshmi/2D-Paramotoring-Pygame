@@ -57,7 +57,6 @@ class Propeller:
 	def draw(self, win):
 		# Draw propeller
 		frames_per_propeller_img = int(self.frames_per_propeller_img)
-		# print(frames_per_propeller_img)
 		if self.propeller_count >= frames_per_propeller_img*self.num_of_propeller_imgs :
 			self.propeller_count = 0
 		

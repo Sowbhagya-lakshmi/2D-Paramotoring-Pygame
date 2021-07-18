@@ -214,9 +214,8 @@ def main(volume_button_on_status):
 		coins_module.display_num_coins_collected(win)
 
 		# Extra life
-
 		num_of_coins_inexchange_for_life = 50
-		if coins_module.Coin.num_coins_collected%num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
+		if coins_module.Coin.num_coins_collected % num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
 			display_module.create_extra_life()
 
 		# Extra life collection
@@ -251,8 +250,6 @@ def main(volume_button_on_status):
 					display_pop_up = False
 		except:
 			pass
-
-		
 
 		# Collision with Obstacles
 		collision_with_obstacle = obstacles_module.collision_with_obstacle()	# Checks collision and Returns bool 
