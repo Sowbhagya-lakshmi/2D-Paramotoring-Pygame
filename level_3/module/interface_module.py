@@ -269,7 +269,7 @@ def display_winscreen():
 	global win, cursor, right_click
 	global mute_button, unmute_button
 	
-	restart_bool = False
+	break_bool = False
 
 	global_config.fps = 60		# fps
 	
@@ -327,8 +327,8 @@ def display_winscreen():
 			if right_click == 0:				
 				win.blit(button_restart_enlarge, (310,450))
 			elif right_click:
-				restart_bool = True
-				return restart_bool
+				break_bool = True
+				return break_bool
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
