@@ -1,8 +1,10 @@
+import time
+
+#import autopy
 import cv2
 import numpy as np
+
 import level_2.module.hand_tracking_module as htm
-import time
-#import autopy
 
 ###################
 

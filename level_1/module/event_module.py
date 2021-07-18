@@ -1,6 +1,7 @@
-import pygame
 import sys
 import time
+
+import pygame
 
 import global_config
 from level_1.module import bird_module

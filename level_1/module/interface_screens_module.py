@@ -1,16 +1,14 @@
 import pygame
 import sys
 import os
-import time
-import multiprocessing
-from multiprocessing import Queue
-from level_1.module.gesture_control import main_avm
-from level_1.module import player_module
-from level_1.mp import queue_shared, process_object
 
+from multiprocessing import Queue
 
 import global_config
 from level_1.module import music_module , interface_module
+from level_1.module import player_module
+from level_1.module.gesture_control import main_avm
+from level_1.mp import queue_shared, process_object
 
 
 win = None

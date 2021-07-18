@@ -1,6 +1,7 @@
-import pygame
 import sys
 import time
+
+import pygame
 
 import global_config
 from level_3.module import dragon_module

@@ -1,6 +1,7 @@
 import os
-import pygame
 import random
+
+import pygame
 
 from level_3.module import background_module
 from level_3.module import effects_module

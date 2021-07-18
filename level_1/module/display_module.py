@@ -1,17 +1,14 @@
-import multiprocessing
 import os
-from sys import base_prefix
-import pygame
 import random
+from sys import base_prefix
+
+import pygame
 
 from pygame.mixer import pause
 
 import global_config
 from level_1.module import coins_module
-from level_1.module import event_module
 from level_1.module import foreground_module
-from level_1.module import interface_module
-from level_1.module import music_module
 from level_1.module import player_module
 
 # LIVES

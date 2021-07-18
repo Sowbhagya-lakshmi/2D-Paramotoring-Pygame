@@ -1,39 +1,32 @@
 import os
-import queue
-import pygame
-import random
-import time
-import multiprocessing
 import sys
+import time
 
+import pygame
 
 import global_config
 from level_2.module import background_module
 from level_2.module import bird_module
 from level_2.module import coins_module
 from level_2.module import display_module
+from level_2.module import dynamic_obstacle_giftbox
+from level_2.module import dynamic_obstacle_olaf
+from level_2.module import dynamic_obstacle_santa
 from level_2.module import effects_module
-# from level_2.module import ending_module
 from level_2.module import event_module
 from level_2.module import foreground_module
 from level_2.module import interface_module
-
 from level_2.module import interface_screens_module
 from level_2.module import music_module
 from level_2.module import obstacles_module
 from level_2.module import player_module
-from level_2.module import dynamic_obstacle_olaf
-from level_2.module import dynamic_obstacle_santa
-from level_2.module import dynamic_obstacle_giftbox
-
-from level_2.mp import process_object
 from level_2.module.interface_screens_module import check_index
 from level_2.module.interface_screens_module import display_no_hand_info
 from level_2.module.interface_screens_module import display_fail_msg
 from level_2.module.interface_screens_module import display_success_msg
-
-from level_2.mp import queue_shared
 from level_2.module.player_movement_box import draw_control_screen_actual, draw_player_position
+from level_2.mp import process_object
+from level_2.mp import queue_shared
 
 # Global variables
 run = True
