@@ -4,6 +4,7 @@ import time
 import pygame
 
 import global_config
+from level_3.module import display_module
 from level_3.module import dragon_module
 from level_3.module import ghost_module
 from level_3.module import shark_module
@@ -17,23 +18,11 @@ right_click = False
 total_number_of_frames = global_config.speed*global_config.game_duration
 
 def setting_up_events():
-	# Generate coin once in every 1 seconds
-	pygame.time.set_timer(pygame.USEREVENT+1, 700)
-	# Generate house obstacles once in every 8 seconds
-	pygame.time.set_timer(pygame.USEREVENT+2, 6000)
-	# Generate tree once in every 20 seconds
-	pygame.time.set_timer(pygame.USEREVENT+3, 10000)
-	# Generate dragon obstacle once in every 8 seconds
-	pygame.time.set_timer(pygame.USEREVENT+4, 9500)
-	# Generate ghost obstacle once in every 8 seconds
-	pygame.time.set_timer(pygame.USEREVENT+5, 16000)
-	# Generate shark obstacle once in every 8 seconds
-	pygame.time.set_timer(pygame.USEREVENT+6, 12500)
 
 	pygame.event.set_blocked(None)
-	pygame.event.set_allowed([pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,pygame.QUIT, pygame.USEREVENT+2, pygame.USEREVENT+3, pygame.USEREVENT+4, pygame.USEREVENT+5, pygame.USEREVENT+6])
+	pygame.event.set_allowed([pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,pygame.QUIT])
 
-def event_loop(frame_count):
+def event_loop(frame_count, win):
 	global right_click
 
 	right_click =  False
@@ -58,6 +47,9 @@ def event_loop(frame_count):
 	
 	if frame_count > 4*global_config.speed and frame_count < (total_number_of_frames - 8*global_config.speed):
 		custom_event_loop(frame_count)
+	
+	if frame_count < 4*global_config.speed:
+			display_module.countdown.draw(win)
 
 def custom_event_loop(frame_count):
 	"""

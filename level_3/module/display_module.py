@@ -38,19 +38,29 @@ class Extra_life:
 		else:
 			del self
 	def check_collision(self):
+
 		player = player_module.player
 		propeller = player_module.propeller
-		player_mask = pygame.mask.from_surface(player.img)
-		propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
-		heart_mask = pygame.mask.from_surface(self.img)
+		if self.x < (player.x + player.img.get_width()) and (self.x + self.img.get_width()) > player.x:	# Check x range
+			if self.y < (player.y + player.img.get_height()) and (self.y + self.img.get_height()) > player.y:	# Check y range
 
-		offset = self.x - player.x, self.y - player.y
-		collision_point_with_player = player_mask.overlap(heart_mask, offset)	# Checking collision with player
-		collision_point_with_propeller = propeller_mask.overlap(heart_mask, offset)	# Checking collision with player
-		if collision_point_with_player or collision_point_with_propeller:
-			return True
+				player_mask = pygame.mask.from_surface(player.img)
+				propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+				heart_mask = pygame.mask.from_surface(self.img)
+
+				offset = self.x - player.x, self.y - player.y
+				collision_point_with_player = player_mask.overlap(heart_mask, offset)	# Checking collision with player
+				collision_point_with_propeller = propeller_mask.overlap(heart_mask, offset)	# Checking collision with player
+				
+				if collision_point_with_player or collision_point_with_propeller:
+					return True
 		return False
+
+def create_extra_life():
+	extra_life = Extra_life()
+	if len(Extra_life.extra_lives_list) == 0:
+		Extra_life.extra_lives_list.append(extra_life)
 
 # MINIMAP
 line = pygame.image.load(os.path.join(r'level_3/Utils/Pics/Display/','line.png'))
