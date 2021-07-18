@@ -30,10 +30,12 @@ button_home_enlarge = pygame.transform.scale(button_home, (int(button_home.get_w
 button_restart =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_Restart.png'))
 button_restart_enlarge = pygame.transform.scale(button_restart, (int(button_restart.get_width()*1.1),int(button_restart.get_height()*1.1)))
 
+button_quit =  pygame.image.load(os.path.join(r'level_1/Utils/Pics/Interface/Buttons','Button_Quit.png'))
+button_quit_enlarge = pygame.transform.scale(button_quit, (int(button_quit.get_width()*1.1),int(button_quit.get_height()*1.1)))
+
 button_about =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_About.png'))
 button_about_enlarge = pygame.transform.scale(button_about, (int(button_about.get_width()*1.1),int(button_about.get_height()*1.1)))
 
-button_highscore =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_HighScore.png'))
 button_score =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_Score.png'))
 
 button_inverted =  pygame.image.load(os.path.join(r'level_2/Utils/Pics/Interface/Buttons','Button_inverted.png'))
@@ -72,16 +74,14 @@ def check_win():
 
 def check_end():
 	"""
-	Checks the button that is clicked from the home screen and returns the corrseponding values.Returns 
-	1 if Play button or Resume button is clicked, 2 if Highscore button is clicked, 3 if Instructions 
-	button is clicked, and 4 if About button is clicked
+	Checks if quit button that is clicked and returns the corresponding values
 	"""
 	global value, right_click
 	i=0
 	value = 0
 	mouse = pygame.mouse.get_pos()
 		
-	if 320 <= mouse[1] <= 480 and 480 <= mouse[0] <=530:
+	if 320 <= mouse[1] <= 480 and 450 <= mouse[0] <=500:
 		if right_click:
 			value = 1 
 
@@ -217,7 +217,7 @@ class Unmute_button:
 def display_endscreen():
 	
 	"""
-	Creates a screen to display the buttons at the end of the game
+	Creates a screen to display the buttons at the end of the game 
 	"""
 
 	global win, cursor
@@ -251,20 +251,19 @@ def display_endscreen():
 
 		val = check_end()
 		if val == 1:
-			main_level_2.main()
+			pygame.quit()
 		win.fill((255,255,255))
 
 		win.blit(screen_end,(0,0))
-		win.blit(button_score, (320,280))
-		win.blit(button_highscore, (320,380))
-		win.blit(button_resume,(320,480))
+		win.blit(button_score, (320,300))
+		win.blit(button_resume,(320,450))
 
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
 
-		if 320 <= mouse[0] <= 480 and 280 <= mouse[1] <= 330 :
+		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
 				win.blit(button_inverted_enlarge, (310,280))
 				font_size = 40
@@ -275,16 +274,10 @@ def display_endscreen():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 		
-		if 320 <= mouse[0] <= 480 and 380 <= mouse[1] <= 430 :
-			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,380))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
 		
-		if 320 <= mouse[0] <= 480 and 480 <= mouse[1] <= 530 :
+		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
-				win.blit(button_resume_enlarge, (310,480))
+				win.blit(button_quit_enlarge, (310,480))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
@@ -321,11 +314,6 @@ def display_winscreen():
 	win = pygame.display.set_mode((width, height))	
 	pygame.display.set_caption('End Screen')
 
-	win.blit(screen_win,(0,0))
-	win.blit(button_score, (320,270))
-	win.blit(button_highscore, (320,370))
-	win.blit(button_next, (320,470))
-
 	pygame.display.update()
 	
 
@@ -348,34 +336,28 @@ def display_winscreen():
 	while i<10000:
 
 		win.blit(screen_win,(0,0))
-		win.blit(button_score, (320,270))
-		win.blit(button_highscore, (320,370))
-		win.blit(button_next, (320,470))
+		win.blit(button_score, (320,300))
+		win.blit(button_next, (320,450))
 
 		event_loop()
 
 		mouse = pygame.mouse.get_pos()
 
 
-		if 320 <= mouse[0] <= 480 and 270 <= mouse[1] <= 320 :
+		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,270))
+				win.blit(button_inverted_enlarge, (310,300))
 				font_size = 40
 				font = pygame.font.Font(r'level_1\Utils\Font\FreeSansBold.ttf', font_size)
 				text = font.render(str(coin), True, (255,255,255))
-				win.blit(text, (380, 280))
+				win.blit(text, (380, 310))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-		if 320 <= mouse[0] <= 480 and 370 <= mouse[1] <= 420 :
-			if right_click == 0:
-				win.blit(button_inverted_enlarge, (310,370))
-			if pop_sound_play == False:
-				music_module.sound_button_enlarge.play()
-			pop_sound_play = True
-		if 320 <= mouse[0] <= 480 and 470 <= mouse[1] <= 520 :
+
+		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:				
-				win.blit(button_next_enlarge, (310,470))
+				win.blit(button_next_enlarge, (310,450))
 			elif right_click:
 				break_bool = True
 				return break_bool
