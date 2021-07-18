@@ -5,6 +5,7 @@ import time
 import global_config
 from level_1.module import bird_module
 from level_1.module import coins_module
+from level_1.module import display_module
 from level_1.module import obstacles_module
 from level_1.mp import process_object
 
@@ -15,7 +16,7 @@ def setting_up_events():
 	pygame.event.set_blocked(None)
 	pygame.event.set_allowed([pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,pygame.QUIT])
 
-def event_loop(frame_count):
+def event_loop(frame_count, win):
 	global right_click
 
 	right_click =  False
@@ -40,6 +41,9 @@ def event_loop(frame_count):
 			
 	if frame_count > 4*global_config.speed and frame_count < (total_number_of_frames - 8*global_config.speed):
 		custom_event_loop(frame_count)
+	
+	if frame_count < 4*global_config.speed:
+			display_module.countdown.draw(win)
 		
 def custom_event_loop(frame_count):
 	"""

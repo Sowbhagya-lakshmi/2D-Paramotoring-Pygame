@@ -1,10 +1,7 @@
 import os
 import queue
 import pygame
-import random
 import time
-import multiprocessing
-import sys
 
 
 import global_config
@@ -196,7 +193,7 @@ def main():
 	pygame.mouse.set_visible(False)
 	
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\BGmusic_Level1.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\BGmusic_Level1.wav'))
 	if volume_button_on_status:
 		pygame.mixer.music.play(-1)
 
@@ -206,12 +203,10 @@ def main():
 		
 		draw_all_objects()	
 
-		if frame_count < 4*global_config.speed:
-			display_module.countdown.draw(win)
-		elif frame_count == 4*global_config.speed:
+		if frame_count == 4*global_config.speed:
 			start_fuel = True
 		
-		event_module.event_loop(frame_count)
+		event_module.event_loop(frame_count, win)
 
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
@@ -224,40 +219,34 @@ def main():
 		# Extra life
 
 		num_of_coins_inexchange_for_life = 50
-		if coins_module.Coin.num_coins_collected%num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
-			extra_life = display_module.Extra_life()
-			if len(display_module.Extra_life.extra_lives_list) == 0:
-				display_module.Extra_life.extra_lives_list.append(extra_life)
+		if coins_module.Coin.num_coins_collected % num_of_coins_inexchange_for_life == 0 and num_of_lives!=3:
+			display_module.create_extra_life()
 
+		# Extra life collection
 		elif coins_module.Coin.num_coins_collected > num_of_coins_inexchange_for_life:
 			for extra_life in display_module.Extra_life.extra_lives_list:
-				extra_life.draw(win)
-				player = player_module.player
-				if extra_life.x < (player.x + player.img.get_width()) and (extra_life.x + extra_life.img.get_width()) > player.x:	# Check x range
-					if extra_life.y < (player.y + player.img.get_height()) and (extra_life.y + extra_life.img.get_height()) > player.y:	# Check y range
-						bool = extra_life.check_collision()
-						if bool:
-							num_of_lives += 1
-							display_module.Extra_life.extra_lives_list.remove(extra_life)
-							coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
-		
+				extra_life.draw(win)	
+				bool = extra_life.check_collision()
+				if bool:
+					num_of_lives += 1
+					display_module.Extra_life.extra_lives_list.remove(extra_life)
+					coins_module.Coin.num_coins_collected -= num_of_coins_inexchange_for_life
+
 		if process_object.is_alive():
 			draw_control_screen_actual(win)
 			draw_player_position(win)		     # draws black screen
 
 		try:
 			bool_val = check_index(queue_shared)
-			if bool_val:
+			if bool_val and num_of_lives > 0:
 				display_pop_up = True
 				start_loop = 0
 
-
 			if display_pop_up:
-				# print('inside if')
 				start_loop += 1
-				# print('displaying')
 				display_no_hand_info(win)
-				if start_loop >= global_config.speed:
+				# Display the no hand info for 0.5 seconds
+				if start_loop >= global_config.speed//2:
 					display_pop_up = False
 		except:
 			pass
