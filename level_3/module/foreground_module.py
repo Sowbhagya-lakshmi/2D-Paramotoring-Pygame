@@ -18,7 +18,6 @@ def draw_fg(win):
 	# Drawing ground
 	win.blit(ground, (ground_x, ground_y))
 	win.blit(ground, (ground_width,ground_y))
-	# win.blit(ground, (ground_width*2,ground_y))	
 
 	# Ground movement
 	ground_x -= foreground_speed

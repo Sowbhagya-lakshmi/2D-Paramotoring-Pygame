@@ -21,9 +21,9 @@ from level_2.module import music_module
 from level_2.module import obstacles_module
 from level_2.module import player_module
 
-from level_3.mp import process_object
-from level_3.mp import queue_shared
-from level_3.module.player_movement_box import draw_control_screen_actual, draw_player_position
+from level_2.mp import process_object
+from level_2.mp import queue_shared
+from level_2.module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 from level_2.mp import process_object
 from level_2.module.interface_screens_module import check_index

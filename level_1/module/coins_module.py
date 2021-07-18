@@ -16,10 +16,8 @@ class Coin:
 	"""
 	# Loading coin images
 	num_of_imgs = 6
-	imgs = [pygame.image.load(os.path.join(r'level_1/Utils/Pics/Coins/', "coin"+ str(x) + '.png')) for x in range(1, num_of_imgs+1)]
-	resized_imgs = [pygame.transform.scale(img, (int(img.get_width()//50), int(img.get_height()//50))) for img in imgs]
+	resized_imgs = [pygame.image.load(os.path.join(r'level_1/Utils/Pics/Coins/', "coin"+ str(x) + '.png')) for x in range(1, num_of_imgs+1)]
 
-	del imgs
 	coins_list = []
 	num_coins_collected = 0
 

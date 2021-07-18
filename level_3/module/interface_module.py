@@ -1,6 +1,5 @@
 import sys
 import os
-
 import pygame
 
 import global_config
@@ -49,17 +48,12 @@ def check_end():
 	Checks if quit button is clicked in the end screen and returns the value 1
 	"""
 	global value, right_click
-	i=0
 	value = 0
 	mouse = pygame.mouse.get_pos()
 		
 	if 320 <= mouse[1] <= 480 and 450 <= mouse[0] <=500:
 		if right_click:
 			value = 1 
-
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
 	return value
 
 
@@ -219,10 +213,9 @@ def display_endscreen():
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
-	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
@@ -231,16 +224,12 @@ def display_endscreen():
 		if val == 1:
 			pygame.quit()
 
-		win.fill((255,255,255))
-
 		win.blit(screen_end,(0,0))
 		win.blit(button_score, (320,300))
 		win.blit(button_quit,(320,450))
 		event_loop()
 
-
 		mouse = pygame.mouse.get_pos()
-
 
 		if 320 <= mouse[0] <= 480 and 300 <= mouse[1] <= 350 :
 			if right_click == 0:
@@ -266,8 +255,6 @@ def display_endscreen():
 		cursor.draw(win)  
 		clock.tick(global_config.fps)
 		pygame.display.update()
-
-		
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
@@ -308,10 +295,9 @@ def display_winscreen():
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
-	volume_button = unmute_button
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
@@ -355,7 +341,5 @@ def display_winscreen():
 		clock.tick(global_config.fps)
 		pygame.display.update()
 
-		
-	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)

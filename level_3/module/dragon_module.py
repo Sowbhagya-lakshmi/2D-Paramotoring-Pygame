@@ -1,8 +1,7 @@
 import math
 import os
-import random
-
 import pygame
+import random
 
 from level_3.module import background_module
 from level_3.module import foreground_module
@@ -77,7 +76,6 @@ def create_dragon():
 def draw_dragon(win):
 	for dragon in Dragon.dragons_list:
 		dragon.draw(win)
-		# music_module.sound_dragon.play()
 	update_dragons_position()
 	
 def update_dragons_position():

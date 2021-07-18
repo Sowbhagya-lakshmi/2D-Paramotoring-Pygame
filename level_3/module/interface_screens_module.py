@@ -4,10 +4,10 @@ import os
 import pygame
 
 import global_config
+from level_3.module import interface_module
 from level_3.module import player_module
-from level_3.module import music_module , interface_module
-from level_3.module.gesture_control import main_avm
-from level_3.mp import queue_shared, process_object
+from level_3.module import music_module
+from level_3.mp import process_object
 
 
 win = None
@@ -65,7 +65,6 @@ def check_mode_playbutton( ):
 
 	"""
 	global right_click
-	i=0
 	mouse = pygame.mouse.get_pos()
 
 	play_mode = None
@@ -84,10 +83,7 @@ def check_mode_playbutton( ):
 			play_mode = 4
 	else:
 		play_mode = None
-		
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
+	
 	return play_mode
 
 
@@ -96,7 +92,6 @@ def check_mode_instructions( ):
 	Checks if the skip button is clicked from the about button and returns  1 if skip button is clicked
 	"""
 	global right_click
-	i=0
 	mouse = pygame.mouse.get_pos()
 
 	skip_mode = None
@@ -104,13 +99,9 @@ def check_mode_instructions( ):
 	if 640 <= mouse[0] <= 780 and 520 <= mouse[1] <= 570:
 			if right_click: 
 				skip_mode = 1
-	
 	else:
 		skip_mode = None
 		
-	clock = pygame.time.Clock()		
-	clock.tick(global_config.fps)		
-	pygame.display.update()
 	return skip_mode
 
 class Cursor:
@@ -171,17 +162,14 @@ def display_playbutton():
 
 	cursor = Cursor()
 
-	clock = pygame.time.Clock()
-
 	# Hide the original cursor
 	pygame.mouse.set_visible(False)
 
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
-	i=0
 	
 	while True:
 
@@ -195,7 +183,6 @@ def display_playbutton():
 		elif mode == 3: 
 			display_playbutton()
 			break 	# breaks interface loop
-		
 		elif mode == 4:
 			display_instructions()
 			break
@@ -239,7 +226,6 @@ def display_playbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
-		i=i+1
 		cursor.draw()
 
 		pygame.display.update()
@@ -256,8 +242,6 @@ def display_instructions():
 	
 	global_config.fps = 60		# fps
 	
-	
-	
 	# Home screen interface
 	width, height = 800,600
 	win = pygame.display.set_mode((width, height))	
@@ -272,7 +256,7 @@ def display_instructions():
 	pop_sound_play = False
 
 	#Music Variable
-	Music_Background = pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
+	pygame.mixer.music.load(os.path.join(r'level_3\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
 	i=0
@@ -420,35 +404,39 @@ def display_instructions():
 
 		clock.tick(global_config.fps)
 		pygame.display.update()
-
-		
 	
 	# Bring back the original cursor
 	pygame.mouse.set_visible(True)
 
 
 def check_index(queue_shared):
+	"""
+	Checks if index finger is recognised
+	"""
 	if queue_shared.empty():
 		return False
 	else:
 		queue_shared.get()
 		return True
-		
-		
+
 def display_no_hand_info(win):
+	"""
+	Displays a pop up if index finger is not visible
+	"""
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 40
 	win.blit(index_finger_not_detected,(pos_x,pos_y))
 
-
 def display_fail_msg(win):
+	"""
+	Displays a msg if lost the game
+	"""
 	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10
 	win.blit(fail_msg,(pos_x,pos_y))
 
-
 def display_success_msg(win):
-	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10 #player_module.player.x - success_msg.get_width() , player_module.player.y 
+	"""
+	Displays a msg if won the game
+	"""
+	pos_x, pos_y = player_module.player.x + 100 , player_module.player.y + 10  
 	win.blit(success_msg,(pos_x,pos_y))
-
-
-
 
