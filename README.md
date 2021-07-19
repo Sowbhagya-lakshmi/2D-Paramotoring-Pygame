@@ -61,6 +61,18 @@ For detailed information of the game, visit [https://github.com/Sowbhagya-lakshm
 In case of any issues or bugs found, feel free to send a pull request or open an issue.
 
 ***
+## CONTRIBUTION
+
+[Aarthi Meena](https://github.com/Aarthi160802)
+
+[Sowbhagya Lakshmi](https://github.com/Sowbhagya-lakshmi)
+
+[Yogeshwari](https://github.com/yogeshwari-vs)
+
+**Mentored by :** [Pragash Durai](https://github.com/Dcruise546)
+
+
+***
 
 ## LICENSE
 
