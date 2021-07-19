@@ -210,7 +210,9 @@ def display_playbutton():
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
-		
+
+		else:
+			pop_sound_play = False		
 			
 		cursor.draw()
 

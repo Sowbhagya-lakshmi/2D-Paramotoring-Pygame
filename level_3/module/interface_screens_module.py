@@ -209,6 +209,9 @@ def display_playbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 		
+		else:
+			pop_sound_play = False
+		
 		cursor.draw()
 
 		pygame.display.update()
