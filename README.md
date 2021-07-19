@@ -1,4 +1,4 @@
-# PARA-ESACPADE : 2D-Paramotoring Pygame
+# PARA-ESCAPADE 
 
 ![ICON](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/main/Images_wiki/ICON.png)
 
