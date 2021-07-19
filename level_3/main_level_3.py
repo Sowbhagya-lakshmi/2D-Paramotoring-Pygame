@@ -203,7 +203,7 @@ def main(volume_button_on_status):
 		if frame_count == 4*global_config.fps:
 			start_fuel = True
 		
-		event_module.event_loop(frame_count, win)
+		event_module.event_loop(frame_count, win, lost_music_count)
 
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
