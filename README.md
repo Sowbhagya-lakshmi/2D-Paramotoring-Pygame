@@ -11,6 +11,8 @@ The game consists of two modes for controlling the player - Mouse Control, Hand 
 
 ### **TO RUN THIS CODE**
 
+**Supported on:**  64 bit Windows
+
 ### Install the dependencies and run the main file
 
 * Install Python 3.8.x (any version)
@@ -51,6 +53,12 @@ Demo for using hand gesture mode
 ***
 
 For detailed information of the game, visit [https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/wiki](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/wiki)
+
+***
+
+## CONTACT
+
+In case of any issues or bugs found, feel free to send a pull request or open an issue.
 
 ***
 
