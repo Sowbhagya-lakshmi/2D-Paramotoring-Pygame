@@ -9,11 +9,11 @@ The game consists of two modes for controlling the player - Mouse Control, Hand 
    ![Intro-Demo](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/main/Images_wiki/intro.gif)
 ***
 
-### **TO RUN THIS CODE**
+## **TO RUN THIS CODE**
 
 **Supported on:**  64 bit Windows
 
-### Install the dependencies and run the main file
+## Install the dependencies and run the main file
 
 * Install Python 3.8.x (any version)
 
