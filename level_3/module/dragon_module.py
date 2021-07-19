@@ -96,14 +96,15 @@ def collision_with_dragon():
 	"""
 	player = player_module.player
 	propeller = player_module.propeller
-	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
 	if len(Dragon.collision_dragons)!=0:
 		for dragon in Dragon.collision_dragons:
 			if dragon.x < (player.x + player.img.get_width()) and (dragon.x + dragon.img.get_width()) > player.x:
 				if dragon.y < (player.y + player.img.get_height()) and (dragon.y + dragon.img.get_height()) > player.y:	# Checking for collision if near player
+					player_mask = pygame.mask.from_surface(player.img)
+					propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 					dragon_mask = pygame.mask.from_surface(dragon.img)
+					
 					offset = int(dragon.x - player.x), int(dragon.y - player.y)
 					collision_point_with_player = player_mask.overlap(dragon_mask, offset)
 					collision_point_with_propeller = propeller_mask.overlap(dragon_mask, offset)	# Checking collision with player

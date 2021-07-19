@@ -97,14 +97,16 @@ def collision_with_shark():
 	"""
 	player = player_module.player
 	propeller = player_module.propeller
-	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
 	if len(Shark.collision_sharks)!=0:
 		for shark in Shark.collision_sharks:
 			if shark.x < (player.x + player.img.get_width()) and (shark.x + shark.img.get_width()) > player.x:
 				if shark.y < (player.y + player.img.get_height()) and (shark.y + shark.img.get_height()) > player.y:	# Checking for collision if near player
+
+					player_mask = pygame.mask.from_surface(player.img)
+					propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 					shark_mask = pygame.mask.from_surface(shark.img)
+					
 					offset = int(shark.x - player.x), int(shark.y - player.y)
 					collision_point_with_player = player_mask.overlap(shark_mask, offset)
 					collision_point_with_propeller = propeller_mask.overlap(shark_mask, offset)	# Checking collision with player

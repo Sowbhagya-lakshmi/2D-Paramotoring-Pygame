@@ -154,17 +154,20 @@ class Fuel:
 		for fuel in self.fuel_list:
 			player = player_module.player
 			propeller = player_module.propeller
-			player_mask = pygame.mask.from_surface(player.img)
-			propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
-			fuel_mask = pygame.mask.from_surface(fuel.img)
+			if fuel.x < (player.x + player.img.get_width()) and (fuel.x + fuel.img.get_width()) > player.x:			# Check x range
+				if fuel.y < (player.y + player.img.get_height()) and (fuel.y + fuel.img.get_height()) > player.y:	# Check y range
 
-			offset = fuel.x - player.x, fuel.y - player.y
-			collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
-			collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
-			if collision_point_with_player or collision_point_with_propeller:
-				return True
-		return False
+					player_mask = pygame.mask.from_surface(player.img)
+					propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+
+					fuel_mask = pygame.mask.from_surface(fuel.img)
+
+					offset = fuel.x - player.x, fuel.y - player.y
+					collision_point_with_player = player_mask.overlap(fuel_mask, offset)	# Checking collision with player
+					collision_point_with_propeller = propeller_mask.overlap(fuel_mask, offset)	# Checking collision with player
+					if collision_point_with_player or collision_point_with_propeller:
+						return True
 
 	def fuel_collection(self):
 		global fuel_bar
@@ -249,15 +252,16 @@ map_y = random.randint(150, foreground_module.ground_y)
 def check_collision_with_map():
 	player = player_module.player
 	propeller = player_module.propeller
-	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
 	if map_x < (player.x + player.img.get_width()) and (map_x + map_img.get_width()) > player.x:
 		if map_y < (player.y + player.img.get_height()) and (map_y + map_img.get_height()) > player.y:	# Checking for collision if near player
-			bird_mask = pygame.mask.from_surface(map_img)
+			player_mask = pygame.mask.from_surface(player.img)
+			propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
+			map_mask = pygame.mask.from_surface(map_img)
+
 			offset = int(map_x - player.x), int(map_y - player.y)
-			collision_point_with_player = player_mask.overlap(bird_mask, offset)
-			collision_point_with_propeller = propeller_mask.overlap(bird_mask, offset)	# Checking collision with player
+			collision_point_with_player = player_mask.overlap(map_mask, offset)
+			collision_point_with_propeller = propeller_mask.overlap(map_mask, offset)	# Checking collision with player
 
 			if collision_point_with_player or collision_point_with_propeller:
 				return True
