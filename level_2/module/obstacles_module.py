@@ -1,7 +1,6 @@
 import os
-import random
-
 import pygame
+import random
 
 import global_config
 from level_2.module import background_module

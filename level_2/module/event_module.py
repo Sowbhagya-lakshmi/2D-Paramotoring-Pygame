@@ -1,17 +1,16 @@
+import pygame
 import sys
 import time
 
-import pygame
-
 import global_config
 from level_2.module import bird_module
+from level_2.module import coins_module
 from level_2.module import display_module
+from level_2.module import dynamic_obstacle_giftbox
 from level_2.module import dynamic_obstacle_olaf
 from level_2.module import dynamic_obstacle_santa
-from level_2.module import dynamic_obstacle_giftbox
-from level_2.module import coins_module
 from level_2.module import obstacles_module
-from level_2.mp import process_object
+from level_2.multiprocessing_module import process_object
 
 
 

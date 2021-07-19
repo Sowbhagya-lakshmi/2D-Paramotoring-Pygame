@@ -1,5 +1,4 @@
 import os
-
 import pygame
 
 from level_2.module import background_module

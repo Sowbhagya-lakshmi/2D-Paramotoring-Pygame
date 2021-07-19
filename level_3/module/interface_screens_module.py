@@ -1,13 +1,11 @@
-import sys
 import os
-
 import pygame
+import sys
 
 import global_config
-from level_3.module import interface_module
 from level_3.module import player_module
 from level_3.module import music_module
-from level_3.mp import process_object
+from level_3.multiprocessing_module import process_object
 
 
 win = None
@@ -249,8 +247,10 @@ def display_instructions():
 	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
+	break_loop_val = True
+
 	i=0
-	while i<10000:
+	while i<10000 and break_loop_val:
 
 		win.fill((255,255,255))
 
@@ -273,7 +273,7 @@ def display_instructions():
 				
 			if skip_mode1 == 1:
 				c=0
-				while c<10000:
+				while c<10000 and break_loop_val:
 		
 					win.blit(screen_instruction2,(0,0))
 					win.blit(button_skip,(620,515))
@@ -291,7 +291,7 @@ def display_instructions():
 
 						if skip_mode2 == 1:
 							d=0
-							while d<10000:
+							while d<10000 and break_loop_val:
 	
 								win.blit(screen_instruction3,(0,0))
 								win.blit(button_skip,(620,515))
@@ -308,7 +308,7 @@ def display_instructions():
 									skip_mode3 = check_mode_instructions()
 									if skip_mode3 == 1:
 										e=0
-										while e<10000:
+										while e<10000 and break_loop_val:
 	
 											win.blit(screen_instruction4,(0,0))
 											win.blit(button_skip,(620,515))
@@ -325,7 +325,7 @@ def display_instructions():
 												skip_mode4 = check_mode_instructions()
 												if skip_mode4==1:
 													f=0
-													while f<10000:
+													while f<10000 and break_loop_val:
 														win.blit(screen_instruction5,(0,0))
 														win.blit(button_skip,(620,515))
 

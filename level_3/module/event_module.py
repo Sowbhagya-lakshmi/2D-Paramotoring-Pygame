@@ -1,7 +1,6 @@
+import pygame
 import sys
 import time
-
-import pygame
 
 import global_config
 from level_3.module import coins_module
@@ -10,7 +9,7 @@ from level_3.module import dragon_module
 from level_3.module import ghost_module
 from level_3.module import obstacles_module
 from level_3.module import shark_module
-from level_3.mp import process_object
+from level_3.multiprocessing_module import process_object
 
 right_click = False
 total_number_of_frames = global_config.fps*global_config.game_duration

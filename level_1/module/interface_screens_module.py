@@ -1,12 +1,11 @@
+import os
 import pygame
 import sys
-import os
 
 import global_config
 from level_1.module import music_module , interface_module
 from level_1.module import player_module
-from level_1.module.gesture_control import main_avm
-from level_1.mp import queue_shared, process_object
+from level_1.multiprocessing_module import process_object
 
 
 win = None
@@ -372,7 +371,7 @@ def display_instructions():
 
 														skip_mode5 = check_mode_instructions()
 														if skip_mode5==1:
-															interface_module.display_homescreen()
+															display_playbutton()
 															break_loop_val = False
 															break
 														
