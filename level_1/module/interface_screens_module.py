@@ -365,18 +365,18 @@ def display_instructions():
 														if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
 															if right_click == 0:
 																win.blit(button_skip_enlarge, (610,515))
-														if pop_sound_play == False:
-																music_module.sound_button_enlarge.play()
-														pop_sound_play = True
+															if pop_sound_play == False:
+																	music_module.sound_button_enlarge.play()
+															pop_sound_play = True
+
+														else:
+															pop_sound_play = False
 
 														skip_mode5 = check_mode_instructions()
 														if skip_mode5==1:
-															display_playbutton()
+															interface_module.display_homescreen()
 															break_loop_val = False
 															break
-														
-														else:
-															pop_sound_play = False
 
 														cursor.draw()
 
