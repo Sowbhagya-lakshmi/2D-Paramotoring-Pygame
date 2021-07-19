@@ -1,5 +1,4 @@
 import os
-
 import pygame
 
 import global_config

@@ -1,8 +1,6 @@
 import os
-import sys
-
-
 import pygame
+import sys
 
 import global_config
 from level_1.module import coins_module
@@ -379,12 +377,13 @@ def display_endscreen():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 	
-		if 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
+		elif 320 <= mouse[0] <= 480 and 450 <= mouse[1] <= 500 :
 			if right_click == 0:
 				win.blit(button_quit_enlarge, (310,450))
 			if pop_sound_play == False:
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
+
 		else:
 			pop_sound_play = False
 							

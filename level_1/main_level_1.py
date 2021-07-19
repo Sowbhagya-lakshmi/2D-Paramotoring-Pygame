@@ -15,8 +15,8 @@ from level_1.module import music_module
 from level_1.module import obstacles_module
 from level_1.module import player_module
 
-from level_1.mp import process_object
-from level_1.mp import queue_shared
+from level_1.multiprocessing_module import process_object
+from level_1.multiprocessing_module import queue_shared
 from level_1.module.player_movement_box import draw_control_screen_actual, draw_player_position
 
 from level_1.module.interface_screens_module import check_index
@@ -140,7 +140,7 @@ def lost():
 		try:
 			process_object.terminate()
 		except: pass
-		interface_module.display_endscreen()
+
 		return True
 	return False
 
@@ -197,7 +197,7 @@ def main():
 		if frame_count == 4*global_config.fps:
 			start_fuel = True
 		
-		event_module.event_loop(frame_count, win)
+		event_module.event_loop(frame_count, win, lost_music_count)
 
 		# Coin collection
 		collected = coins_module.coin_collection(player_module.player)	# Returns bool 
@@ -269,6 +269,8 @@ def main():
 
 			# If the player has fallen to the ground
 			if game_end:
+				music_module.sound_aftercollided.fadeout(1500)
+				interface_module.display_endscreen()
 				break
 
 		if frame_count > total_num_of_frames - 10*global_config.fps:	#last 10 seconds

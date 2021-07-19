@@ -1,5 +1,4 @@
 import os
-
 import pygame
 
 from level_2.module import background_module
@@ -78,13 +77,13 @@ def collision_with_gift():
 	"""
 	player = player_module.player
 	propeller = player_module.propeller
-	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 
 	if len(Gift.collision_gift)!=0:
 		for bird in Gift.collision_gift:
 			if bird.x < (player.x + player.img.get_width()) and (bird.x + bird.img.get_width()) > player.x:
 				if bird.y < (player.y + player.img.get_height()) and (bird.y + bird.img.get_height()) > player.y:	# Checking for collision if near player
+					player_mask = pygame.mask.from_surface(player.img)
+					propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 					bird_mask = pygame.mask.from_surface(bird.img)
 					offset = int(bird.x - player.x), int(bird.y - player.y)
 					collision_point_with_player = player_mask.overlap(bird_mask, offset)

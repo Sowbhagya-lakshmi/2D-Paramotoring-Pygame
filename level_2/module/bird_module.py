@@ -1,8 +1,7 @@
 import math
 import os
-import random
-
 import pygame
+import random
 
 from level_2.module import background_module
 from level_2.module import foreground_module

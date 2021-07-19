@@ -1,12 +1,11 @@
+import os
 import pygame
 import sys
-import os
 
 import global_config
 from level_1.module import music_module , interface_module
 from level_1.module import player_module
-from level_1.module.gesture_control import main_avm
-from level_1.mp import queue_shared, process_object
+from level_1.multiprocessing_module import process_object
 
 
 win = None
@@ -245,6 +244,9 @@ def display_playbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 			
+		else:
+			pop_sound_play = False
+			
 		cursor.draw()
 		pygame.display.update()
 
@@ -366,18 +368,18 @@ def display_instructions():
 														if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
 															if right_click == 0:
 																win.blit(button_skip_enlarge, (610,515))
-														if pop_sound_play == False:
-																music_module.sound_button_enlarge.play()
-														pop_sound_play = True
+															if pop_sound_play == False:
+																	music_module.sound_button_enlarge.play()
+															pop_sound_play = True
+
+														else:
+															pop_sound_play = False
 
 														skip_mode5 = check_mode_instructions()
 														if skip_mode5==1:
 															interface_module.display_homescreen()
 															break_loop_val = False
 															break
-														
-														else:
-															pop_sound_play = False
 
 														cursor.draw()
 

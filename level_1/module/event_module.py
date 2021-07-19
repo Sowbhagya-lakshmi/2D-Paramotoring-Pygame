@@ -1,14 +1,13 @@
 import sys
-import time
-
 import pygame
+import time
 
 import global_config
 from level_1.module import bird_module
 from level_1.module import coins_module
 from level_1.module import display_module
 from level_1.module import obstacles_module
-from level_1.mp import process_object
+from level_1.multiprocessing_module import process_object
 
 right_click = False
 total_number_of_frames = global_config.fps*global_config.game_duration
@@ -17,7 +16,7 @@ def setting_up_events():
 	pygame.event.set_blocked(None)
 	pygame.event.set_allowed([pygame.KEYDOWN, pygame.MOUSEBUTTONDOWN,pygame.QUIT])
 
-def event_loop(frame_count, win):
+def event_loop(frame_count, win, lost_music_count):
 	global right_click
 
 	right_click =  False
@@ -41,7 +40,7 @@ def event_loop(frame_count, win):
 				right_click = True
 	
 	# Spawn objects after countdown and 8 seconds before level completion
-	if frame_count > 4*global_config.fps and frame_count < (total_number_of_frames - 8*global_config.fps):
+	if frame_count > 4*global_config.fps and frame_count < (total_number_of_frames - 8*global_config.fps) and lost_music_count == 0:
 		custom_event_loop(frame_count)
 	
 	# Countdown

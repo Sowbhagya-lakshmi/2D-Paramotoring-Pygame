@@ -1,7 +1,6 @@
 import os
-import random
-
 import pygame
+import random
 
 from level_1.module import background_module
 from level_1.module import effects_module
@@ -89,11 +88,11 @@ def coin_collection(player):
 	Collision with coin is checked using Pixel perfect collision method. If collision occurs returns True, else False.
 	Collision is checked only if coin is near the player to save computation.
 	"""
-	player_mask = pygame.mask.from_surface(player.img)
 	for coin in Coin.coins_list:
 		try:
 			if coin.x < (player.x + player.img.get_width()) and (coin.x + coin.img.get_width()) > player.x:			# Check x range
 				if coin.y < (player.y + player.img.get_height()) and (coin.y + coin.img.get_height()) > player.y:	# Check y range
+					player_mask = pygame.mask.from_surface(player.img)
 					coin_mask = pygame.mask.from_surface(coin.img)
 					offset = coin.x - player.x, coin.y - player.y
 					collision_point = player_mask.overlap(coin_mask, offset)		# returns collision point else returns None

@@ -1,13 +1,11 @@
-import sys
 import os
-
 import pygame
+import sys
 
 import global_config
-from level_3.module import interface_module
 from level_3.module import player_module
 from level_3.module import music_module
-from level_3.mp import process_object
+from level_3.multiprocessing_module import process_object
 
 
 win = None
@@ -211,6 +209,9 @@ def display_playbutton():
 				music_module.sound_button_enlarge.play()
 			pop_sound_play = True
 		
+		else:
+			pop_sound_play = False
+		
 		cursor.draw()
 
 		pygame.display.update()
@@ -249,8 +250,10 @@ def display_instructions():
 	pygame.mixer.music.load(os.path.join(r'level_1\Utils\Music\InterfaceBG.wav'))
 	pygame.mixer.music.play(-1)
 
+	break_loop_val = True
+
 	i=0
-	while i<10000:
+	while i<10000 and break_loop_val:
 
 		win.fill((255,255,255))
 
@@ -273,7 +276,7 @@ def display_instructions():
 				
 			if skip_mode1 == 1:
 				c=0
-				while c<10000:
+				while c<10000 and break_loop_val:
 		
 					win.blit(screen_instruction2,(0,0))
 					win.blit(button_skip,(620,515))
@@ -291,7 +294,7 @@ def display_instructions():
 
 						if skip_mode2 == 1:
 							d=0
-							while d<10000:
+							while d<10000 and break_loop_val:
 	
 								win.blit(screen_instruction3,(0,0))
 								win.blit(button_skip,(620,515))
@@ -308,7 +311,7 @@ def display_instructions():
 									skip_mode3 = check_mode_instructions()
 									if skip_mode3 == 1:
 										e=0
-										while e<10000:
+										while e<10000 and break_loop_val:
 	
 											win.blit(screen_instruction4,(0,0))
 											win.blit(button_skip,(620,515))
@@ -325,7 +328,7 @@ def display_instructions():
 												skip_mode4 = check_mode_instructions()
 												if skip_mode4==1:
 													f=0
-													while f<10000:
+													while f<10000 and break_loop_val:
 														win.blit(screen_instruction5,(0,0))
 														win.blit(button_skip,(620,515))
 
@@ -334,18 +337,18 @@ def display_instructions():
 														if 620 <= mouse[0] <= 780 and 515 <= mouse[1] <= 565 :
 															if right_click == 0:
 																win.blit(button_skip_enlarge, (610,515))
-														if pop_sound_play == False:
-																music_module.sound_button_enlarge.play()
-														pop_sound_play = True
+															if pop_sound_play == False:
+																	music_module.sound_button_enlarge.play()
+															pop_sound_play = True
+														
+														else:
+															pop_sound_play = False
 
 														skip_mode5 = check_mode_instructions()
 														if skip_mode5==1:
 															display_playbutton()
 															break_loop_val = False
 															break
-														
-														else:
-															pop_sound_play = False
 
 														cursor.draw()
 

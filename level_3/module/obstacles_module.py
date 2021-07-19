@@ -1,7 +1,6 @@
 import os
-import random
-
 import pygame
+import random
 
 import global_config
 from level_3.module import background_module
@@ -122,14 +121,15 @@ def collision_with_obstacle():
 	"""
 	player = player_module.player
 	propeller = player_module.propeller
-	player_mask = pygame.mask.from_surface(player.img)
-	propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 	
 	for element in obstacle_classes:
 		for obstacle in element.collision_obstacles:
 			if obstacle.x < (player.x + player.img.get_width()) and (obstacle.x + obstacle.img.get_width()) > player.x:	# Check x range
 				if obstacle.y < (player.y + player.img.get_height()) and (obstacle.y + obstacle.img.get_height()) > player.y:	# Check y range
+					player_mask = pygame.mask.from_surface(player.img)
+					propeller_mask = pygame.mask.from_surface(propeller.propeller_img)
 					obstacle_mask = pygame.mask.from_surface(obstacle.img)
+					
 					offset = obstacle.x - player.x, obstacle.y - player.y
 
 					collision_point_with_player = player_mask.overlap(obstacle_mask, offset)	# Checking collision with player

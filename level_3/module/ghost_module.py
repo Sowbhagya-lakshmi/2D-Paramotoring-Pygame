@@ -1,7 +1,6 @@
 import os
-import random
-
 import pygame
+import random
 
 from level_3.module import background_module
 from level_3.module import foreground_module

@@ -1,7 +1,6 @@
+import cv2
 import math
 import time
-
-import cv2
 import mediapipe as mp
 
 class HandDetector():
@@ -11,10 +10,10 @@ class HandDetector():
         self.detectionCon = detectionCon
         self.trackCon = trackCon
 
-        self.mpHands = mp.solutions.hands
+        self.multiprocessing_moduleHands = mp.solutions.hands
         # create an object -- arg == parameters
-        self.hands = self.mpHands.Hands(self.mode, self.maxHands, self.detectionCon, self.trackCon)
-        self.mpDraw = mp.solutions.drawing_utils
+        self.hands = self.multiprocessing_moduleHands.Hands(self.mode, self.maxHands, self.detectionCon, self.trackCon)
+        self.multiprocessing_moduleDraw = mp.solutions.drawing_utils
         self.tipIds = [4, 8, 12, 16, 20]
         #self.lmlist = lmlist
 
@@ -26,7 +25,7 @@ class HandDetector():
         if self.results.multi_hand_landmarks:
             for handLms in self.results.multi_hand_landmarks:
                 if draw:
-                    self.mpDraw.draw_landmarks(img, handLms, self.mpHands.HAND_CONNECTIONS)
+                    self.multiprocessing_moduleDraw.draw_landmarks(img, handLms, self.multiprocessing_moduleHands.HAND_CONNECTIONS)
         return img
 
     def findPosition(self, img, handNo=0, draw=True):
