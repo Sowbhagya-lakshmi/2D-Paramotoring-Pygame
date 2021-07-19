@@ -76,6 +76,6 @@ In case of any issues or bugs found, feel free to send a pull request or open an
 
 ## LICENSE
 
-Mit License
+MIT License
 
 
