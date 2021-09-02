@@ -42,7 +42,7 @@ The game consists of two modes for controlling the player - Mouse Control, Hand 
 
 **2. Hand-gesture Control**
 
-To use hand gesture, keep only the index finder up and all others down. Move the index finger up and down as desired to control the movement of the player.  
+To use hand gesture, keep only the index finger up and all others down. Move the index finger up and down as desired to control the movement of the player.  
 
 ![Gesture-Control](https://github.com/Sowbhagya-lakshmi/2D-Paramotoring-Pygame/blob/main/Images_wiki/gesture_control.gif)
 
